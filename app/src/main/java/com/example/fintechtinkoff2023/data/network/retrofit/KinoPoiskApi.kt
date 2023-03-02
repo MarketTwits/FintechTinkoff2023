@@ -1,22 +1,34 @@
 package com.example.fintechtinkoff2023.data.network.retrofit
 
-import com.example.fintechtinkoff2023.data.network.model.PageFilm
-import retrofit2.Call
-import retrofit2.Response
+import com.example.fintechtinkoff2023.data.network.model.page_film.TopFilmPage
+import com.example.fintechtinkoff2023.data.network.model.search_films.SearchFilmsPage
+
+
 import retrofit2.http.*
 
 interface KinoPoiskApi {
 
 
     @Headers("X-API-KEY: $API_KEY")
-    @GET("films/top")
-     suspend fun getTopFilms(
-        @Query(QUERY_PARAM_TYPE) type: String = "TOP_100_POPULAR_FILMS")
-    : PageFilm
+    @GET("v2.2/films/top")
+    suspend fun getTopFilms(
+        @Query(QUERY_PARAM_TYPE) type: String = "TOP_100_POPULAR_FILMS",
+        @Query(QUERY_PARAM_PAGE) page: Int = 1
+    ): TopFilmPage
 
-    companion object {
+    @Headers("X-API-KEY: $API_KEY")
+    @GET("v2.1/films/search-by-keyword")
+    suspend fun getFilmsByKeyWords(
+        @Query(QUERY_PARAM_KEYWORD) keyword: String = "",
+        @Query(QUERY_PARAM_PAGE) page: Int = 1,
+    ): SearchFilmsPage
+
+    private companion object {
         private const val QUERY_PARAM_TYPE = "type"
+        private const val QUERY_PARAM_KEYWORD = "keyword"
+        private const val QUERY_PARAM_PAGE = "page"
         private const val API_KEY = "fe86bf2b-79bf-4c49-b04a-b6bd30241f6c"
+
     }
 
 }
