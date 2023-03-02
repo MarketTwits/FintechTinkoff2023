@@ -1,13 +1,12 @@
 package com.example.fintechtinkoff2023.domain
 
 import androidx.lifecycle.LiveData
-import com.example.fintechtinkoff2023.data.network.model.RatingFilms
+import com.example.fintechtinkoff2023.data.network.model.PageFilm
+import retrofit2.Response
+
 
 interface FilmsRepository {
 
-        fun getTopFilms(): RatingFilms
+        suspend  fun getTopFilms()
 
-        fun getFilmInfo(fromSymbol: String): LiveData<RatingFilms>
-
-        fun loadData()
 }

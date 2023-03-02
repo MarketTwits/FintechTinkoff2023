@@ -1,6 +1,8 @@
-package com.example.fintechtinkoff2023.data.network
+package com.example.fintechtinkoff2023.data.network.retrofit
 
-import com.example.fintechtinkoff2023.data.network.model.RatingFilms
+import com.example.fintechtinkoff2023.data.network.model.PageFilm
+import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.*
 
 interface KinoPoiskApi {
@@ -10,7 +12,7 @@ interface KinoPoiskApi {
     @GET("films/top")
      suspend fun getTopFilms(
         @Query(QUERY_PARAM_TYPE) type: String = "TOP_100_POPULAR_FILMS")
-    : RatingFilms
+    : PageFilm
 
     companion object {
         private const val QUERY_PARAM_TYPE = "type"

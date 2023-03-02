@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.bumptech.glide.Glide
 import com.example.fintechtinkoff2023.data.network.model.Film
-import com.example.fintechtinkoff2023.data.network.model.RatingFilms
 import com.example.fintechtinkoff2023.databinding.FilmItemBinding
 
 class TopFilmsAdapter : ListAdapter<Film,TopFilmsViewHolder>(TopFilmsItemDiffCallback()) {
