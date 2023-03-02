@@ -20,20 +20,20 @@ class PopularFilmsViewModel : ViewModel() {
         loadTopFilms()
     }
 
-    private fun loadTopFilms() {
+    fun loadTopFilms() {
         filmsRepository.getTopMovie()
         filmsRepository.flow
             .onStart {
                 _topFilms.value = (NetworkResult.Loading())
             }
             .onEach {
-                _topFilms.value = when(it) {
-                    is NetworkResult.Error->
+                _topFilms.value = when (it) {
+                    is NetworkResult.Error ->
                         NetworkResult.Error(it.message)
-                    is NetworkResult.Success ->{
+                    is NetworkResult.Success -> {
                         NetworkResult.Success(it.data!!)
                     }
-                    else ->  NetworkResult.Error("Unknown error")
+                    else -> NetworkResult.Error("Unknown error")
                 }
             }
             .launchIn(viewModelScope)
