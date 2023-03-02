@@ -1,4 +1,4 @@
-package com.example.fintechtinkoff2023.data.network.model
+package com.example.fintechtinkoff2023.data.network.model.page_film
 
 data class Film(
     val countries: List<Country>,

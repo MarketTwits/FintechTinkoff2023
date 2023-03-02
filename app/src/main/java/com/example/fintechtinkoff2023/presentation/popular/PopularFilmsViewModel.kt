@@ -2,7 +2,7 @@ package com.example.fintechtinkoff2023.presentation.popular
 
 
 import androidx.lifecycle.*
-import com.example.fintechtinkoff2023.data.network.model.PageFilm
+import com.example.fintechtinkoff2023.data.network.model.page_film.TopFilmPage
 import com.example.fintechtinkoff2023.data.repository.FilmsRepositoryImpl
 import com.example.fintechtinkoff2023.domain.state.NetworkResult
 
@@ -13,8 +13,8 @@ class PopularFilmsViewModel : ViewModel() {
 
     private val filmsRepository = FilmsRepositoryImpl()
 
-    private val _topFilms: MutableLiveData<NetworkResult<PageFilm>> = MutableLiveData()
-    val topFilms: LiveData<NetworkResult<PageFilm>> = _topFilms
+    private val _topFilms: MutableLiveData<NetworkResult<TopFilmPage>> = MutableLiveData()
+    val topFilms: LiveData<NetworkResult<TopFilmPage>> = _topFilms
 
     init {
         loadTopFilms()
@@ -22,7 +22,7 @@ class PopularFilmsViewModel : ViewModel() {
 
     fun loadTopFilms() {
         filmsRepository.getTopMovie()
-        filmsRepository.flow
+        filmsRepository.topFilms
             .onStart {
                 _topFilms.value = (NetworkResult.Loading())
             }

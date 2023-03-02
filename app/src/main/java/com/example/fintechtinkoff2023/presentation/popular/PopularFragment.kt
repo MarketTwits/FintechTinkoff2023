@@ -1,22 +1,21 @@
 package com.example.fintechtinkoff2023.presentation.popular
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fintechtinkoff2023.R
 import com.example.fintechtinkoff2023.R.*
-import com.example.fintechtinkoff2023.data.network.model.Film
+import com.example.fintechtinkoff2023.data.network.model.page_film.Film
 import com.example.fintechtinkoff2023.databinding.FragmentPopularBinding
 import com.example.fintechtinkoff2023.domain.state.NetworkResult
 import com.example.fintechtinkoff2023.presentation.popular.adapter.TopFilmsAdapter
+import com.example.fintechtinkoff2023.presentation.search.SearchFragment
 import kotlinx.coroutines.launch
 
 
@@ -46,12 +45,14 @@ class PopularFragment : Fragment() {
         binding.rvTopFilms.adapter = adapter
         binding.rvTopFilms.layoutManager = layoutManager
         adapter.submitList(films)
-
     }
 
     private fun setupListeners() {
         binding.btRetry.setOnClickListener {
             viewModel.loadTopFilms()
+        }
+        binding.imSearch.setOnClickListener {
+            navigation(SearchFragment())
         }
     }
 
@@ -83,6 +84,12 @@ class PopularFragment : Fragment() {
             binding.tvExceptionMessage.text = getString(string.check_your_connection, exception)
             binding.btRetry.isVisible = it
         }
+    }
+    private fun navigation(fragment: Fragment){
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainerView, fragment )
+            .addToBackStack(null)
+            .commit()
     }
 }
 
