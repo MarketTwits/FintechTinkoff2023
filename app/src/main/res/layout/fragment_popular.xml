@@ -69,6 +69,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="50dp"
         android:layout_marginBottom="50dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/bt_favorites"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -85,5 +86,54 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvExceptionMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="40dp"
+        android:fontFamily="@font/roboto_regular"
+        android:gravity="center"
+        android:text="Произошла ошибка при загрузке данных, \n проверьте подключение к сети"
+        android:textAllCaps="false"
+        android:textColor="@color/blue"
+        android:textSize="16sp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imExceptin" />
+
+    <Button
+        android:id="@+id/bt_retry"
+        android:layout_width="132dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/background_corner_15"
+        android:fontFamily="@font/roboto_medium"
+        android:text="Повторить"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:visibility="invisible"
+        app:backgroundTint="@color/blue"
+        app:layout_constraintEnd_toEndOf="@+id/tvExceptionMessage"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="@+id/tvExceptionMessage"
+        app:layout_constraintTop_toBottomOf="@+id/tvExceptionMessage" />
+
+    <ImageView
+        android:id="@+id/imExceptin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dont_found_internet_im"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.43" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
