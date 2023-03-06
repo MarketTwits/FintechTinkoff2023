@@ -4,12 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.bumptech.glide.Glide
-import com.example.fintechtinkoff2023.data.network.model.page_film.Film
+import com.example.fintechtinkoff2023.data.network.model.page_film.TopFilm
 import com.example.fintechtinkoff2023.databinding.FilmItemBinding
 
-class TopFilmsAdapter : ListAdapter<Film,TopFilmsViewHolder>(TopFilmsItemDiffCallback()) {
+class TopFilmsAdapter : ListAdapter<TopFilm,TopFilmsViewHolder>(TopFilmsItemDiffCallback()) {
 
-    var onFeelingsItemClickListener: ((Film) -> Unit)? = null
+    var onFilmItemClickListener: ((TopFilm) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TopFilmsViewHolder {
 
@@ -24,7 +24,7 @@ class TopFilmsAdapter : ListAdapter<Film,TopFilmsViewHolder>(TopFilmsItemDiffCal
         val element = getItem(position)
 
         binding.root.setOnClickListener {
-            onFeelingsItemClickListener?.invoke(element)
+            onFilmItemClickListener?.invoke(element)
         }
         binding.tvFilmTitle.text = element.nameRu
         binding.tvGenreAndYearOfRelease.text = element.year

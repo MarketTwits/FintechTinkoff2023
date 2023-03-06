@@ -7,12 +7,12 @@ import com.bumptech.glide.Glide
 import com.example.fintechtinkoff2023.databinding.FilmItemBinding
 import com.example.fintechtinkoff2023.presentation.popular.adapter.SearchFilmsItemDiffCallback
 import com.example.fintechtinkoff2023.presentation.popular.adapter.SearchFilmsViewHolder
-import com.example.fintechtinkoff2023.data.network.model.search_films.Film
+import com.example.fintechtinkoff2023.data.network.model.search_films.SearchFilm
 
 
-class SearchFilmsAdapter : ListAdapter<Film, SearchFilmsViewHolder>(SearchFilmsItemDiffCallback()) {
+class SearchFilmsAdapter : ListAdapter<SearchFilm, SearchFilmsViewHolder>(SearchFilmsItemDiffCallback()) {
 
-    var onFeelingsItemClickListener: ((Film) -> Unit)? = null
+    var onFilmItemClickListener: ((SearchFilm) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchFilmsViewHolder {
 
@@ -27,7 +27,7 @@ class SearchFilmsAdapter : ListAdapter<Film, SearchFilmsViewHolder>(SearchFilmsI
         val element = getItem(position)
 
         binding.root.setOnClickListener {
-            onFeelingsItemClickListener?.invoke(element)
+            onFilmItemClickListener?.invoke(element)
         }
         binding.tvFilmTitle.text = element.nameRu
         binding.tvGenreAndYearOfRelease.text = element.year

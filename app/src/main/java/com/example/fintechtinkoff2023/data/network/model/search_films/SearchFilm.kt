@@ -1,7 +1,9 @@
-package com.example.fintechtinkoff2023.data.network.model.page_film
+package com.example.fintechtinkoff2023.data.network.model.search_films
 
-data class Film(
+
+data class SearchFilm(
     val countries: List<Country>,
+    val description: String,
     val filmId: Int,
     val filmLength: String,
     val genres: List<Genre>,
@@ -10,7 +12,7 @@ data class Film(
     val posterUrl: String,
     val posterUrlPreview: String,
     val rating: String,
-    val ratingChange: Any,
     val ratingVoteCount: Int,
+    val type: String,
     val year: String
 )

@@ -1,5 +1,6 @@
 package com.example.fintechtinkoff2023.data.network.retrofit
 
+import com.example.fintechtinkoff2023.data.network.model.item_film.InfoFilm
 import com.example.fintechtinkoff2023.data.network.model.page_film.TopFilmPage
 import com.example.fintechtinkoff2023.data.network.model.search_films.SearchFilmsPage
 
@@ -7,7 +8,6 @@ import com.example.fintechtinkoff2023.data.network.model.search_films.SearchFilm
 import retrofit2.http.*
 
 interface KinoPoiskApi {
-
 
     @Headers("X-API-KEY: $API_KEY")
     @GET("v2.2/films/top")
@@ -22,6 +22,12 @@ interface KinoPoiskApi {
         @Query(QUERY_PARAM_KEYWORD) keyword: String = "",
         @Query(QUERY_PARAM_PAGE) page: Int = 1,
     ): SearchFilmsPage
+
+    @Headers("X-API-KEY: $API_KEY")
+    @GET("v2.2/films/{filmId}")
+    suspend fun getInfoAboutFilmById(
+        @Path("filmId") filmId: Int
+    ) : InfoFilm
 
     private companion object {
         private const val QUERY_PARAM_TYPE = "type"

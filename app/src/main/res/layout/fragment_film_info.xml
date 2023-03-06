@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".presentation.film.FilmInfoFragment">
+
+
+    <ProgressBar
+        android:id="@+id/progressBarInfoFilm"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imExceptinInfoFilm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dont_found_internet_im"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.43" />
+
+    <TextView
+        android:id="@+id/tvExceptionMessageInfoFilm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/roboto_regular"
+        android:gravity="center"
+        android:textAllCaps="false"
+        android:textColor="@color/blue"
+        android:textSize="16sp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/imExceptinInfoFilm"
+        app:layout_constraintStart_toStartOf="@+id/imExceptinInfoFilm"
+        app:layout_constraintTop_toBottomOf="@+id/imExceptinInfoFilm" />
+    <Button
+        android:id="@+id/bt_retryInfoFilm"
+        android:layout_width="132dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/background_corner_15"
+        android:fontFamily="@font/roboto_medium"
+        android:text="Повторить"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:visibility="invisible"
+        app:backgroundTint="@color/blue"
+        app:layout_constraintEnd_toEndOf="@+id/tvExceptionMessageInfoFilm"
+        app:layout_constraintStart_toStartOf="@+id/tvExceptionMessageInfoFilm"
+        app:layout_constraintTop_toBottomOf="@+id/tvExceptionMessageInfoFilm" />
+
+    <TextView
+        android:id="@+id/tvCountry"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="30dp"
+        android:fontFamily="@font/roboto_regular"
+        android:textColor="@color/grey"
+        android:textSize="16sp"
+        tools:text = "@string/countries"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/tvGenres"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/tvGenres"
+        app:layout_constraintTop_toBottomOf="@+id/tvGenres" />
+
+    <TextView
+        android:id="@+id/tvGenres"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="12dp"
+        android:fontFamily="@font/roboto_regular"
+        android:textColor="@color/grey"
+        android:textSize="16sp"
+        tools:text = "@string/genres"
+        app:layout_constraintEnd_toEndOf="@+id/tvFilmDescription"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/tvFilmDescription"
+        app:layout_constraintTop_toBottomOf="@+id/tvFilmDescription" />
+
+
+    <TextView
+        android:id="@+id/tvFilmDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="12dp"
+        android:fontFamily="@font/roboto_regular"
+        android:textColor="@color/grey"
+        android:textSize="16sp"
+        tools:text="Сопротивление собирает отряд для выполнения особой миссии - надо выкрасть чертежи самого совершенного и мертоносного оружия Империи. Не всем суждено вернуться домой, но герои готовы к этому, ведь на кону судьба Галактики"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/tvFilmName"
+        app:layout_constraintTop_toBottomOf="@+id/tvFilmName" />
+
+    <TextView
+        android:id="@+id/tvFilmName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/roboto_bold"
+
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        tools:text="Изгой-один: Звёздные войны"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.088"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imFilmPoster" />
+
+
+    <ImageView
+        android:id="@+id/imFilmPoster"
+        android:layout_width="match_parent"
+        android:layout_height="450dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
