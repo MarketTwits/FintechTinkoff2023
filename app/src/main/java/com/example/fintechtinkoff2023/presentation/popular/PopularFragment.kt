@@ -11,9 +11,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fintechtinkoff2023.R
 import com.example.fintechtinkoff2023.R.*
-import com.example.fintechtinkoff2023.data.network.model.page_film.Film
+import com.example.fintechtinkoff2023.data.network.model.page_film.TopFilm
 import com.example.fintechtinkoff2023.databinding.FragmentPopularBinding
 import com.example.fintechtinkoff2023.domain.state.NetworkResult
+import com.example.fintechtinkoff2023.presentation.film.FilmInfoFragment
 import com.example.fintechtinkoff2023.presentation.popular.adapter.TopFilmsAdapter
 import com.example.fintechtinkoff2023.presentation.search.SearchFragment
 import kotlinx.coroutines.launch
@@ -22,6 +23,7 @@ import kotlinx.coroutines.launch
 class PopularFragment : Fragment() {
 
     lateinit var binding: FragmentPopularBinding
+    private val adapter = TopFilmsAdapter()
     private val viewModel by viewModels<PopularFilmsViewModel>()
 
     override fun onCreateView(
@@ -39,12 +41,11 @@ class PopularFragment : Fragment() {
         setupListeners()
     }
 
-    private fun setupRecyclerView(films: List<Film>) {
-        val adapter = TopFilmsAdapter()
+    private fun setupRecyclerView(topFilms: List<TopFilm>) {
         val layoutManager = LinearLayoutManager(requireContext())
         binding.rvTopFilms.adapter = adapter
         binding.rvTopFilms.layoutManager = layoutManager
-        adapter.submitList(films)
+        adapter.submitList(topFilms)
     }
 
     private fun setupListeners() {
@@ -54,6 +55,10 @@ class PopularFragment : Fragment() {
         binding.imSearch.setOnClickListener {
             navigation(SearchFragment())
         }
+        adapter.onFilmItemClickListener = {
+            val fragment  = FilmInfoFragment.newInstanceEditItem(filmItemId = it.filmId)
+            navigation(fragment)
+        }
     }
 
     private fun observerTopFilmLiveDataFlow() {
@@ -61,33 +66,32 @@ class PopularFragment : Fragment() {
             viewModel.topFilms.observe(viewLifecycleOwner) {
                 when (it) {
                     is NetworkResult.Error -> {
-                        exceptionToggle(true, it.message)
-                        binding.progressBar.isVisible = false
+                        exceptionToggle(true, exception = it.message, loading = false)
                     }
                     is NetworkResult.Success -> {
-                        setupRecyclerView(it.data!!.films)
-                        exceptionToggle(false)
-                        binding.progressBar.isVisible = false
+                        setupRecyclerView(it.data!!.topFilms)
+                        exceptionToggle(false, loading = false)
                     }
                     is NetworkResult.Loading -> {
-                        exceptionToggle(false)
-                        binding.progressBar.isVisible = true
+                        exceptionToggle(false, loading = true)
                     }
                 }
             }
         }
     }
-    private fun exceptionToggle(loadingException: Boolean, exception: String? = null) {
+    private fun exceptionToggle(loadingException: Boolean, loading : Boolean, exception: String? = null) {
         loadingException.let {
             binding.imExceptin.isVisible = it
             binding.tvExceptionMessage.isVisible = it
             binding.tvExceptionMessage.text = getString(string.check_your_connection, exception)
             binding.btRetry.isVisible = it
         }
+        binding.progressBar.isVisible = loading == true
+
     }
     private fun navigation(fragment: Fragment){
         parentFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainerView, fragment )
+            .replace(R.id.fragmentContainerView, fragment)
             .addToBackStack(null)
             .commit()
     }

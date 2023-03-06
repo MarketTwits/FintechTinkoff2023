@@ -1,32 +1,30 @@
-package com.example.fintechtinkoff2023.presentation.search
+package com.example.fintechtinkoff2023.presentation.film
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.fintechtinkoff2023.data.network.model.search_films.SearchFilmsPage
-
-
+import com.example.fintechtinkoff2023.data.network.model.item_film.InfoFilm
 import com.example.fintechtinkoff2023.domain.FilmsRepositoryImpl
 import com.example.fintechtinkoff2023.domain.state.NetworkResult
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 
-class SearchFilmsViewModel : ViewModel() {
+class FilmInfoViewModel : ViewModel() {
     private val filmsRepository = FilmsRepositoryImpl()
 
-    private val _topFilms: MutableLiveData<NetworkResult<SearchFilmsPage>> = MutableLiveData()
-    val topFilms: LiveData<NetworkResult<SearchFilmsPage>> = _topFilms
+    private val _infoFilms: MutableLiveData<NetworkResult<InfoFilm>> = MutableLiveData()
+    val infoFilms: LiveData<NetworkResult<InfoFilm>> = _infoFilms
 
-    fun loadTopFilms(keywords: String) {
-        filmsRepository.getSearchMovie(keywords = keywords)
-        filmsRepository.searchFilms
+    fun loadTopFilms(filmId: Int) {
+        filmsRepository.getInfoAboutFilm(filmId = filmId)
+        filmsRepository.infoFilm
             .onStart {
-                _topFilms.value = (NetworkResult.Loading())
+                _infoFilms.value = (NetworkResult.Loading())
             }
             .onEach {
-                _topFilms.value = when (it) {
+                _infoFilms.value = when (it) {
                     is NetworkResult.Error ->
                         NetworkResult.Error(it.message)
                     is NetworkResult.Success -> {

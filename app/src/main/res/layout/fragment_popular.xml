@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".presentation.favorites.FavoritesFragment">
     <TextView
         android:id="@+id/textView"
@@ -33,6 +34,7 @@
         android:id="@+id/bt_favorites"
         android:layout_width="165dp"
         android:layout_height="55dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/background_corner_15"
         android:fontFamily="@font/roboto_medium"
@@ -43,13 +45,14 @@
         app:backgroundTint="@color/blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.875"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/bt_popularity"
         android:layout_width="165dp"
         android:layout_height="55dp"
+        android:layout_marginStart="20dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/background_corner_15"
         android:fontFamily="@font/roboto_medium"
@@ -60,7 +63,7 @@
         app:backgroundTint="@color/light_blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.132"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -68,7 +71,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="50dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="20dp"
         android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/bt_favorites"
         app:layout_constraintEnd_toEndOf="parent"

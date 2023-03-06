@@ -3,13 +3,14 @@ package com.example.fintechtinkoff2023.presentation.popular
 
 import androidx.lifecycle.*
 import com.example.fintechtinkoff2023.data.network.model.page_film.TopFilmPage
-import com.example.fintechtinkoff2023.data.repository.FilmsRepositoryImpl
+import com.example.fintechtinkoff2023.domain.FilmsRepositoryImpl
 import com.example.fintechtinkoff2023.domain.state.NetworkResult
 
 import kotlinx.coroutines.flow.*
 
 
-class PopularFilmsViewModel : ViewModel() {
+class PopularFilmsViewModel(
+    ) : ViewModel() {
 
     private val filmsRepository = FilmsRepositoryImpl()
 
@@ -31,7 +32,7 @@ class PopularFilmsViewModel : ViewModel() {
                     is NetworkResult.Error ->
                         NetworkResult.Error(it.message)
                     is NetworkResult.Success -> {
-                        NetworkResult.Success(it.data!!)
+                        NetworkResult.Success(checkNotNull(it.data))
                     }
                     else -> NetworkResult.Error("Unknown error")
                 }

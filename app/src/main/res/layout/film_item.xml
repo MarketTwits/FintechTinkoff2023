@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/white"
     app:cardElevation="12dp"
     app:cardCornerRadius="15dp"
     android:layout_margin="10dp">
+
 <androidx.constraintlayout.widget.ConstraintLayout
+    android:background="@color/white"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
-
     <View
         android:id="@+id/background"
         android:layout_width="match_parent"
@@ -26,17 +29,19 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imFilm"
-        android:layout_width="65dp"
-        android:layout_height="97dp"
-        android:layout_marginStart="12dp"
+        android:layout_width="73dp"
+        android:layout_height="104dp"
         android:layout_marginTop="12dp"
         android:layout_marginBottom="12dp"
+        android:foregroundGravity="center"
         android:src="@drawable/banner"
         app:layout_constraintBottom_toBottomOf="@+id/background"
+        app:layout_constraintEnd_toEndOf="@+id/background"
+        app:layout_constraintHorizontal_bias="0.049"
         app:layout_constraintStart_toStartOf="@+id/background"
         app:layout_constraintTop_toTopOf="@+id/background"
-        app:layout_constraintVertical_bias="0.508"
-        app:shapeAppearanceOverlay="@style/circle_5">
+        app:layout_constraintVertical_bias="0.555"
+        app:shapeAppearanceOverlay="@style/circle_10">
 
     </com.google.android.material.imageview.ShapeableImageView>
 
