@@ -14,9 +14,11 @@ import com.example.fintechtinkoff2023.R.*
 import com.example.fintechtinkoff2023.data.network.model.page_film.TopFilm
 import com.example.fintechtinkoff2023.databinding.FragmentPopularBinding
 import com.example.fintechtinkoff2023.domain.state.NetworkResult
+import com.example.fintechtinkoff2023.presentation.favorites.FavoritesFragment
 import com.example.fintechtinkoff2023.presentation.film.FilmInfoFragment
 import com.example.fintechtinkoff2023.presentation.popular.adapter.TopFilmsAdapter
 import com.example.fintechtinkoff2023.presentation.search.SearchFragment
+import com.example.fintechtinkoff2023.presentation.utils.navigation
 import kotlinx.coroutines.launch
 
 
@@ -55,6 +57,9 @@ class PopularFragment : Fragment() {
         binding.imSearch.setOnClickListener {
             navigation(SearchFragment())
         }
+        binding.btFavorites.setOnClickListener {
+            navigation(FavoritesFragment(), false)
+        }
         adapter.onFilmItemClickListener = {
             val fragment  = FilmInfoFragment.newInstanceEditItem(filmItemId = it.filmId)
             navigation(fragment)
@@ -69,7 +74,7 @@ class PopularFragment : Fragment() {
                         exceptionToggle(true, exception = it.message, loading = false)
                     }
                     is NetworkResult.Success -> {
-                        setupRecyclerView(it.data!!.topFilms)
+                        setupRecyclerView(checkNotNull(it.data).topFilms)
                         exceptionToggle(false, loading = false)
                     }
                     is NetworkResult.Loading -> {
@@ -89,11 +94,6 @@ class PopularFragment : Fragment() {
         binding.progressBar.isVisible = loading == true
 
     }
-    private fun navigation(fragment: Fragment){
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainerView, fragment)
-            .addToBackStack(null)
-            .commit()
-    }
+
 }
 

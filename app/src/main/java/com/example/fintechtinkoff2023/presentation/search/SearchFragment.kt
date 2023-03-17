@@ -3,10 +3,13 @@ package com.example.fintechtinkoff2023.presentation.search
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.TextView.OnEditorActionListener
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -17,6 +20,8 @@ import com.example.fintechtinkoff2023.databinding.FragmentSearchBinding
 import com.example.fintechtinkoff2023.domain.state.NetworkResult
 import com.example.fintechtinkoff2023.presentation.film.FilmInfoFragment
 import com.example.fintechtinkoff2023.presentation.search.adapter.SearchFilmsAdapter
+import com.example.fintechtinkoff2023.presentation.utils.navigation
+import com.example.fintechtinkoff2023.presentation.utils.text_handler.AfterTextChangedListener
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -49,15 +54,11 @@ class SearchFragment : Fragment() {
     }
 
     private fun setupListeners() {
-        binding.edSearchFilm.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
+        binding.edSearchFilmTextField.addTextChangedListener(object : AfterTextChangedListener{
             override fun afterTextChanged(p0: Editable?) {
                 lifecycleScope.launch {
                     delay(1500)
-                    viewModel.loadTopFilms(binding.edSearchFilm.text.toString())
+                    viewModel.loadTopFilms(binding.edSearchFilmTextField.text.toString())
                 }
             }
         })
@@ -97,10 +98,5 @@ class SearchFragment : Fragment() {
         binding.progressBar.isVisible = loading == true
     }
 
-    private fun navigation(fragment: Fragment) {
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainerView, fragment)
-            .addToBackStack(null)
-            .commit()
-    }
+
 }
