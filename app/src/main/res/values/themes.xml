@@ -21,5 +21,11 @@
         <item name="cornerSize">10dp</item>
     </style>
 
+    <style name="ThemeOverlay.AppTheme.TextInputEditText.Outline" parent="">
+        <item name="colorPrimary">@color/blue</item>
+    </style>
+
+
+
 
 </resources>
