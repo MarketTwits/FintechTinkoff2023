@@ -1,15 +1,18 @@
 package com.example.fintechtinkoff2023.domain
 
+
+
 import android.util.Log
 import com.example.fintechtinkoff2023.data.network.model.item_film.InfoFilm
-import com.example.fintechtinkoff2023.data.network.retrofit.RetrofitInstance
 import com.example.fintechtinkoff2023.data.network.model.page_film.TopFilmPage
 import com.example.fintechtinkoff2023.data.network.model.search_films.SearchFilmsPage
-
-
+import com.example.fintechtinkoff2023.data.network.retrofit.RetrofitInstance
 import com.example.fintechtinkoff2023.domain.state.NetworkResult
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.launch
 
 class FilmsRepositoryImpl {
 
@@ -30,7 +33,11 @@ class FilmsRepositoryImpl {
         scope.launch {
             try {
                 val pageFilms = movieApi.getTopFilms()
-                topFilms.emit(NetworkResult.Success(pageFilms))
+                if (pageFilms.topFilms.isEmpty()) {
+                    searchFilms.emit(NetworkResult.Error("Not found"))
+                } else {
+                    topFilms.emit(NetworkResult.Success(pageFilms))
+                }
             } catch (e: Exception) {
                 topFilms.emit(NetworkResult.Error(e.message))
             }

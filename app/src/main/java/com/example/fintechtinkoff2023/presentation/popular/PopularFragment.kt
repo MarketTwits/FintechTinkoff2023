@@ -1,16 +1,15 @@
 package com.example.fintechtinkoff2023.presentation.popular
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.fintechtinkoff2023.R
-import com.example.fintechtinkoff2023.R.*
+import com.example.fintechtinkoff2023.R.string
 import com.example.fintechtinkoff2023.data.network.model.page_film.TopFilm
 import com.example.fintechtinkoff2023.databinding.FragmentPopularBinding
 import com.example.fintechtinkoff2023.domain.state.NetworkResult
@@ -61,7 +60,7 @@ class PopularFragment : Fragment() {
             navigation(FavoritesFragment(), false)
         }
         adapter.onFilmItemClickListener = {
-            val fragment  = FilmInfoFragment.newInstanceEditItem(filmItemId = it.filmId)
+            val fragment = FilmInfoFragment.newInstanceEditItem(filmItemId = it.filmId)
             navigation(fragment)
         }
     }
@@ -84,7 +83,12 @@ class PopularFragment : Fragment() {
             }
         }
     }
-    private fun exceptionToggle(loadingException: Boolean, loading : Boolean, exception: String? = null) {
+
+    private fun exceptionToggle(
+        loadingException: Boolean,
+        loading: Boolean,
+        exception: String? = null,
+    ) {
         loadingException.let {
             binding.imExceptin.isVisible = it
             binding.tvExceptionMessage.isVisible = it
