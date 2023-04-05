@@ -1,5 +1,7 @@
 package com.example.fintechtinkoff2023.data.network.model.search_films
 
+import com.example.fintechtinkoff2023.data.network.model.base_film_model.Country
+import com.example.fintechtinkoff2023.data.network.model.base_film_model.Genre
 
 data class SearchFilm(
     val countries: List<Country>,

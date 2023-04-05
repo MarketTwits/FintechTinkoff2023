@@ -2,6 +2,8 @@ package com.example.fintechtinkoff2023.presentation.popular
 
 
 import androidx.lifecycle.*
+import com.example.fintechtinkoff2023.data.database.db_entites.FilmDbModel
+import com.example.fintechtinkoff2023.data.network.model.item_film.InfoFilm
 import com.example.fintechtinkoff2023.data.network.model.page_film.TopFilmPage
 import com.example.fintechtinkoff2023.domain.FilmsRepositoryImpl
 import com.example.fintechtinkoff2023.domain.state.NetworkResult
