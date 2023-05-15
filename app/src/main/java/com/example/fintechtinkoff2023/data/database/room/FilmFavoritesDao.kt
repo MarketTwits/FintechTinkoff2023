@@ -14,6 +14,7 @@ interface FilmFavoritesDao {
 
     @Insert
     suspend fun insertFavoritesFilm(film: FilmCache)
+
     @Query("DELETE FROM favorites_films_list WHERE filmId = :filmId")
     suspend fun deleteFavoriteFilm(filmId: Int)
 }

@@ -18,8 +18,11 @@ import com.example.fintechtinkoff2023.presentation.utils.adapterListener.ItemLon
 import com.example.fintechtinkoff2023.presentation.utils.adapterListener.Retry
 import com.example.fintechtinkoff2023.presentation.utils.navigation
 import com.example.fintechtinkoff2023.presentation.utils.text_handler.AfterTextChangedListener
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
+import java.util.*
 
 
 class SearchFragment : Fragment() {
@@ -68,14 +71,15 @@ class SearchFragment : Fragment() {
     }
 
     private fun setupListeners() {
-        binding.edSearchFilmTextField.addTextChangedListener(object : AfterTextChangedListener{
-            override fun afterTextChanged(p0: Editable?) {
-                lifecycleScope.launch {
-                    delay(1500)
-                    viewModel.loadTopFilms(binding.edSearchFilmTextField.text.toString())
+            binding.edSearchFilmTextField.addTextChangedListener(object : AfterTextChangedListener{
+                override fun afterTextChanged(p0: Editable?) {
+                    lifecycleScope.launch(Dispatchers.Main){
+                        delay(1500)
+                        viewModel.loadTopFilms(binding.edSearchFilmTextField.text.toString())
+                    }
                 }
-            }
-        })
+            })
+
         binding.imBackArrow.setOnClickListener {
             parentFragmentManager.popBackStack()
         }

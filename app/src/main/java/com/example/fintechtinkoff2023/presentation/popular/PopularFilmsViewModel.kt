@@ -26,7 +26,6 @@ class PopularFilmsViewModel(
     init {
         loadTopFilms()
     }
-
         fun loadTopFilms() {
         viewModelScope.launch {
             filmsRepository.getTopMovie()
