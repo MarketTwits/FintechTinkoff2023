@@ -3,7 +3,7 @@ package com.example.fintechtinkoff2023.data.network.model.item_film
 import com.example.fintechtinkoff2023.data.network.model.base_film_model.Country
 import com.example.fintechtinkoff2023.data.network.model.base_film_model.Genre
 
-data class InfoFilm(
+data class InfoFilmCloud(
     val completed: Boolean,
     val countries: List<Country>,
     val coverUrl: String,

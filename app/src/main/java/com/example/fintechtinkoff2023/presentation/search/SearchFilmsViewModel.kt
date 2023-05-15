@@ -1,40 +1,54 @@
 package com.example.fintechtinkoff2023.presentation.search
 
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.fintechtinkoff2023.data.network.model.search_films.SearchFilmsPage
-
-
 import com.example.fintechtinkoff2023.domain.FilmsRepositoryImpl
+import com.example.fintechtinkoff2023.domain.model.FilmBase
+import com.example.fintechtinkoff2023.domain.model.FilmUi
 import com.example.fintechtinkoff2023.domain.state.NetworkResult
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.launch
 
-class SearchFilmsViewModel : ViewModel() {
-    private val filmsRepository = FilmsRepositoryImpl()
+class SearchFilmsViewModel(
+    private val filmsRepository: FilmsRepositoryImpl,
+) : ViewModel() {
 
-    private val _topFilms: MutableLiveData<NetworkResult<SearchFilmsPage>> = MutableLiveData()
-    val topFilms: LiveData<NetworkResult<SearchFilmsPage>> = _topFilms
+    private val _topFilms: MutableLiveData<List<FilmUi>> = MutableLiveData()
+    val topFilms: LiveData<List<FilmUi>> = _topFilms
 
     fun loadTopFilms(keywords: String) {
-        filmsRepository.getSearchMovie(keywords = keywords)
-        filmsRepository.searchFilms
-            .onStart {
-                _topFilms.value = (NetworkResult.Loading())
-            }
-            .onEach {
-                _topFilms.value = when (it) {
-                    is NetworkResult.Error ->
-                        NetworkResult.Error(it.message)
-                    is NetworkResult.Success -> {
-                        NetworkResult.Success(checkNotNull(it.data))
-                    }
-                    else -> NetworkResult.Error("Unknown error")
+        viewModelScope.launch {
+            filmsRepository.getSearchMovie(keywords = keywords)
+            filmsRepository.searchFilms
+                .onStart {
+                    _topFilms.value = arrayListOf(FilmUi.Progress)
                 }
-            }
-            .launchIn(viewModelScope)
+                .onEach {
+                    _topFilms.value = when (it) {
+                        is NetworkResult.Error ->
+                            arrayListOf(FilmUi.Failed(it.message!!))
+                        is NetworkResult.Error.NotFound ->
+                            arrayListOf(FilmUi.Failed.FilmNotFound())
+                        is NetworkResult.Success -> {
+                            it.data
+                        }
+                        else -> arrayListOf(FilmUi.Failed("some wrong"))
+                    }
+                }
+                .launchIn(viewModelScope)
+        }
+    }
+
+    fun itemToCache(item: FilmUi) {
+        val baseFilm = FilmBase(item.filmId, item.nameRu, item.posterUrl, item.year)
+        viewModelScope.launch(Dispatchers.IO) {
+            filmsRepository.addFilmsToFavorite(baseFilm)
+        }
     }
 }

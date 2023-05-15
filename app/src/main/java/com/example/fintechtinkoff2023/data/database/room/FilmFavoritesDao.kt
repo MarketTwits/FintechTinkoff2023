@@ -1,17 +1,19 @@
 package com.example.fintechtinkoff2023.data.database.room
 
-import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
-import com.example.fintechtinkoff2023.data.database.db_entites.FilmDbModel
+import androidx.room.*
+import com.example.fintechtinkoff2023.data.database.db_entites.FilmCache
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface FilmFavoritesDao {
-    @Query("SELECT * FROM favorites_films_lis ORDER BY timeAdded DESC")
-    fun getFavoritesFilmsList(): LiveData<List<FilmDbModel>>
+    @Query("SELECT * FROM favorites_films_list ORDER BY id DESC")
+    fun getFavoritesFilmsList(): Flow<List<FilmCache>>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertFavoritesFilm(film: FilmDbModel)
+    @Query("SELECT * FROM favorites_films_list WHERE filmId = :id")
+    fun getFilmById(id: String): FilmCache?
+
+    @Insert
+    suspend fun insertFavoritesFilm(film: FilmCache)
+    @Query("DELETE FROM favorites_films_list WHERE filmId = :filmId")
+    suspend fun deleteFavoriteFilm(filmId: Int)
 }
