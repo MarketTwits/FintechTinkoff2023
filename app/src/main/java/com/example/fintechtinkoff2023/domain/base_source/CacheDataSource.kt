@@ -31,30 +31,8 @@ interface CacheDataSource {
             return filmFavoritesDao.getFilmById(filmId.toString())
         }
 
-//        override suspend fun getData(): List<FilmBase> {
-//            val data = filmFavoritesDao.getFavoritesFilmsList()
-//            return if (data.isEmpty()) {
-//                    emptyList()
-//            } else {
-//                val favoriteBaseFilms = arrayListOf<FilmBase>()
-//                data.forEach {
-//                    favoriteBaseFilms.add(it.map(Film.Mapper.ToDomain()))
-//                }
-//                favoriteBaseFilms
-//            }
-//        }
         override suspend fun getData(): Flow<List<FilmCache>> {
-
             val data = filmFavoritesDao.getFavoritesFilmsList()
-//                if (checkNotNull(data.value).isEmpty()) {
-//                    filmsFlow.value = emptyList()
-//                } else {
-//                    val favoriteBaseFilms = arrayListOf<FilmBase>()
-//                    checkNotNull(data.value) .forEach {
-//                        favoriteBaseFilms.add(it.map(Film.Mapper.ToDomain()))
-//                    }
-//                    filmsFlow.value = favoriteBaseFilms
-//                }
             return data
         }
     }

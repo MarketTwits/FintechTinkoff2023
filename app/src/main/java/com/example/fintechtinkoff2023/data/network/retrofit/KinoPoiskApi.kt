@@ -33,7 +33,9 @@ interface KinoPoiskApi {
         private const val QUERY_PARAM_TYPE = "type"
         private const val QUERY_PARAM_KEYWORD = "keyword"
         private const val QUERY_PARAM_PAGE = "page"
-        private const val API_KEY = "fe86bf2b-79bf-4c49-b04a-b6bd30241f6c"
+        private const val API_KEY = "e30ffed0-76ab-4dd6-b41f-4c9da2b2735b"
+        //500 per day --> "fe86bf2b-79bf-4c49-b04a-b6bd30241f6c"
+        //20 sec --> e30ffed0-76ab-4dd6-b41f-4c9da2b2735b
     }
 
 }

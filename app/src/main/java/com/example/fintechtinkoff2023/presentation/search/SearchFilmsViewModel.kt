@@ -31,14 +31,10 @@ class SearchFilmsViewModel(
                 }
                 .onEach {
                     _topFilms.value = when (it) {
-                        is NetworkResult.Error ->
-                            arrayListOf(FilmUi.Failed(it.message!!))
-                        is NetworkResult.Error.NotFound ->
-                            arrayListOf(FilmUi.Failed.FilmNotFound())
-                        is NetworkResult.Success -> {
-                            it.data
-                        }
-                        else -> arrayListOf(FilmUi.Failed("some wrong"))
+                        is NetworkResult.Error -> arrayListOf(FilmUi.Failed(it.message!!))
+                        is NetworkResult.Error.NotFound -> arrayListOf(FilmUi.Failed.FilmNotFound())
+                        is NetworkResult.Success -> it.data
+                        is NetworkResult.Loading -> arrayListOf(FilmUi.Progress)
                     }
                 }
                 .launchIn(viewModelScope)

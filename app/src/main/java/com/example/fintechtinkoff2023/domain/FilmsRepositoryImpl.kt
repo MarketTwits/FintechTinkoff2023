@@ -4,6 +4,7 @@ package com.example.fintechtinkoff2023.domain
 import android.util.Log
 import com.example.fintechtinkoff2023.data.database.db_entites.FilmCache
 import com.example.fintechtinkoff2023.data.network.model.item_film.InfoFilmCloud
+import com.example.fintechtinkoff2023.data.network.retrofit.KinoPoiskApi
 import com.example.fintechtinkoff2023.data.network.retrofit.RetrofitInstance
 import com.example.fintechtinkoff2023.domain.base_source.CacheDataSource
 import com.example.fintechtinkoff2023.domain.base_source.ItemsSearchComparison
@@ -20,11 +21,10 @@ import kotlinx.coroutines.launch
 
 class FilmsRepositoryImpl(
     private val cacheDataSource: CacheDataSource,
+    private val movieApi : KinoPoiskApi,
     private val itemsTopComparison: ItemsTopComparison,
     private val itemsSearchComparison: ItemsSearchComparison
 ) {
-
-    private val movieApi = RetrofitInstance.kinoPoiskApiInstance
 
     val topFilms = MutableSharedFlow<NetworkResult<List<FilmUi>>>()
 
@@ -59,19 +59,19 @@ class FilmsRepositoryImpl(
 
     fun getSearchMovie(keywords: String) {
         scope.launch {
-            try {
+            //try {
                 val pageFilms = movieApi.getFilmsByKeyWords(keywords)
                 if (pageFilms.searchFilms.isEmpty()) {
                     searchFilms.emit(NetworkResult.Error.NotFound("Film not found"))
                 } else {
-                    cacheDataSource.getData().collect{
+                    //cacheDataSource.getData().collect{
                         val compare = itemsSearchComparison.compare(pageFilms.searchFilms)
                         searchFilms.emit(NetworkResult.Success(compare))
-                    }
+                    //}
                 }
-            } catch (e: Exception) {
-                searchFilms.emit(NetworkResult.Error(e.message))
-            }
+//            } catch (e: Exception) {
+//                searchFilms.emit(NetworkResult.Error(e.message))
+//            }
         }
     }
 
@@ -87,17 +87,7 @@ class FilmsRepositoryImpl(
     }
 
     suspend fun getFavoriteFilms(): Flow<List<FilmCache>> {
-        // val filmsFlow = MutableSharedFlow<List<FilmUi>>()
-        //val sharedList = MutableLiveData<List<FilmUi>>()
         val data = cacheDataSource.getData()
-        val uiFilms = arrayListOf<FilmUi>()
-        // data.collect {
-//                data.value!!.forEach { filmUi ->
-//                    uiFilms.add(filmUi.map(Film.Mapper.ToUi()))
-//                }
-//                //favoritesFilms.emit(uiFilms)
-//                sharedList.value = uiFilms
-        //}
         return data
     }
 
