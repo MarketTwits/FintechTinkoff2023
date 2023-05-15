@@ -4,14 +4,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.fintechtinkoff2023.data.database.db_entites.CountryDbModel
-import com.example.fintechtinkoff2023.data.database.db_entites.FilmDbModel
-import com.example.fintechtinkoff2023.data.database.db_entites.GenreDbModel
+import com.example.fintechtinkoff2023.data.database.db_entites.FilmCache
 
 
-@Database(entities = [CountryDbModel::class], [FilmDbModel::class, GenreDbModel::class], version = 1, exportSchema = false)
+@Database(entities = [FilmCache::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
-
     companion object{
         private var db: AppDatabase? = null
         private const val DB_NAME = "main.db"
@@ -33,5 +30,5 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
     }
-    abstract fun movieDao(): FilmFavoritesDao
+    abstract fun filmDao(): FilmFavoritesDao
 }

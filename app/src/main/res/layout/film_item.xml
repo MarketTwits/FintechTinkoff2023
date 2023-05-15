@@ -61,20 +61,24 @@
 
     <TextView
         android:id="@+id/tvFilmTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
+        android:layout_marginEnd="12dp"
         android:layout_marginBottom="12dp"
+        android:ellipsize="end"
         android:fontFamily="@font/roboto_medium"
-        android:maxLength="24"
-        android:text="Изгой-один: Звёздные..."
+        android:singleLine="true"
+        android:text="Изгой-один:"
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/imFilm"
+        app:layout_constraintEnd_toStartOf="@+id/imStar"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/imFilm"
         app:layout_constraintTop_toTopOf="@+id/imFilm"
-        app:layout_constraintVertical_bias="0.16" />
+        app:layout_constraintVertical_bias="0.086" />
 
     <ImageView
         android:id="@+id/imStar"

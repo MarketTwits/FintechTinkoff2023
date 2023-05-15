@@ -1,6 +1,6 @@
 package com.example.fintechtinkoff2023.data.network.retrofit
 
-import com.example.fintechtinkoff2023.data.network.model.item_film.InfoFilm
+import com.example.fintechtinkoff2023.data.network.model.item_film.InfoFilmCloud
 import com.example.fintechtinkoff2023.data.network.model.page_film.TopFilmPage
 import com.example.fintechtinkoff2023.data.network.model.search_films.SearchFilmsPage
 
@@ -27,14 +27,13 @@ interface KinoPoiskApi {
     @GET("v2.2/films/{filmId}")
     suspend fun getInfoAboutFilmById(
         @Path("filmId") filmId: Int
-    ) : InfoFilm
+    ) : InfoFilmCloud
 
     private companion object {
         private const val QUERY_PARAM_TYPE = "type"
         private const val QUERY_PARAM_KEYWORD = "keyword"
         private const val QUERY_PARAM_PAGE = "page"
         private const val API_KEY = "fe86bf2b-79bf-4c49-b04a-b6bd30241f6c"
-
     }
 
 }
