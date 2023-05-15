@@ -59,19 +59,19 @@ class FilmsRepositoryImpl(
 
     fun getSearchMovie(keywords: String) {
         scope.launch {
-            //try {
+            try {
                 val pageFilms = movieApi.getFilmsByKeyWords(keywords)
                 if (pageFilms.searchFilms.isEmpty()) {
                     searchFilms.emit(NetworkResult.Error.NotFound("Film not found"))
                 } else {
-                    //cacheDataSource.getData().collect{
+                    cacheDataSource.getData().collect{
                         val compare = itemsSearchComparison.compare(pageFilms.searchFilms)
                         searchFilms.emit(NetworkResult.Success(compare))
-                    //}
+                    }
                 }
-//            } catch (e: Exception) {
-//                searchFilms.emit(NetworkResult.Error(e.message))
-//            }
+            } catch (e: Exception) {
+                searchFilms.emit(NetworkResult.Error(e.message))
+            }
         }
     }
 
