@@ -5,7 +5,6 @@ import android.util.Log
 import com.example.fintechtinkoff2023.data.database.db_entites.FilmCache
 import com.example.fintechtinkoff2023.data.network.model.item_film.InfoFilmCloud
 import com.example.fintechtinkoff2023.data.network.retrofit.KinoPoiskApi
-import com.example.fintechtinkoff2023.data.network.retrofit.RetrofitInstance
 import com.example.fintechtinkoff2023.domain.base_source.CacheDataSource
 import com.example.fintechtinkoff2023.domain.base_source.ItemsSearchComparison
 import com.example.fintechtinkoff2023.domain.base_source.ItemsTopComparison

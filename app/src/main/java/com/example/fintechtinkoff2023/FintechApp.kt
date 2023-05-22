@@ -3,7 +3,6 @@ package com.example.fintechtinkoff2023
 import android.app.Application
 import com.example.fintechtinkoff2023.data.database.room.AppDatabase
 import com.example.fintechtinkoff2023.data.network.retrofit.KinoPoiskApi
-import com.example.fintechtinkoff2023.data.network.retrofit.RetrofitInstance
 import com.example.fintechtinkoff2023.domain.FilmsRepositoryImpl
 import com.example.fintechtinkoff2023.domain.base_source.CacheDataSource
 import com.example.fintechtinkoff2023.domain.base_source.ItemsSearchComparison
