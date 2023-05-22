@@ -19,7 +19,6 @@ import kotlinx.coroutines.launch
 class PopularFilmsViewModel(
     private val filmsRepository: FilmsRepositoryImpl,
 ) : ViewModel() {
-
     private val _topFilms: MutableLiveData<List<FilmUi>> = MutableLiveData()
     val topFilms: LiveData<List<FilmUi>> = _topFilms
 

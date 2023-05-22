@@ -1,7 +1,6 @@
 package com.example.fintechtinkoff2023.presentation.search
 
 import android.os.Bundle
-import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,13 +15,9 @@ import com.example.fintechtinkoff2023.presentation.search.adapter.SearchFilmsAda
 import com.example.fintechtinkoff2023.presentation.utils.adapterListener.ItemClick
 import com.example.fintechtinkoff2023.presentation.utils.adapterListener.ItemLongClick
 import com.example.fintechtinkoff2023.presentation.utils.adapterListener.Retry
+import com.example.fintechtinkoff2023.presentation.utils.afterTextChangedDelayed
 import com.example.fintechtinkoff2023.presentation.utils.navigation
-import com.example.fintechtinkoff2023.presentation.utils.text_handler.AfterTextChangedListener
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
-import java.util.*
 
 
 class SearchFragment : Fragment() {
@@ -47,6 +42,7 @@ class SearchFragment : Fragment() {
             }
         }
     )
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -71,15 +67,9 @@ class SearchFragment : Fragment() {
     }
 
     private fun setupListeners() {
-            binding.edSearchFilmTextField.addTextChangedListener(object : AfterTextChangedListener{
-                override fun afterTextChanged(p0: Editable?) {
-                    lifecycleScope.launch(Dispatchers.Main){
-                        delay(1500)
-                        viewModel.loadTopFilms(binding.edSearchFilmTextField.text.toString())
-                    }
-                }
-            })
-
+        binding.edSearchFilmTextField.afterTextChangedDelayed {
+            viewModel.loadTopFilms(binding.edSearchFilmTextField.text.toString())
+        }
         binding.imBackArrow.setOnClickListener {
             parentFragmentManager.popBackStack()
         }
