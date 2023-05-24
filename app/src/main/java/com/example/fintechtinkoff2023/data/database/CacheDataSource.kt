@@ -1,4 +1,4 @@
-package com.example.fintechtinkoff2023.domain.base_source
+package com.example.fintechtinkoff2023.data.database
 
 import com.example.fintechtinkoff2023.data.database.db_entites.FilmCache
 import com.example.fintechtinkoff2023.data.database.room.FilmFavoritesDao
@@ -10,12 +10,10 @@ interface CacheDataSource {
     suspend fun addOrRemove(film: FilmBase)
     fun getMovieById(filmId: Int): FilmCache?
     suspend fun getData(): Flow<List<FilmCache>>
-    //suspend fun getData() : List<FilmBase>
 
     class Base(
         private val filmFavoritesDao: FilmFavoritesDao,
     ) : CacheDataSource {
-
 
         override suspend fun addOrRemove(film: FilmBase) {
             val filmCached = film.map(Film.Mapper.ToCache())

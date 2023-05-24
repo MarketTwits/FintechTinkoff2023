@@ -110,7 +110,7 @@ class PopularFilmsAdapter(
             private val retry: Retry,
         ) : PopularFilmsViewHolder(binding.root) {
             override fun bind(film: FilmUi) {
-                binding.tvExceptionMessage.text = "todo"
+                binding.tvExceptionMessage.text = "todo" //todo
                 //getString(R.string.check_your_connection, exception) //todo
                 binding.btRetry.setOnClickListener {
                     retry.retry()
@@ -119,7 +119,10 @@ class PopularFilmsAdapter(
         }
         class FilmNotFound(
             private val binding: FilmItemNotFoundBinding,
-        ) : PopularFilmsViewHolder(binding.root)
+        ) : PopularFilmsViewHolder(binding.root){
+        }
+
+
 
         class Loading(
             private val binding: PopularFilmsLoadingBinding,
