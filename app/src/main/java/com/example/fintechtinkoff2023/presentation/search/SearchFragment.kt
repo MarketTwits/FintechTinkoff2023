@@ -42,7 +42,6 @@ class SearchFragment : Fragment() {
             }
         }
     )
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -64,6 +63,8 @@ class SearchFragment : Fragment() {
         val layoutManager = LinearLayoutManager(requireContext())
         binding.rvSearchFilm.adapter = adapter
         binding.rvSearchFilm.layoutManager = layoutManager
+        binding.rvSearchFilm.clearAnimation()
+        binding.rvSearchFilm.itemAnimator?.changeDuration = 0
     }
 
     private fun setupListeners() {

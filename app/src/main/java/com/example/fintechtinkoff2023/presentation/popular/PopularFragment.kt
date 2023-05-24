@@ -64,6 +64,7 @@ class PopularFragment : Fragment() {
         )
         binding.rvTopFilms.adapter = adapter
         binding.rvTopFilms.clearAnimation()
+        binding.rvTopFilms.itemAnimator?.changeDuration = 0
     }
 
     private fun setupListeners() {

@@ -2,12 +2,13 @@ package com.example.fintechtinkoff2023.domain
 
 
 import android.util.Log
+import com.example.fintechtinkoff2023.data.database.CacheDataSource
 import com.example.fintechtinkoff2023.data.database.db_entites.FilmCache
 import com.example.fintechtinkoff2023.data.network.model.item_film.InfoFilmCloud
 import com.example.fintechtinkoff2023.data.network.retrofit.KinoPoiskApi
-import com.example.fintechtinkoff2023.domain.base_source.CacheDataSource
 import com.example.fintechtinkoff2023.domain.base_source.ItemsSearchComparison
 import com.example.fintechtinkoff2023.domain.base_source.ItemsTopComparison
+import com.example.fintechtinkoff2023.domain.error.ErrorType
 import com.example.fintechtinkoff2023.domain.model.FilmBase
 import com.example.fintechtinkoff2023.domain.model.FilmUi
 import com.example.fintechtinkoff2023.domain.state.NetworkResult
@@ -17,6 +18,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
+import java.net.UnknownHostException
 
 class FilmsRepositoryImpl(
     private val cacheDataSource: CacheDataSource,
@@ -69,6 +72,11 @@ class FilmsRepositoryImpl(
                     }
                 }
             } catch (e: Exception) {
+                val errorType = when (e) {
+                    is UnknownHostException -> ErrorType.NO_CONNECTION
+                    is HttpException -> ErrorType.SERVICE_UNAVAILABLE
+                    else -> ErrorType.GENERIC_ERROR
+                }
                 searchFilms.emit(NetworkResult.Error(e.message))
             }
         }
