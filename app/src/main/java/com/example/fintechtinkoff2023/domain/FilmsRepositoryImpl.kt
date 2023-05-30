@@ -53,7 +53,7 @@ class FilmsRepositoryImpl(
                     }
                 }
             } catch (e: Exception) {
-                topFilms.emit(NetworkResult.Error(e.message))
+                topFilms.emit(NetworkResult.Error(e.message!!))
             }
         }
     }
@@ -63,7 +63,7 @@ class FilmsRepositoryImpl(
             try {
                 val pageFilms = movieApi.getFilmsByKeyWords(keywords)
                 if (pageFilms.searchFilms.isEmpty()) {
-                    searchFilms.emit(NetworkResult.Error.NotFound("Film not found"))
+                    searchFilms.emit(NetworkResult.Error.NotFound())
                 } else {
                     cacheDataSource.getData().collect {
                         val compare = itemsSearchComparison.compare(pageFilms.searchFilms)
@@ -76,7 +76,7 @@ class FilmsRepositoryImpl(
                     is HttpException -> ErrorType.SERVICE_UNAVAILABLE
                     else -> ErrorType.GENERIC_ERROR
                 }
-                searchFilms.emit(NetworkResult.Error(e.message))
+                searchFilms.emit(NetworkResult.Error(e.message!!))
             }
         }
     }
@@ -87,7 +87,7 @@ class FilmsRepositoryImpl(
                 val infoFilmsResponse = movieApi.getInfoAboutFilmById(filmId)
                 infoFilmCloud.emit(NetworkResult.Success(infoFilmsResponse))
             } catch (e: Exception) {
-                infoFilmCloud.emit(NetworkResult.Error(e.message))
+                infoFilmCloud.emit(NetworkResult.Error(e.message!!))
             }
         }
     }

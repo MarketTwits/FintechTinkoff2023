@@ -56,7 +56,7 @@ class PopularFragment : Fragment() {
             object : Retry {
                 override fun retry() {
                     lifecycleScope.launch {//todo
-                        viewModel.loadTopFilms()
+                        viewModel.fetchTopFilms()
                     }
                 }
             }, object : ItemClick {

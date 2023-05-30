@@ -20,6 +20,6 @@ data class SearchFilm(
     val year: String
 ) : Film{
     override suspend fun <T> map(mapper: Film.Mapper<T>): T {
-        return mapper.map(filmId, nameRu ?: nameEn, posterUrl, year)
+        return mapper.map(filmId, nameRu ?: nameEn, posterUrlPreview, year)
     }
 }

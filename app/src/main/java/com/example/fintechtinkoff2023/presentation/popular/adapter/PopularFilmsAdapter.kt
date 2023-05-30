@@ -58,6 +58,7 @@ class PopularFilmsAdapter(
         RecyclerView.ViewHolder(view) {
         open fun bind(film: FilmUi) = Unit
 
+
         class Base(
             private val binding: FilmItemBinding,
             private val onItemClicked: ItemClick,
@@ -110,7 +111,7 @@ class PopularFilmsAdapter(
             private val retry: Retry,
         ) : PopularFilmsViewHolder(binding.root) {
             override fun bind(film: FilmUi) {
-                binding.tvExceptionMessage.text = "todo" //todo
+                binding.tvExceptionMessage.text = film.getMessage()
                 //getString(R.string.check_your_connection, exception) //todo
                 binding.btRetry.setOnClickListener {
                     retry.retry()

@@ -1,11 +1,12 @@
 package com.example.fintechtinkoff2023.domain.state
 
-sealed class NetworkResult<T>(val data: T? = null, val message: String? = null) {
+sealed class NetworkResult<T>(val data: T, val message: String) {
 
-    class Success<T>(data: T) : NetworkResult<T>(data)
-    class Error<T>(errorMessage: String?, data: T? = null) : NetworkResult<T>(data, errorMessage){
-        class NotFound<T>(message: String?) : NetworkResult<T>(message = message)
+    class Success<T>(data: T) : NetworkResult<T>(data, "")
+    class Error<T>(errorMessage: String) : NetworkResult<T>(Unit as T, errorMessage) {
+        class NotFound<T>() : NetworkResult<T>(message = "", data = Unit as T)
     }
-    class Loading<T> : NetworkResult<T>()
+    class Loading<T> : NetworkResult<T>(Unit as T, "")
+
 
 }

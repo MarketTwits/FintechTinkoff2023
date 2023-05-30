@@ -2,6 +2,8 @@ package com.example.fintechtinkoff2023.data.network.model.item_film
 
 import com.example.fintechtinkoff2023.data.network.model.base_film_model.Country
 import com.example.fintechtinkoff2023.data.network.model.base_film_model.Genre
+import com.example.fintechtinkoff2023.domain.model.Film
+import com.example.fintechtinkoff2023.domain.model.FilmInfo
 
 data class InfoFilmCloud(
     val completed: Boolean,
@@ -21,7 +23,7 @@ data class InfoFilmCloud(
     val logoUrl: String,
     val nameEn: Any,
     val nameOriginal: String,
-    val nameRu: String,
+    val nameRu: String?,
     val posterUrl: String,
     val posterUrlPreview: String,
     val productionStatus: Any,
@@ -47,5 +49,16 @@ data class InfoFilmCloud(
     val startYear: Any,
     val type: String,
     val webUrl: String,
-    val year: Int
-) //todo add mapper
+    val year: Int,
+) : FilmInfo { //todo add mapper
+    override suspend fun <T> map(mapper: FilmInfo.Mapper<T>): T {
+        return mapper.map(
+            kinopoiskId,
+            nameRu ?: nameOriginal,
+            posterUrl,
+            description,
+            countries,
+            genres
+        )
+    }
+}

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
@@ -13,6 +14,7 @@ import com.example.fintechtinkoff2023.R
 import com.example.fintechtinkoff2023.core.ProvideViewModel
 import com.example.fintechtinkoff2023.data.network.model.item_film.InfoFilmCloud
 import com.example.fintechtinkoff2023.databinding.FragmentFilmInfoBinding
+import com.example.fintechtinkoff2023.domain.model.FilmInfoUi
 import com.example.fintechtinkoff2023.domain.state.NetworkResult
 import com.example.fintechtinkoff2023.presentation.search.SearchFilmsViewModel
 import com.example.fintechtinkoff2023.presentation.utils.formatBoldString
@@ -42,30 +44,26 @@ class FilmInfoFragment : Fragment() {
     private fun loadInfoAboutFilm(){
         val filmId = requireArguments().getInt(FILM_ITEM_ID)
         lifecycleScope.launch {
-            viewModel.loadTopFilms(filmId = filmId)
+            viewModel.loadInfoAboutFilm(filmId = filmId)
         }
     }
 
     private fun observerTopFilmLiveDataFlow() {
         lifecycleScope.launch {
             viewModel.infoFilmsCloud.observe(viewLifecycleOwner) {
-                when (it) {
-                    is NetworkResult.Error -> {
-                    }
-                    is NetworkResult.Success -> {
-                        setUpUI(checkNotNull(it.data))
-                    }
-                    is NetworkResult.Loading -> {
-                    }
-                    else -> {}
+                when(it){
+                    is FilmInfoUi.Base ->   setUpUI(it)
+                    is FilmInfoUi.Progress -> {Toast.makeText(requireContext(), "Progress", Toast.LENGTH_LONG).show()}//todo
+                    is FilmInfoUi.Failed -> {Toast.makeText(requireContext(), "Failed", Toast.LENGTH_LONG).show()} //todo
+                    else -> {} //todo
                 }
             }
         }
     }
-    private fun setUpUI(film : InfoFilmCloud){
-        binding.tvFilmName.text = film.nameRu
-        binding.tvCountry.text = formatBoldString( getString(R.string.countries), film.countries.map { it.country }.joinToString())
-        binding.tvGenres.text = formatBoldString( getString(R.string.genres), film.genres.map { it.genre }.joinToString())
+    private fun setUpUI(film : FilmInfoUi){
+        binding.tvFilmName.text = film.name
+        binding.tvCountry.text = formatBoldString( getString(R.string.countries), film.country.joinToString { it.country })
+        binding.tvGenres.text = formatBoldString( getString(R.string.genres), film.genres.joinToString { it.genre })
         binding.tvFilmDescription.text = film.description
         Glide
             .with(requireContext())
