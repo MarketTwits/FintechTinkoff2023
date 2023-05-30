@@ -63,10 +63,8 @@ class FavoritesFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        lifecycleScope.launch {
-            viewModel.liveData.observe(viewLifecycleOwner) {
-                adapter.submitList(it)
-            }
+        viewModel.favoriteFilms.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
         }
     }
 

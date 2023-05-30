@@ -28,7 +28,7 @@ class SearchFragment : Fragment() {
         object : Retry {
             override fun retry() {
                 lifecycleScope.launch {//todo
-                    viewModel.loadTopFilms(binding.edSearchFilmTextField.text.toString())
+                    //viewModel.loadTopFilms(binding.edSearchFilmTextField.text.toString())
                 }
             }
         }, object : ItemClick {
@@ -69,7 +69,7 @@ class SearchFragment : Fragment() {
     private fun setupListeners() {
         binding.edSearchFilmTextField.afterTextChangedDelayed {
             //todo fix call listener after rotation
-           viewModel.loadTopFilms(binding.edSearchFilmTextField.text.toString())
+           viewModel.load(binding.edSearchFilmTextField.text.toString())
         }
         binding.imBackArrow.setOnClickListener {
             parentFragmentManager.popBackStack()
