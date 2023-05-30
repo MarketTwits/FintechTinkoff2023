@@ -1,13 +1,14 @@
 package com.example.fintechtinkoff2023.presentation.search
 
+import android.R
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.fintechtinkoff2023.FintechApp
+import com.example.fintechtinkoff2023.core.ProvideViewModel
 import com.example.fintechtinkoff2023.databinding.FragmentSearchBinding
 import com.example.fintechtinkoff2023.domain.model.FilmUi
 import com.example.fintechtinkoff2023.presentation.film.FilmInfoFragment
@@ -21,7 +22,6 @@ import kotlinx.coroutines.launch
 
 
 class SearchFragment : Fragment() {
-
     lateinit var binding: FragmentSearchBinding
     lateinit var viewModel: SearchFilmsViewModel
     private val adapter = SearchFilmsAdapter(
@@ -42,12 +42,13 @@ class SearchFragment : Fragment() {
             }
         }
     )
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        // Inflate the layout for this fragment
-        viewModel = (requireActivity().application as FintechApp).searchFilmsViewModel
+        viewModel = (requireActivity().application as ProvideViewModel)
+            .viewModel(requireActivity(), SearchFilmsViewModel::class.java)
         binding = FragmentSearchBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -55,21 +56,20 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observerTopFilmLiveDataFlow()
-        setupListeners()
         setupRecyclerView()
+        setupListeners()
     }
 
     private fun setupRecyclerView() {
-        val layoutManager = LinearLayoutManager(requireContext())
         binding.rvSearchFilm.adapter = adapter
-        binding.rvSearchFilm.layoutManager = layoutManager
         binding.rvSearchFilm.clearAnimation()
         binding.rvSearchFilm.itemAnimator?.changeDuration = 0
     }
 
     private fun setupListeners() {
         binding.edSearchFilmTextField.afterTextChangedDelayed {
-            viewModel.loadTopFilms(binding.edSearchFilmTextField.text.toString())
+            //todo fix call listener after rotation
+           viewModel.loadTopFilms(binding.edSearchFilmTextField.text.toString())
         }
         binding.imBackArrow.setOnClickListener {
             parentFragmentManager.popBackStack()
