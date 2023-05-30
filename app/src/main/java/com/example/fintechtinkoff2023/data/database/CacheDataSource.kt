@@ -30,8 +30,7 @@ interface CacheDataSource {
         }
 
         override suspend fun getData(): Flow<List<FilmCache>> {
-            val data = filmFavoritesDao.getFavoritesFilmsList()
-            return data
+            return filmFavoritesDao.getFavoritesFilmsList()
         }
     }
 }

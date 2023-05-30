@@ -35,11 +35,11 @@ class FavoritesFragment : Fragment() {
         binding = FragmentFavoritesBinding.inflate(inflater, container, false)
         adapter = FavoriteFilmsAdapter(
             object : ItemClick {
-            override fun onClick(filmUi: FilmUi) {
-                val fragment = FilmInfoFragment.newInstanceEditItem(filmItemId = filmUi.filmId)
-                navigation(fragment)
-            }
-        },
+                override fun onClick(filmUi: FilmUi) {
+                    val fragment = FilmInfoFragment.newInstanceEditItem(filmItemId = filmUi.filmId)
+                    navigation(fragment)
+                }
+            },
             object : ItemLongClick {
                 override fun onLongClick(filmUi: FilmUi) {
                     viewModel.addFilm(filmUi)

@@ -3,19 +3,18 @@ package com.example.fintechtinkoff2023.domain
 
 import android.util.Log
 import com.example.fintechtinkoff2023.data.database.CacheDataSource
-import com.example.fintechtinkoff2023.data.database.db_entites.FilmCache
 import com.example.fintechtinkoff2023.data.network.model.item_film.InfoFilmCloud
 import com.example.fintechtinkoff2023.data.network.retrofit.KinoPoiskApi
 import com.example.fintechtinkoff2023.domain.base_source.ItemsSearchComparison
 import com.example.fintechtinkoff2023.domain.base_source.ItemsTopComparison
 import com.example.fintechtinkoff2023.domain.error.ErrorType
+import com.example.fintechtinkoff2023.domain.model.Film
 import com.example.fintechtinkoff2023.domain.model.FilmBase
 import com.example.fintechtinkoff2023.domain.model.FilmUi
 import com.example.fintechtinkoff2023.domain.state.NetworkResult
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
@@ -23,7 +22,7 @@ import java.net.UnknownHostException
 
 class FilmsRepositoryImpl(
     private val cacheDataSource: CacheDataSource,
-    private val movieApi : KinoPoiskApi,
+    private val movieApi: KinoPoiskApi,
     private val itemsTopComparison: ItemsTopComparison,
     private val itemsSearchComparison: ItemsSearchComparison
 ) {
@@ -41,22 +40,22 @@ class FilmsRepositoryImpl(
     }
     private val scope = CoroutineScope(Dispatchers.IO + excetionHandler)
 
-     fun getTopMovie() {
-         scope.launch {
-             try {
-                 val pageFilms = movieApi.getTopFilms()
-                 if (pageFilms.topFilms.isEmpty()) {
-                     searchFilms.emit(NetworkResult.Error("Not found"))
-                 } else {
-                     cacheDataSource.getData().collect{
-                         val compareList = itemsTopComparison.compare(pageFilms.topFilms)
-                         topFilms.emit(NetworkResult.Success(compareList))
-                     }
-                 }
-             } catch (e: Exception) {
-                 topFilms.emit(NetworkResult.Error(e.message))
-             }
-         }
+    fun getTopMovie() {
+        scope.launch {
+            try {
+                val pageFilms = movieApi.getTopFilms()
+                if (pageFilms.topFilms.isEmpty()) {
+                    searchFilms.emit(NetworkResult.Error("Not found"))
+                } else {
+                    cacheDataSource.getData().collect {
+                        val compareList = itemsTopComparison.compare(pageFilms.topFilms)
+                        topFilms.emit(NetworkResult.Success(compareList))
+                    }
+                }
+            } catch (e: Exception) {
+                topFilms.emit(NetworkResult.Error(e.message))
+            }
+        }
     }
 
     fun getSearchMovie(keywords: String) {
@@ -66,7 +65,7 @@ class FilmsRepositoryImpl(
                 if (pageFilms.searchFilms.isEmpty()) {
                     searchFilms.emit(NetworkResult.Error.NotFound("Film not found"))
                 } else {
-                    cacheDataSource.getData().collect{
+                    cacheDataSource.getData().collect {
                         val compare = itemsSearchComparison.compare(pageFilms.searchFilms)
                         searchFilms.emit(NetworkResult.Success(compare))
                     }
@@ -93,9 +92,15 @@ class FilmsRepositoryImpl(
         }
     }
 
-    suspend fun getFavoriteFilms(): Flow<List<FilmCache>> {
-        val data = cacheDataSource.getData()
-        return data
+    suspend fun getFavoriteFilms() {
+        scope.launch {
+            cacheDataSource.getData().collect {
+                val data = it.map { filmCache ->
+                    filmCache.map(Film.Mapper.ToFavoriteUi())
+                }
+                favoritesFilms.emit(data)
+            }
+        }
     }
 
     suspend fun addFilmsToFavorite(baseFilm: FilmBase) {
