@@ -5,6 +5,3 @@ enum class ErrorType {
     SERVICE_UNAVAILABLE,
     GENERIC_ERROR
 }
-interface ErrorTypes{
-    fun map()
-}
