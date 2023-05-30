@@ -15,10 +15,10 @@ interface ItemsTopComparison {
             movies.map { film ->
                 val isFavorite = favoriteList.any { it.filmId == film.filmId }
                 if (isFavorite) {
-                    val favorite = FilmUi.Favorite(film.filmId, film.nameRu, film.posterUrl, film.year)
+                    val favorite = FilmUi.Favorite(film.filmId, film.nameRu ?: film.nameEn, film.posterUrl, film.year)
                     items.add(favorite)
                 } else {
-                    val base = FilmUi.Base(film.filmId, film.nameRu, film.posterUrl, film.year)
+                    val base = FilmUi.Base(film.filmId, film.nameRu ?: film.nameEn, film.posterUrl, film.year)
                     items.add(base)
                 }
             }

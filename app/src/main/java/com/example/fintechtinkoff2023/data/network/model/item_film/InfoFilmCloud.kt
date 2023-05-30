@@ -48,4 +48,4 @@ data class InfoFilmCloud(
     val type: String,
     val webUrl: String,
     val year: Int
-)
+) //todo add mapper
