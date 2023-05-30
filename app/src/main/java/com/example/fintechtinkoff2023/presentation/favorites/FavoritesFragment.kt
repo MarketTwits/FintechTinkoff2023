@@ -8,11 +8,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fintechtinkoff2023.FintechApp
+import com.example.fintechtinkoff2023.core.ProvideViewModel
 import com.example.fintechtinkoff2023.databinding.FragmentFavoritesBinding
 import com.example.fintechtinkoff2023.domain.model.FilmUi
 import com.example.fintechtinkoff2023.presentation.favorites.adapter.FavoriteFilmsAdapter
 import com.example.fintechtinkoff2023.presentation.film.FilmInfoFragment
 import com.example.fintechtinkoff2023.presentation.popular.PopularFragment
+import com.example.fintechtinkoff2023.presentation.search.SearchFilmsViewModel
 import com.example.fintechtinkoff2023.presentation.search.SearchFragment
 import com.example.fintechtinkoff2023.presentation.utils.adapterListener.ItemClick
 import com.example.fintechtinkoff2023.presentation.utils.adapterListener.ItemLongClick
@@ -28,7 +30,8 @@ class FavoritesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        viewModel = (requireActivity().application as FintechApp).favoritesFilmViewModel
+        viewModel = (requireActivity().application as ProvideViewModel)
+            .viewModel(requireActivity(), FavoritesFilmViewModel::class.java)
         binding = FragmentFavoritesBinding.inflate(inflater, container, false)
         adapter = FavoriteFilmsAdapter(
             object : ItemClick {
@@ -54,9 +57,9 @@ class FavoritesFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        val layoutManager = LinearLayoutManager(requireContext())
         binding.rvSearchFilm.adapter = adapter
-        binding.rvSearchFilm.layoutManager = layoutManager
+        binding.rvSearchFilm.clearAnimation()
+        binding.rvSearchFilm.itemAnimator?.changeDuration = 0
     }
 
     private fun observeViewModel() {

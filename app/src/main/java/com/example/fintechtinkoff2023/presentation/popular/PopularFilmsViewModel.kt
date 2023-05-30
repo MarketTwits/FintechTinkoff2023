@@ -21,9 +21,13 @@ class PopularFilmsViewModel(
 ) : ViewModel() {
     private val _topFilms: MutableLiveData<List<FilmUi>> = MutableLiveData()
     val topFilms: LiveData<List<FilmUi>> = _topFilms
-
     init {
         loadTopFilms()
+    }
+     fun init(firstRun: Boolean) {
+        if (firstRun){
+            loadTopFilms()
+        }
     }
         fun loadTopFilms() {
         viewModelScope.launch {
@@ -41,9 +45,7 @@ class PopularFilmsViewModel(
                 }
                 .launchIn(viewModelScope)
         }
-
     }
-
     fun itemToCache(item: FilmUi) {
         val baseFilm = FilmBase(item.filmId, item.nameRu, item.posterUrl, item.year)
         viewModelScope.launch(Dispatchers.IO) {

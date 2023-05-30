@@ -10,9 +10,11 @@ import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.fintechtinkoff2023.FintechApp
 import com.example.fintechtinkoff2023.R
+import com.example.fintechtinkoff2023.core.ProvideViewModel
 import com.example.fintechtinkoff2023.data.network.model.item_film.InfoFilmCloud
 import com.example.fintechtinkoff2023.databinding.FragmentFilmInfoBinding
 import com.example.fintechtinkoff2023.domain.state.NetworkResult
+import com.example.fintechtinkoff2023.presentation.search.SearchFilmsViewModel
 import com.example.fintechtinkoff2023.presentation.utils.formatBoldString
 import kotlinx.coroutines.launch
 
@@ -26,7 +28,8 @@ class FilmInfoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        viewModel = (requireActivity().application as FintechApp).filmInfoViewModel
+        viewModel = (requireActivity().application as ProvideViewModel)
+            .viewModel(requireActivity(), FilmInfoViewModel::class.java)
         binding = FragmentFilmInfoBinding.inflate(inflater, container, false)
         return binding.root
     }

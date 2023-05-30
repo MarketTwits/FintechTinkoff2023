@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.fintechtinkoff2023.data.network.model.item_film.InfoFilmCloud
 import com.example.fintechtinkoff2023.domain.FilmsRepositoryImpl
 import com.example.fintechtinkoff2023.domain.state.NetworkResult
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
@@ -21,6 +22,9 @@ class FilmInfoViewModel(private val filmsRepository : FilmsRepositoryImpl) : Vie
         filmsRepository.infoFilmCloud
             .onStart {
                 _infoFilmsCloud.value = (NetworkResult.Loading())
+            }
+            .catch {
+                _infoFilmsCloud.value = NetworkResult.Error(it.localizedMessage!!)
             }
             .onEach {
                 _infoFilmsCloud.value = when (it) {
