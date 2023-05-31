@@ -1,4 +1,4 @@
-package com.example.fintechtinkoff2023.core
+package com.example.fintechtinkoff2023.core.wrappers
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

@@ -1,4 +1,4 @@
-package com.example.fintechtinkoff2023.core
+package com.example.fintechtinkoff2023.core.sl
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

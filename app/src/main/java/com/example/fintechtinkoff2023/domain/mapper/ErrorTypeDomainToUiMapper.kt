@@ -1,7 +1,7 @@
 package com.example.fintechtinkoff2023.domain.mapper
 
 import com.example.fintechtinkoff2023.R
-import com.example.fintechtinkoff2023.core.ManageResource
+import com.example.fintechtinkoff2023.core.wrappers.ManageResource
 import com.example.fintechtinkoff2023.domain.error.ErrorType
 
 interface ErrorTypeDomainToUiMapper {

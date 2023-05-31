@@ -5,9 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import com.example.fintechtinkoff2023.core.Core
-import com.example.fintechtinkoff2023.core.DependencyContainer
-import com.example.fintechtinkoff2023.core.ProvideViewModel
-import com.example.fintechtinkoff2023.core.ViewModelsFactory
+import com.example.fintechtinkoff2023.core.sl.DependencyContainer
+import com.example.fintechtinkoff2023.core.sl.ProvideViewModel
+import com.example.fintechtinkoff2023.core.sl.ViewModelsFactory
 
 class FintechApp : Application(), ProvideViewModel {
     override fun <T : ViewModel> viewModel(owner: ViewModelStoreOwner, className: Class<T>): T {
@@ -22,7 +22,6 @@ class FintechApp : Application(), ProvideViewModel {
         viewModelFactory = ViewModelsFactory(
             DependencyContainer.Base(Core(this))
         )
-
     }
 }
 

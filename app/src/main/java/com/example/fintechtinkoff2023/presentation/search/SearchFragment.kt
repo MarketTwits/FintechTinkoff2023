@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.example.fintechtinkoff2023.core.ProvideViewModel
+import com.example.fintechtinkoff2023.core.sl.ProvideViewModel
 import com.example.fintechtinkoff2023.databinding.FragmentSearchBinding
 import com.example.fintechtinkoff2023.domain.model.FilmUi
 import com.example.fintechtinkoff2023.presentation.film.FilmInfoFragment
@@ -15,7 +15,6 @@ import com.example.fintechtinkoff2023.presentation.utils.adapterListener.ItemCli
 import com.example.fintechtinkoff2023.presentation.utils.adapterListener.ItemLongClick
 import com.example.fintechtinkoff2023.presentation.utils.adapterListener.Retry
 import com.example.fintechtinkoff2023.presentation.utils.afterTextChangedDelayed
-import com.example.fintechtinkoff2023.presentation.utils.navigationAddFragment
 import com.example.fintechtinkoff2023.presentation.utils.navigationReplaceFragment
 import kotlinx.coroutines.launch
 

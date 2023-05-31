@@ -1,6 +1,10 @@
 package com.example.fintechtinkoff2023.core
 
 import android.content.Context
+import com.example.fintechtinkoff2023.core.communication.NavigationCommunication
+import com.example.fintechtinkoff2023.core.storage.RoomStorage
+import com.example.fintechtinkoff2023.core.storage.SharedPreferencesStorage
+import com.example.fintechtinkoff2023.core.wrappers.ManageResource
 import com.example.fintechtinkoff2023.data.database.CacheDataSource
 import com.example.fintechtinkoff2023.data.network.FilmsCloudDataSource
 import com.example.fintechtinkoff2023.data.network.mapper.FilmsCloudToDomainFilmMapper
@@ -17,10 +21,10 @@ class Core(
 ) : ProvideStorage, ProvideManageResource, ProvideRoomDataBase, ProvideInteract {
     private val navigation = NavigationCommunication.Base()
     private val manageResource = ManageResource.Base(context)
-    private val storage =
-        Storage.Base(context.getSharedPreferences(STORAGE_NAME, Context.MODE_PRIVATE))
+    private val sharedPreferencesStorage =
+        SharedPreferencesStorage.Base(context.getSharedPreferences(STORAGE_NAME, Context.MODE_PRIVATE))
 
-    override fun storage(): Storage = storage
+    override fun storage(): SharedPreferencesStorage = sharedPreferencesStorage
 
     companion object {
         private const val STORAGE_NAME = "NEWS APP DATA"
@@ -51,7 +55,7 @@ class Core(
 }
 
 interface ProvideStorage {
-    fun storage(): Storage
+    fun storage(): SharedPreferencesStorage
 }
 
 interface ProvideManageResource {

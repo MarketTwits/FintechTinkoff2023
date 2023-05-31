@@ -1,4 +1,4 @@
-package com.example.fintechtinkoff2023.core
+package com.example.fintechtinkoff2023.core.communication
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
