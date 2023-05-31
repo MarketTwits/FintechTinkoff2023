@@ -52,7 +52,7 @@
             android:id="@+id/edSearchFilmTextField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Поиск"
+            android:hint="@string/search"
             android:maxLines="1"
             android:textColor="@color/black"
             android:textColorHint="@color/grey"

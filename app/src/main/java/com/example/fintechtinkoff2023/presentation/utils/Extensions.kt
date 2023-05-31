@@ -11,7 +11,7 @@ import com.example.fintechtinkoff2023.R
 import com.example.fintechtinkoff2023.presentation.utils.text_handler.AfterTextChangedListener
 import com.google.android.material.textfield.TextInputEditText
 
-fun Fragment.navigation(
+fun Fragment.navigationReplaceFragment(
     fragment: Fragment,
     addToBackStack: Boolean = true,
 ) {
@@ -26,6 +26,22 @@ fun Fragment.navigation(
             .commit()
     }
 }
+fun Fragment.navigationAddFragment(
+    fragment: Fragment,
+    addToBackStack: Boolean = true,
+) {
+    if (addToBackStack) {
+        parentFragmentManager.beginTransaction()
+            .add(R.id.fragmentContainerView, fragment)
+            .addToBackStack(null)
+            .commit()
+    } else {
+        parentFragmentManager.beginTransaction()
+            .add(R.id.fragmentContainerView, fragment)
+            .commit()
+    }
+}
+
 
 fun Fragment.formatBoldString(title: String, text: String): SpannableString {
         val str = SpannableString(title + text)

@@ -5,11 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.lifecycleScope
-import com.example.fintechtinkoff2023.FintechApp
 import com.example.fintechtinkoff2023.core.ProvideViewModel
 import com.example.fintechtinkoff2023.databinding.FragmentPopularBinding
 import com.example.fintechtinkoff2023.domain.model.FilmUi
@@ -20,7 +16,8 @@ import com.example.fintechtinkoff2023.presentation.search.SearchFragment
 import com.example.fintechtinkoff2023.presentation.utils.adapterListener.ItemClick
 import com.example.fintechtinkoff2023.presentation.utils.adapterListener.ItemLongClick
 import com.example.fintechtinkoff2023.presentation.utils.adapterListener.Retry
-import com.example.fintechtinkoff2023.presentation.utils.navigation
+import com.example.fintechtinkoff2023.presentation.utils.navigationAddFragment
+import com.example.fintechtinkoff2023.presentation.utils.navigationReplaceFragment
 import kotlinx.coroutines.launch
 
 
@@ -62,7 +59,7 @@ class PopularFragment : Fragment() {
             }, object : ItemClick {
                 override fun onClick(filmUi: FilmUi) {
                     val fragment = FilmInfoFragment.newInstanceEditItem(filmItemId = filmUi.filmId)
-                    navigation(fragment)
+                    navigationReplaceFragment(fragment)
                 }
             }, object : ItemLongClick {
                 override fun onLongClick(filmUi: FilmUi) {
@@ -77,10 +74,10 @@ class PopularFragment : Fragment() {
 
     private fun setupListeners() {
         binding.imSearch.setOnClickListener {
-            navigation(SearchFragment())
+            navigationReplaceFragment(SearchFragment())
         }
         binding.btFavorites.setOnClickListener {
-            navigation(FavoritesFragment(), false)
+            navigationReplaceFragment(FavoritesFragment(), false)
         }
     }
 

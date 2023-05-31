@@ -9,7 +9,7 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/white"
     tools:context=".presentation.film.FilmInfoFragment">
 
@@ -18,32 +18,30 @@
         android:id="@+id/tvCountry"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="12dp"
         android:layout_marginBottom="30dp"
         android:fontFamily="@font/roboto_regular"
         android:textColor="@color/grey"
         android:textSize="16sp"
-        tools:text = "@string/countries"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/tvGenres"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/tvGenres"
-        app:layout_constraintTop_toBottomOf="@+id/tvGenres" />
+        app:layout_constraintTop_toBottomOf="@+id/tvGenres"
+        tools:text="@string/countries" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvGenres"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="12dp"
         android:fontFamily="@font/roboto_regular"
         android:textColor="@color/grey"
         android:textSize="16sp"
-        tools:text = "@string/genres"
         app:layout_constraintEnd_toEndOf="@+id/tvFilmDescription"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/tvFilmDescription"
-        app:layout_constraintTop_toBottomOf="@+id/tvFilmDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/tvFilmDescription"
+        tools:text="@string/genres"/>
 
 
     <TextView
@@ -68,7 +66,6 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
         android:fontFamily="@font/roboto_bold"
-
         android:textColor="@color/black"
         android:textSize="25sp"
         tools:text="Изгой-один: Звёздные войны"

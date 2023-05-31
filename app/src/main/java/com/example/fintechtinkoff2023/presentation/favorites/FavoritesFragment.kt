@@ -5,21 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.fintechtinkoff2023.FintechApp
 import com.example.fintechtinkoff2023.core.ProvideViewModel
 import com.example.fintechtinkoff2023.databinding.FragmentFavoritesBinding
 import com.example.fintechtinkoff2023.domain.model.FilmUi
 import com.example.fintechtinkoff2023.presentation.favorites.adapter.FavoriteFilmsAdapter
 import com.example.fintechtinkoff2023.presentation.film.FilmInfoFragment
 import com.example.fintechtinkoff2023.presentation.popular.PopularFragment
-import com.example.fintechtinkoff2023.presentation.search.SearchFilmsViewModel
 import com.example.fintechtinkoff2023.presentation.search.SearchFragment
 import com.example.fintechtinkoff2023.presentation.utils.adapterListener.ItemClick
 import com.example.fintechtinkoff2023.presentation.utils.adapterListener.ItemLongClick
-import com.example.fintechtinkoff2023.presentation.utils.navigation
-import kotlinx.coroutines.launch
+import com.example.fintechtinkoff2023.presentation.utils.navigationAddFragment
+import com.example.fintechtinkoff2023.presentation.utils.navigationReplaceFragment
 
 
 class FavoritesFragment : Fragment() {
@@ -37,7 +33,7 @@ class FavoritesFragment : Fragment() {
             object : ItemClick {
                 override fun onClick(filmUi: FilmUi) {
                     val fragment = FilmInfoFragment.newInstanceEditItem(filmItemId = filmUi.filmId)
-                    navigation(fragment)
+                    navigationReplaceFragment(fragment)
                 }
             },
             object : ItemLongClick {
@@ -70,10 +66,10 @@ class FavoritesFragment : Fragment() {
 
     private fun setUpListeners() {
         binding.btPopularity.setOnClickListener {
-            navigation(PopularFragment(), false)
+            navigationReplaceFragment(PopularFragment(), false)
         }
         binding.imSearch.setOnClickListener {
-            navigation(SearchFragment(), true)
+            navigationReplaceFragment(SearchFragment(), true)
         }
     }
 }

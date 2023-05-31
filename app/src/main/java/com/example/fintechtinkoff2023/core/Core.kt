@@ -2,14 +2,19 @@ package com.example.fintechtinkoff2023.core
 
 import android.content.Context
 import com.example.fintechtinkoff2023.data.database.CacheDataSource
+import com.example.fintechtinkoff2023.data.network.FilmsCloudDataSource
+import com.example.fintechtinkoff2023.data.network.mapper.FilmsCloudToDomainFilmMapper
 import com.example.fintechtinkoff2023.data.network.retrofit.MakeService
-import com.example.fintechtinkoff2023.domain.FilmsRepositoryImpl
-import com.example.fintechtinkoff2023.domain.base_source.ItemsSearchComparison
-import com.example.fintechtinkoff2023.domain.base_source.ItemsTopComparison
+import com.example.fintechtinkoff2023.domain.FavoriteFilmsComparisonMapper
+import com.example.fintechtinkoff2023.domain.FilmInteract
+import com.example.fintechtinkoff2023.domain.FilmRepository
+import com.example.fintechtinkoff2023.domain.error.ErrorTypeDomainMapper
+import com.example.fintechtinkoff2023.domain.mapper.ErrorTypeDomainToUiMapper
+import com.example.fintechtinkoff2023.domain.mapper.FilmUiToDomainFilmMapper
 
 class Core(
     private val context: Context
-) : ProvideStorage, ProvideManageResource, ProvideRoomDataBase, ProvideFilmsRepository {
+) : ProvideStorage, ProvideManageResource, ProvideRoomDataBase, ProvideInteract {
     private val navigation = NavigationCommunication.Base()
     private val manageResource = ManageResource.Base(context)
     private val storage =
@@ -23,23 +28,26 @@ class Core(
 
     override fun manageResource(): ManageResource = manageResource
     override fun database(): RoomStorage = RoomStorage.AppDatabase.getInstance(context)
-    override fun filmsRepository() = FilmsRepositoryImpl(
-        CacheDataSource.Base(
-            database().filmDao()
-        ),
-        MakeService.Base().service(),
-        ItemsTopComparison.TopFilmCompare(
-            CacheDataSource.Base(
-                database().filmDao()
-            )
-        ),
-        ItemsSearchComparison.SearchFilmCompare(
-            CacheDataSource.Base(
-                database().filmDao()
+    override fun filmsInteractor(): FilmInteract {
+        val cacheDataSource = CacheDataSource.Base(database().filmDao())
+        return FilmInteract.Base(
+            cacheDataSource,
+            FavoriteFilmsComparisonMapper.Base(
+                cacheDataSource
+            ),
+            ErrorTypeDomainToUiMapper.Base(manageResource),
+            FilmUiToDomainFilmMapper.Base(),
+            FilmRepository.Base(
+                cacheDataSource,
+                FilmsCloudDataSource.Base(
+                    MakeService.Base().service()
+                ),
+                ErrorTypeDomainMapper.Base(),
+                FilmsCloudToDomainFilmMapper.Base()
             )
         )
-    )
 
+    }
 }
 
 interface ProvideStorage {
@@ -54,7 +62,7 @@ interface ProvideRoomDataBase {
     fun database(): RoomStorage
 }
 
-interface ProvideFilmsRepository {
-    fun filmsRepository(): FilmsRepositoryImpl
+interface ProvideInteract {
+    fun filmsInteractor(): FilmInteract
 }
 

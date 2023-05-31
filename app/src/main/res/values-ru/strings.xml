@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="check_your_connection">Произошла ошибка при загрузке данных, проверьте подключение к сети %s</string>
+    <string name="search">Поиск</string>
+    <string name="not_found">Не найдено</string>
+    <string name="genres">" <b>Жанры:</b> "</string>
+    <string name="countries">" <b>Страны:</b> "</string>
+    <string name="generic_error">Упс, что то пошло не так, проверьте соединение с интернетом</string>
+    <string name="no_connection_message">Нет соединения с интернетом</string>
+    <string name="service_unavalible">Сервис временно не доступен, повторите попытку позже</string>
+    <string name="popular">Популярные</string>
+    <string name="favourites">Избранные</string>
+</resources>
