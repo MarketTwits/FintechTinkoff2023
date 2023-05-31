@@ -31,7 +31,7 @@ class FilmInfoFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         viewModel = (requireActivity().application as ProvideViewModel)
-            .viewModel(requireActivity(), FilmInfoViewModel::class.java)
+            .viewModel(this, FilmInfoViewModel::class.java)
         binding = FragmentFilmInfoBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -53,7 +53,7 @@ class FilmInfoFragment : Fragment() {
             viewModel.infoFilmsCloud.observe(viewLifecycleOwner) {
                 when(it){
                     is FilmInfoUi.Base ->   setUpUI(it)
-                    is FilmInfoUi.Progress -> {Toast.makeText(requireContext(), "Progress", Toast.LENGTH_LONG).show()}//todo
+                    is FilmInfoUi.Progress -> {}//todo
                     is FilmInfoUi.Failed -> {Toast.makeText(requireContext(), "Failed", Toast.LENGTH_LONG).show()} //todo
                     else -> {} //todo
                 }

@@ -1,11 +1,9 @@
 package com.example.fintechtinkoff2023.presentation.search
 
-import android.R
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.fintechtinkoff2023.core.ProvideViewModel
@@ -17,7 +15,8 @@ import com.example.fintechtinkoff2023.presentation.utils.adapterListener.ItemCli
 import com.example.fintechtinkoff2023.presentation.utils.adapterListener.ItemLongClick
 import com.example.fintechtinkoff2023.presentation.utils.adapterListener.Retry
 import com.example.fintechtinkoff2023.presentation.utils.afterTextChangedDelayed
-import com.example.fintechtinkoff2023.presentation.utils.navigation
+import com.example.fintechtinkoff2023.presentation.utils.navigationAddFragment
+import com.example.fintechtinkoff2023.presentation.utils.navigationReplaceFragment
 import kotlinx.coroutines.launch
 
 
@@ -34,7 +33,7 @@ class SearchFragment : Fragment() {
         }, object : ItemClick {
             override fun onClick(filmUi: FilmUi) {
                 val fragment = FilmInfoFragment.newInstanceEditItem(filmItemId = filmUi.filmId)
-                navigation(fragment)
+                navigationReplaceFragment(fragment)
             }
         }, object : ItemLongClick {
             override fun onLongClick(filmUi: FilmUi) {
