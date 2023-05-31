@@ -1,4 +1,4 @@
-package com.example.fintechtinkoff2023.core
+package com.example.fintechtinkoff2023.core.storage
 
 import android.content.Context
 import androidx.room.Database

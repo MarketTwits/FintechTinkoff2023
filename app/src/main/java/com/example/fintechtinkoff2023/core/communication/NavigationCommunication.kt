@@ -1,4 +1,6 @@
-package com.example.fintechtinkoff2023.core
+package com.example.fintechtinkoff2023.core.communication
+
+import com.example.fintechtinkoff2023.core.wrappers.Screen
 
 
 interface NavigationCommunication {

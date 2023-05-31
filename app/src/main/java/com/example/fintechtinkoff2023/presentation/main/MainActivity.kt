@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelStoreOwner
 import com.example.fintechtinkoff2023.R
-import com.example.fintechtinkoff2023.core.ProvideViewModel
+import com.example.fintechtinkoff2023.core.sl.ProvideViewModel
 
 class MainActivity : AppCompatActivity(), ProvideViewModel {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,13 +1,13 @@
-package com.example.fintechtinkoff2023.core
+package com.example.fintechtinkoff2023.core.storage
 
 import android.content.SharedPreferences
 
-interface Storage {
+interface SharedPreferencesStorage {
     fun save(key: String, value: Boolean)
     fun save(key: String, value: String)
     fun read(key: String, default: Boolean): Boolean
     fun read(key: String, default: String): String
-    class Base(private val sharedPreferences: SharedPreferences) : Storage {
+    class Base(private val sharedPreferences: SharedPreferences) : SharedPreferencesStorage {
         override fun save(key: String, value: Boolean) {
             sharedPreferences.edit().putBoolean(key, value).apply()
         }

@@ -9,14 +9,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
-import com.example.fintechtinkoff2023.FintechApp
 import com.example.fintechtinkoff2023.R
-import com.example.fintechtinkoff2023.core.ProvideViewModel
-import com.example.fintechtinkoff2023.data.network.model.item_film.InfoFilmCloud
+import com.example.fintechtinkoff2023.core.sl.ProvideViewModel
 import com.example.fintechtinkoff2023.databinding.FragmentFilmInfoBinding
 import com.example.fintechtinkoff2023.domain.model.FilmInfoUi
-import com.example.fintechtinkoff2023.domain.state.NetworkResult
-import com.example.fintechtinkoff2023.presentation.search.SearchFilmsViewModel
 import com.example.fintechtinkoff2023.presentation.utils.formatBoldString
 import kotlinx.coroutines.launch
 

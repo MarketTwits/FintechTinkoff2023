@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.fintechtinkoff2023.core.ProvideViewModel
+import com.example.fintechtinkoff2023.core.sl.ProvideViewModel
 import com.example.fintechtinkoff2023.databinding.FragmentFavoritesBinding
 import com.example.fintechtinkoff2023.domain.model.FilmUi
 import com.example.fintechtinkoff2023.presentation.favorites.adapter.FavoriteFilmsAdapter
@@ -14,7 +14,6 @@ import com.example.fintechtinkoff2023.presentation.popular.PopularFragment
 import com.example.fintechtinkoff2023.presentation.search.SearchFragment
 import com.example.fintechtinkoff2023.presentation.utils.adapterListener.ItemClick
 import com.example.fintechtinkoff2023.presentation.utils.adapterListener.ItemLongClick
-import com.example.fintechtinkoff2023.presentation.utils.navigationAddFragment
 import com.example.fintechtinkoff2023.presentation.utils.navigationReplaceFragment
 
 
