@@ -7,11 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.fintechtinkoff2023.domain.FilmInteract
 import com.example.fintechtinkoff2023.domain.model.FilmUi
-import com.example.fintechtinkoff2023.domain.state.NetworkResult
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -20,16 +17,15 @@ class SearchFilmsViewModel(
 ) : ViewModel() {
     private val _searchText: MutableLiveData<String> = MutableLiveData()
 
-    private val _topFilms: MutableLiveData<List<FilmUi>> = MutableLiveData()
-    val topFilms: LiveData<List<FilmUi>> = _topFilms
+    private val _searchFilms: MutableLiveData<List<FilmUi>> = MutableLiveData()
+    val searchFilms: LiveData<List<FilmUi>> = _searchFilms
 
     private fun load(keywords: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            filmsInteractor.fetchSearchFilms(keywords)
-            filmsInteractor.topFilms
-                .collect {
+            filmsInteractor.testFetchSearchFilms(keywords)
+                .collectLatest {
                     withContext(Dispatchers.Main) {
-                        _topFilms.value = it
+                        _searchFilms.value = it
                     }
                 }
         }
