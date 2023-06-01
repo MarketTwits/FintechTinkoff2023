@@ -36,9 +36,7 @@ class Core(
         val cacheDataSource = CacheDataSource.Base(database().filmDao())
         return FilmInteract.Base(
             cacheDataSource,
-            FavoriteFilmsComparisonMapper.Base(
-                cacheDataSource
-            ),
+            FavoriteFilmsComparisonMapper.Base(),
             ErrorTypeDomainToUiMapper.Base(manageResource),
             FilmUiToDomainFilmMapper.Base(),
             FilmRepository.Base(

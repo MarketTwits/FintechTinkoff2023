@@ -1,6 +1,7 @@
 package com.example.fintechtinkoff2023.domain
 
 import com.example.fintechtinkoff2023.data.database.CacheDataSource
+import com.example.fintechtinkoff2023.data.database.db_entites.FilmCache
 import com.example.fintechtinkoff2023.domain.model.Film
 import com.example.fintechtinkoff2023.domain.model.FilmBase
 import com.example.fintechtinkoff2023.domain.model.FilmUi
@@ -8,13 +9,12 @@ import kotlinx.coroutines.flow.first
 
 
 interface FavoriteFilmsComparisonMapper {
-    suspend fun compare(movies: List<FilmBase>): List<FilmUi>
-    class Base(private val cacheDataSource: CacheDataSource) : FavoriteFilmsComparisonMapper {
-        override suspend fun compare(movies: List<FilmBase>): List<FilmUi> {
+    suspend fun compare(moviesBase: List<FilmBase>, moviesCache : List<FilmCache>): List<FilmUi>
+    class Base() : FavoriteFilmsComparisonMapper {
+        override suspend fun compare(moviesBase: List<FilmBase>,moviesCache : List<FilmCache>): List<FilmUi> {
             val items = arrayListOf<FilmUi>()
-            val favoriteList = cacheDataSource.getData().first()
-            movies.map { film ->
-                val isFavorite = favoriteList.any { it.filmId == film.getId() }
+            moviesBase.map { film ->
+                val isFavorite = moviesCache.any { it.filmId == film.getId() }
                 if (isFavorite) {
                     val favorites = film.map(Film.Mapper.ToFavoriteUi())
                     items.add(favorites)

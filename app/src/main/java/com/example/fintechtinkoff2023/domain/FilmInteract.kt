@@ -1,5 +1,7 @@
 package com.example.fintechtinkoff2023.domain
 
+import android.util.Log
+import com.example.fintechtinkoff2023.core.wrappers.Logger
 import com.example.fintechtinkoff2023.data.database.CacheDataSource
 import com.example.fintechtinkoff2023.domain.mapper.ErrorTypeDomainToUiMapper
 import com.example.fintechtinkoff2023.domain.mapper.FilmUiToDomainFilmMapper
@@ -39,7 +41,7 @@ interface FilmInteract {
                 when (val data = filmRepository.fetchTopMovie()) {
                     is NetworkResult.Success -> {
                         cacheDataSource.getData().collect {
-                            topFilms.emit(favoriteFilmsComparisonMapper.compare(data.data))
+                            topFilms.emit(favoriteFilmsComparisonMapper.compare(data.data, it))
                         }
                     }
                     is NetworkResult.Error -> topFilms.emit(listOf(FilmUi.Failed(errorToUi.map(data.errorType))))
@@ -55,7 +57,7 @@ interface FilmInteract {
                 when (val data = filmRepository.fetchSearchMovie(keywords)) {
                     is NetworkResult.Success -> {
                         cacheDataSource.getData().collect {
-                            topFilms.emit(favoriteFilmsComparisonMapper.compare(data.data))
+                            topFilms.emit(favoriteFilmsComparisonMapper.compare(data.data, it))
                         }
                     }
                     is NetworkResult.Error -> topFilms.emit(listOf(FilmUi.Failed(errorToUi.map(data.errorType))))
@@ -91,7 +93,6 @@ interface FilmInteract {
         }
 
         override suspend fun addOrRemoveFilm(film: FilmUi) {
-            //todo add FilmUi to DomainMapper
             scope.launch {
                 val filmBase = filmUiToDomainMapper.map(film)
                 filmRepository.addFilmsToFavorite(filmBase)
