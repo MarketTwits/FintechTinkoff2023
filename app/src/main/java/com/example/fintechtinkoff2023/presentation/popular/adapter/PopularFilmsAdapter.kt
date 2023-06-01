@@ -58,7 +58,6 @@ class PopularFilmsAdapter(
         RecyclerView.ViewHolder(view) {
         open fun bind(film: FilmUi) = Unit
 
-
         class Base(
             private val binding: FilmItemBinding,
             private val onItemClicked: ItemClick,
@@ -122,8 +121,6 @@ class PopularFilmsAdapter(
             private val binding: FilmItemNotFoundBinding,
         ) : PopularFilmsViewHolder(binding.root){
         }
-
-
 
         class Loading(
             private val binding: PopularFilmsLoadingBinding,
