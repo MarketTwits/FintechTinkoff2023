@@ -27,14 +27,12 @@ class PopularFilmsViewModel(
         fetchTopFilms()
     }
 
-    fun fetchTopFilms(){
-        viewModelScope.launch {
-            viewModelScope.launch(Dispatchers.IO) {
-                filmsInteractor.fetchTopFilms()
-                filmsInteractor.topFilms.collect {
-                    withContext(Dispatchers.Main) {
-                        _topFilms.value = it
-                    }
+    fun fetchTopFilms() {
+        viewModelScope.launch(Dispatchers.IO) {
+            filmsInteractor.fetchTopFilms()
+            filmsInteractor.topFilms.collect {
+                withContext(Dispatchers.Main) {
+                    _topFilms.value = it
                 }
             }
         }

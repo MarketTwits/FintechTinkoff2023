@@ -25,9 +25,7 @@ class SearchFragment : Fragment() {
     private val adapter = SearchFilmsAdapter(
         object : Retry {
             override fun retry() {
-                lifecycleScope.launch {//todo
-                    //viewModel.loadTopFilms(binding.edSearchFilmTextField.text.toString())
-                }
+              viewModel.listen(binding.edSearchFilmTextField.text.toString())
             }
         }, object : ItemClick {
             override fun onClick(filmUi: FilmUi) {
@@ -40,7 +38,6 @@ class SearchFragment : Fragment() {
             }
         }
     )
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -66,8 +63,7 @@ class SearchFragment : Fragment() {
 
     private fun setupListeners() {
         binding.edSearchFilmTextField.afterTextChangedDelayed {
-            //todo fix call listener after rotation
-           viewModel.load(binding.edSearchFilmTextField.text.toString())
+            viewModel.listen(binding.edSearchFilmTextField.text.toString())
         }
         binding.imBackArrow.setOnClickListener {
             parentFragmentManager.popBackStack()

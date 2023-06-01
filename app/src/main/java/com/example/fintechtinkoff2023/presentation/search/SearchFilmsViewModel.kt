@@ -18,11 +18,12 @@ import kotlinx.coroutines.withContext
 class SearchFilmsViewModel(
     private val filmsInteractor: FilmInteract,
 ) : ViewModel() {
+    private val _searchText: MutableLiveData<String> = MutableLiveData()
 
     private val _topFilms: MutableLiveData<List<FilmUi>> = MutableLiveData()
     val topFilms: LiveData<List<FilmUi>> = _topFilms
 
-    fun load(keywords: String) {
+    private fun load(keywords: String) {
         viewModelScope.launch(Dispatchers.IO) {
             filmsInteractor.fetchSearchFilms(keywords)
             filmsInteractor.topFilms
@@ -31,6 +32,13 @@ class SearchFilmsViewModel(
                         _topFilms.value = it
                     }
                 }
+        }
+    }
+
+    fun listen(text: String) {
+        if (text != _searchText.value) {
+            _searchText.value = text
+            load(text)
         }
     }
 

@@ -9,6 +9,6 @@ class PopularFilmsItemDiffCallback : DiffUtil.ItemCallback<FilmUi>() {
     }
 
     override fun areContentsTheSame(oldItem: FilmUi, newItem: FilmUi): Boolean {
-        return oldItem.hashCode() == newItem.hashCode()
+        return oldItem == newItem
     }
 }
