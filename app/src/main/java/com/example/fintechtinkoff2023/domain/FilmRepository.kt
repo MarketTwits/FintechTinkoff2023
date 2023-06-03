@@ -1,5 +1,9 @@
 package com.example.fintechtinkoff2023.domain
 
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.map
 import com.example.fintechtinkoff2023.data.database.CacheDataSource
 import com.example.fintechtinkoff2023.data.FilmsCloudDataSource
 import com.example.fintechtinkoff2023.data.network.mapper.FilmsCloudToDomainFilmMapper
@@ -9,6 +13,7 @@ import com.example.fintechtinkoff2023.domain.model.FilmBase
 import com.example.fintechtinkoff2023.domain.model.FilmInfoBase
 import com.example.fintechtinkoff2023.domain.state.NetworkResult
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import java.lang.Exception
 
@@ -18,7 +23,7 @@ interface FilmRepository {
     suspend fun fetchInfoAboutFilm(filmId: Int): NetworkResult<FilmInfoBase>
     suspend fun fetchFavoriteFilms(): Flow<List<FilmBase>>
     suspend fun addFilmsToFavorite(baseFilm: FilmBase)
-
+    suspend fun fetchSearchMovieFlow(keywords: String): Flow<NetworkResult<List<FilmBase>>>
     class Base(
         private val cacheDataSource: CacheDataSource,
         private val cloudDataSource: FilmsCloudDataSource,
@@ -48,6 +53,18 @@ interface FilmRepository {
                 return NetworkResult.Error(errorTypeDomainMapper.map(e))
             }
         }
+        override suspend fun fetchSearchMovieFlow(keywords: String): Flow<NetworkResult<List<FilmBase>>> = flow {
+            try {
+                val data = cloudDataSource.fetchSearchMovie(keywords)
+                if (data.isEmpty()) {
+                    emit(NetworkResult.Error.NotFound())
+                } else {
+                    emit(NetworkResult.Success(filmMapper.mapFilms(data)))
+                }
+            } catch (e: Exception) {
+                emit(NetworkResult.Error(errorTypeDomainMapper.map(e)))
+            }
+        }
 
         override suspend fun fetchInfoAboutFilm(filmId: Int): NetworkResult<FilmInfoBase> {
             return try {
@@ -66,7 +83,6 @@ interface FilmRepository {
             }
 
         }
-
         override suspend fun addFilmsToFavorite(baseFilm: FilmBase) {
             cacheDataSource.addOrRemove(baseFilm)
         }

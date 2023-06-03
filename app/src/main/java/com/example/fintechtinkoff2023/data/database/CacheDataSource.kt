@@ -1,5 +1,6 @@
 package com.example.fintechtinkoff2023.data.database
 
+import androidx.lifecycle.LiveData
 import com.example.fintechtinkoff2023.data.database.db_entites.FilmCache
 import com.example.fintechtinkoff2023.data.database.room.FilmFavoritesDao
 import com.example.fintechtinkoff2023.domain.model.Film
@@ -13,6 +14,7 @@ interface CacheDataSource {
     suspend fun addOrRemove(film: FilmBase)
     fun getMovieById(filmId: Int): FilmCache?
     suspend fun getData(): Flow<List<FilmCache>>
+    suspend fun getDataLiveData() : LiveData<List<FilmCache>>
 
     class Base(
         private val filmFavoritesDao: FilmFavoritesDao,
@@ -35,6 +37,10 @@ interface CacheDataSource {
 
         override suspend fun getData(): Flow<List<FilmCache>> {
             return filmFavoritesDao.getFavoritesFilmsList()
+        }
+
+        override suspend fun getDataLiveData(): LiveData<List<FilmCache>> {
+            return filmFavoritesDao.getFavoritesFilmsListLiveData()
         }
     }
 }
