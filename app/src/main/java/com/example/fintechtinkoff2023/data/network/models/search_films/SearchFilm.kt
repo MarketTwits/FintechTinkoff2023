@@ -1,11 +1,12 @@
-package com.example.fintechtinkoff2023.data.network.model.page_film
+package com.example.fintechtinkoff2023.data.network.models.search_films
 
-import com.example.fintechtinkoff2023.data.network.model.base_film_model.Country
-import com.example.fintechtinkoff2023.data.network.model.base_film_model.Genre
+import com.example.fintechtinkoff2023.data.network.models.base_film_model.Country
+import com.example.fintechtinkoff2023.data.network.models.base_film_model.Genre
 import com.example.fintechtinkoff2023.domain.model.Film
 
-data class TopFilm(
+data class SearchFilm(
     val countries: List<Country>,
+    val description: String,
     val filmId: Int,
     val filmLength: String,
     val genres: List<Genre>,
@@ -14,10 +15,10 @@ data class TopFilm(
     val posterUrl: String,
     val posterUrlPreview: String,
     val rating: String,
-    val ratingChange: Any,
     val ratingVoteCount: Int,
-    val year: String,
-): Film{
+    val type: String,
+    val year: String
+) : Film{
     override suspend fun <T> map(mapper: Film.Mapper<T>): T {
         return mapper.map(filmId, nameRu ?: nameEn, posterUrlPreview, year)
     }

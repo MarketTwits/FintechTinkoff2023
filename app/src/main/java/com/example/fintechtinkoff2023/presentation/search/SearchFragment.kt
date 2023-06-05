@@ -72,7 +72,7 @@ class SearchFragment : Fragment() {
 
     private fun observerTopFilmLiveDataFlow() {
         lifecycleScope.launch {
-            viewModel.searchFilms.observe(viewLifecycleOwner) {
+            viewModel.observe(viewLifecycleOwner) {
                 adapter.submitList(it)
             }
         }

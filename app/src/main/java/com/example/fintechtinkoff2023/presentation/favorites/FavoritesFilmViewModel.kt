@@ -1,38 +1,40 @@
 package com.example.fintechtinkoff2023.presentation.favorites
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.fintechtinkoff2023.core.communication.Communication
+import com.example.fintechtinkoff2023.core.wrappers.DispatchersList
 import com.example.fintechtinkoff2023.domain.FilmInteract
 import com.example.fintechtinkoff2023.domain.model.FilmUi
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class FavoritesFilmViewModel(
+    private val dispatchers : DispatchersList,
+    private val communication: FavoritesCommunication,
     private val interactor: FilmInteract,
-) : ViewModel() {
+) : ViewModel(), Communication.Observe<List<FilmUi>> {
     init {
         fetch()
     }
-    private val _favoriteFilms = MutableLiveData<List<FilmUi>>()
-    val favoriteFilms: LiveData<List<FilmUi>> = _favoriteFilms
-
     private fun fetch() {
-        viewModelScope.launch(Dispatchers.IO) {
-            interactor.fetchFavoriteFilms()
-            interactor.favoriteFilms.collect {
-                withContext(Dispatchers.Main) {
-                    _favoriteFilms.value = it
+        viewModelScope.launch(dispatchers.io()) {
+            interactor.fetchFavoriteFilms().collect {
+                withContext(dispatchers.main()) {
+                    communication.map(it)
                 }
             }
         }
     }
-
     fun addFilm(filmUi: FilmUi) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatchers.io()) {
             interactor.addOrRemoveFilm(filmUi)
         }
+    }
+
+    override fun observe(owner: LifecycleOwner, observer: Observer<List<FilmUi>>) {
+        communication.observe(owner, observer)
     }
 }

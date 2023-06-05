@@ -1,4 +1,4 @@
-package com.example.fintechtinkoff2023.data.network.model.search_films
+package com.example.fintechtinkoff2023.data.network.models.search_films
 
 import com.google.gson.annotations.SerializedName
 

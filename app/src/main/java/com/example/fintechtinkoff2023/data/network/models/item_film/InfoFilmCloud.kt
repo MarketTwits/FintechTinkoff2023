@@ -1,8 +1,7 @@
-package com.example.fintechtinkoff2023.data.network.model.item_film
+package com.example.fintechtinkoff2023.data.network.models.item_film
 
-import com.example.fintechtinkoff2023.data.network.model.base_film_model.Country
-import com.example.fintechtinkoff2023.data.network.model.base_film_model.Genre
-import com.example.fintechtinkoff2023.domain.model.Film
+import com.example.fintechtinkoff2023.data.network.models.base_film_model.Country
+import com.example.fintechtinkoff2023.data.network.models.base_film_model.Genre
 import com.example.fintechtinkoff2023.domain.model.FilmInfo
 
 data class InfoFilmCloud(

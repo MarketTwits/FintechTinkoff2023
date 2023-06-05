@@ -46,7 +46,7 @@ class FilmInfoFragment : Fragment() {
 
     private fun observerTopFilmLiveDataFlow() {
         lifecycleScope.launch {
-            viewModel.infoFilmsCloud.observe(viewLifecycleOwner) {
+            viewModel.observe(viewLifecycleOwner) {
                 when(it){
                     is FilmInfoUi.Base ->   setUpUI(it)
                     is FilmInfoUi.Progress -> {}//todo

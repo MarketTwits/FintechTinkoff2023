@@ -1,8 +1,8 @@
 package com.example.fintechtinkoff2023.data.network.retrofit
 
-import com.example.fintechtinkoff2023.data.network.model.item_film.InfoFilmCloud
-import com.example.fintechtinkoff2023.data.network.model.page_film.TopFilmPage
-import com.example.fintechtinkoff2023.data.network.model.search_films.SearchFilmsPage
+import com.example.fintechtinkoff2023.data.network.models.item_film.InfoFilmCloud
+import com.example.fintechtinkoff2023.data.network.models.page_film.TopFilmPage
+import com.example.fintechtinkoff2023.data.network.models.search_films.SearchFilmsPage
 
 
 import retrofit2.http.*

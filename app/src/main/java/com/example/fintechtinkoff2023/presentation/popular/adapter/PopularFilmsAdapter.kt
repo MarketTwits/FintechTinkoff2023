@@ -11,6 +11,7 @@ import com.example.fintechtinkoff2023.databinding.FilmItemNotFoundBinding
 import com.example.fintechtinkoff2023.databinding.PopularFilmsErrorBinding
 import com.example.fintechtinkoff2023.databinding.PopularFilmsLoadingBinding
 import com.example.fintechtinkoff2023.domain.model.FilmUi
+import com.example.fintechtinkoff2023.presentation.base.adapter.FilmsUiItemDiffCallback
 import com.example.fintechtinkoff2023.presentation.utils.adapterListener.ItemClick
 import com.example.fintechtinkoff2023.presentation.utils.adapterListener.ItemLongClick
 import com.example.fintechtinkoff2023.presentation.utils.adapterListener.Retry
@@ -19,7 +20,7 @@ class PopularFilmsAdapter(
     private val retry: Retry,
     private val onItemClicked: ItemClick,
     private val onItemLongClicked: ItemLongClick
-) : ListAdapter<FilmUi, PopularFilmsAdapter.PopularFilmsViewHolder>(PopularFilmsItemDiffCallback()) {
+) : ListAdapter<FilmUi, PopularFilmsAdapter.PopularFilmsViewHolder>(FilmsUiItemDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PopularFilmsViewHolder {
 

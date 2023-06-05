@@ -7,13 +7,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.fintechtinkoff2023.databinding.FilmItemBinding
 import com.example.fintechtinkoff2023.domain.model.FilmUi
+import com.example.fintechtinkoff2023.presentation.base.adapter.FilmsUiItemDiffCallback
 import com.example.fintechtinkoff2023.presentation.utils.adapterListener.ItemClick
 import com.example.fintechtinkoff2023.presentation.utils.adapterListener.ItemLongClick
 
 class FavoriteFilmsAdapter(
     private val onItemClicked: ItemClick,
     private val onItemLongClicked: ItemLongClick,
-) : ListAdapter<FilmUi, FavoriteFilmsViewHolder>(PopularFilmsItemDiffCallback()) {
+) : ListAdapter<FilmUi, FavoriteFilmsViewHolder>(FilmsUiItemDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteFilmsViewHolder {
         val binding = FilmItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)

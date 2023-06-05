@@ -70,22 +70,3 @@ fun TextInputEditText.afterTextChangedDelayed(afterTextChanged: (String) -> Unit
         }
     })
 }
-
-class AfterTextChangedDelayed(val editText: TextInputEditText) {
-    fun listener(afterTextChanged: (String) -> Unit): TextWatcher {
-        val listener = object : AfterTextChangedListener {
-            var timer: CountDownTimer? = null
-            override fun afterTextChanged(editable: Editable?) {
-                timer?.cancel()
-                timer = object : CountDownTimer(1000, 1000) {
-                    override fun onTick(millisUntilFinished: Long) {}
-                    override fun onFinish() {
-                        afterTextChanged.invoke(editable.toString())
-                    }
-                }.start()
-            }
-        }
-        editText.addTextChangedListener(listener)
-        return listener
-    }
-}

@@ -11,15 +11,20 @@ interface Communication<T : Any> {
     interface Observe<T : Any>{
         fun observe(owner : LifecycleOwner, observer: Observer<T>) = Unit
     }
-    interface Mutable<T : Any> : Update<T>, Observe<T>
-    abstract class Abstract<T : Any>(private val liveData: MutableLiveData<T>
-                                     = MutableLiveData()
+    interface Fetch<T : Any>{
+        fun fetch() : T?
+    }
+    interface Mutable<T : Any> : Update<T>, Observe<T>, Fetch<T>
+    abstract class Abstract<T : Any>(private val liveData: MutableLiveData<T> = MutableLiveData()
     ) : Mutable<T> {
         override fun map(source: T) {
             liveData.value = source
         }
         override fun observe(owner: LifecycleOwner, observer: Observer<T>) {
             liveData.observe(owner, observer)
+        }
+        override fun fetch(): T? {
+            return liveData.value
         }
     }
 }

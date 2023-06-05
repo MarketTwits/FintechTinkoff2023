@@ -1,7 +1,7 @@
 package com.example.fintechtinkoff2023.domain
 
 import com.example.fintechtinkoff2023.data.database.CacheDataSource
-import com.example.fintechtinkoff2023.data.network.FilmsCloudDataSource
+import com.example.fintechtinkoff2023.data.FilmsCloudDataSource
 import com.example.fintechtinkoff2023.data.network.mapper.FilmsCloudToDomainFilmMapper
 import com.example.fintechtinkoff2023.domain.error.ErrorTypeDomainMapper
 import com.example.fintechtinkoff2023.domain.model.Film
@@ -36,6 +36,7 @@ interface FilmRepository {
                 return NetworkResult.Error(errorTypeDomainMapper.map(e))
             }
         }
+
         override suspend fun fetchSearchMovie(keywords: String): NetworkResult<List<FilmBase>> {
             try {
                 val data = cloudDataSource.fetchSearchMovie(keywords)
@@ -69,7 +70,5 @@ interface FilmRepository {
         override suspend fun addFilmsToFavorite(baseFilm: FilmBase) {
             cacheDataSource.addOrRemove(baseFilm)
         }
-
-
     }
 }

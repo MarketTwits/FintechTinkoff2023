@@ -1,9 +1,7 @@
 package com.example.fintechtinkoff2023.domain.model
 
-import androidx.annotation.DrawableRes
-import com.example.fintechtinkoff2023.R
-import com.example.fintechtinkoff2023.data.network.model.base_film_model.Country
-import com.example.fintechtinkoff2023.data.network.model.base_film_model.Genre
+import com.example.fintechtinkoff2023.data.network.models.base_film_model.Country
+import com.example.fintechtinkoff2023.data.network.models.base_film_model.Genre
 
 sealed class FilmInfoUi(
     val filmId: Int = 0,
