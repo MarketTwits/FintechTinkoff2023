@@ -1,11 +1,9 @@
-package com.example.fintechtinkoff2023.domain
+package com.example.fintechtinkoff2023.domain.mapper
 
-import com.example.fintechtinkoff2023.data.database.CacheDataSource
 import com.example.fintechtinkoff2023.data.database.db_entites.FilmCache
 import com.example.fintechtinkoff2023.domain.model.Film
 import com.example.fintechtinkoff2023.domain.model.FilmBase
 import com.example.fintechtinkoff2023.domain.model.FilmUi
-import kotlinx.coroutines.flow.first
 
 
 interface FavoriteFilmsComparisonMapper {

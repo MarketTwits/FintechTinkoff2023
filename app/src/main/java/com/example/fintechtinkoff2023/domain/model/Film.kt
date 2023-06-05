@@ -1,8 +1,8 @@
 package com.example.fintechtinkoff2023.domain.model
 
 import com.example.fintechtinkoff2023.data.database.db_entites.FilmCache
-import com.example.fintechtinkoff2023.data.network.model.base_film_model.Country
-import com.example.fintechtinkoff2023.data.network.model.base_film_model.Genre
+import com.example.fintechtinkoff2023.data.network.models.base_film_model.Country
+import com.example.fintechtinkoff2023.data.network.models.base_film_model.Genre
 
 
 interface Film {
@@ -91,8 +91,6 @@ interface FilmInfo {
             }
         }
     }
-
-
 }
 
 data class FilmInfoBase(

@@ -51,9 +51,7 @@ class PopularFragment : Fragment() {
         adapter = PopularFilmsAdapter(
             object : Retry {
                 override fun retry() {
-                    lifecycleScope.launch {//todo
-                        viewModel.fetchTopFilms()
-                    }
+                  viewModel.fetchTopFilms()
                 }
             }, object : ItemClick {
                 override fun onClick(filmUi: FilmUi) {
@@ -81,7 +79,7 @@ class PopularFragment : Fragment() {
     }
 
     private fun observerTopFilmLiveDataFlow() {
-        viewModel.topFilms.observe(viewLifecycleOwner) {
+        viewModel.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
     }

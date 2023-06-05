@@ -3,6 +3,7 @@ package com.example.fintechtinkoff2023.data.database.room
 import androidx.room.*
 import com.example.fintechtinkoff2023.data.database.db_entites.FilmCache
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 
 @Dao
 interface FilmFavoritesDao {
@@ -17,4 +18,5 @@ interface FilmFavoritesDao {
 
     @Query("DELETE FROM favorites_films_list WHERE filmId = :filmId")
     suspend fun deleteFavoriteFilm(filmId: Int)
+
 }

@@ -5,12 +5,12 @@ import kotlinx.coroutines.Dispatchers
 
 interface DispatchersList {
     fun io() : CoroutineDispatcher
-    fun ui() : CoroutineDispatcher
+    fun main() : CoroutineDispatcher
     fun default() : CoroutineDispatcher
 
     class Base : DispatchersList {
         override fun io(): CoroutineDispatcher = Dispatchers.IO
-        override fun ui(): CoroutineDispatcher = Dispatchers.Main
+        override fun main(): CoroutineDispatcher = Dispatchers.Main
         override fun default(): CoroutineDispatcher = Dispatchers.Default
     }
 }

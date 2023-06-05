@@ -5,6 +5,9 @@ import com.example.fintechtinkoff2023.data.database.room.FilmFavoritesDao
 import com.example.fintechtinkoff2023.domain.model.Film
 import com.example.fintechtinkoff2023.domain.model.FilmBase
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import okhttp3.internal.notify
 
 interface CacheDataSource {
     suspend fun addOrRemove(film: FilmBase)
@@ -16,6 +19,7 @@ interface CacheDataSource {
     ) : CacheDataSource {
 
         override suspend fun addOrRemove(film: FilmBase) {
+            //FIXME - add FilmBaseToCacheMapper
             val filmCached = film.map(Film.Mapper.ToCache())
             val existingMovie = filmFavoritesDao.getFilmById(filmCached.filmId.toString())
             if (existingMovie == null) {
