@@ -14,20 +14,31 @@ import kotlinx.coroutines.withContext
 class FilmInfoViewModel
     (
     private val dispatchersList: DispatchersList,
-    private val communication : FilmInfoCommunication,
+    private val communication: FilmInfoCommunication,
+    private val communicationId: FilmInfoIdCommunication,
     private val interactor: FilmInteract
-) : ViewModel(), Communication.Observe<FilmInfoUi> {
+) : ViewModel() {
     fun loadInfoAboutFilm(filmId: Int) {
         viewModelScope.launch(dispatchersList.io()) {
-            interactor.fetchInfoFilm(filmId).collect {
-                withContext(dispatchersList.main()) {
-                    communication.map(it)
+            //if (communicationId.fetch() != null){
+                interactor.fetchInfoFilm(filmId).collect {
+                    withContext(dispatchersList.main()) {
+                        communication.map(it)
+                    }
                 }
-            }
+            //}
+        }
+    }
+    fun fetchFilm(filmId: Int){
+        viewModelScope.launch(dispatchersList.main()) {
+            communicationId.map(filmId)
         }
     }
 
-    override fun observe(owner: LifecycleOwner, observer: Observer<FilmInfoUi>) {
+    fun observeFilm(owner: LifecycleOwner, observer: Observer<FilmInfoUi>) {
         communication.observe(owner, observer)
+    }
+    fun observeFilmId(owner: LifecycleOwner, observer: Observer<Int>){
+        communicationId.observe(owner, observer)
     }
 }

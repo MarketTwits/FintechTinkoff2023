@@ -7,3 +7,6 @@ import com.example.fintechtinkoff2023.domain.model.FilmInfoUi
 interface FilmInfoCommunication : Communication.Mutable<FilmInfoUi> {
     class Base : Communication.Abstract<FilmInfoUi>(), FilmInfoCommunication
 }
+interface FilmInfoIdCommunication : Communication.Mutable<Int>{
+    class Base : Communication.Abstract<Int>(), FilmInfoIdCommunication
+}

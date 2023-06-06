@@ -36,6 +36,7 @@ class FilmInfoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val filmId = requireArguments().getInt(FILM_ITEM_ID)
         viewModel.loadInfoAboutFilm(filmId = filmId)
+        viewModel.fetchFilm(filmId)
     }
 
     companion object {
