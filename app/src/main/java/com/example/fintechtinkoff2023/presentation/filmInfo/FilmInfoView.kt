@@ -3,10 +3,15 @@ package com.example.fintechtinkoff2023.presentation.filmInfo
 import android.content.Context
 import android.renderscript.ScriptGroup.Binding
 import android.util.AttributeSet
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.widget.FrameLayout
+import android.widget.LinearLayout
 import android.widget.RadioButton
+import android.widget.ScrollView
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.GravityCompat
 import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.lifecycle.findViewTreeViewModelStoreOwner
 import androidx.viewbinding.ViewBinding
@@ -22,8 +27,7 @@ import com.example.fintechtinkoff2023.presentation.utils.formatBoldString
 import kotlinx.coroutines.launch
 
 class FilmInfoView : FrameLayout {
-
-
+    val binding = FilmInfoViewBinding.inflate(LayoutInflater.from(context))
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
@@ -44,9 +48,12 @@ class FilmInfoView : FrameLayout {
                 findViewTreeViewModelStoreOwner()!!,
                 FilmInfoViewModel::class.java
             )
-        viewModel.observe(findViewTreeLifecycleOwner()!!) {
+        viewModel.observeFilm(findViewTreeLifecycleOwner()!!) {
             observerTopFilmLiveDataFlow(it)
         }
+//        viewModel.observeFilmId(findViewTreeLifecycleOwner()!!){
+//
+//        }
     }
 
     private fun observerTopFilmLiveDataFlow(filmInfo: FilmInfoUi) {
@@ -68,27 +75,24 @@ class FilmInfoView : FrameLayout {
             else ->  {
                 val errorBinding = PopularFilmsErrorBinding.inflate(LayoutInflater.from(context))
                 addView(errorBinding.root)
+                errorBinding.tvExceptionMessage.text = filmInfo.getMessage()
             }
         }
     }
-
     private fun setUpUI(film: FilmInfoUi, binding: FilmInfoViewBinding) {
         val manageResource = ManageResource.Base(context)
         binding.tvFilmName.text = film.name
-        binding.tvCountry.text = formatBoldString(
-            manageResource.string(R.string.countries),
-            film.country.joinToString { it.country })
+        binding.tvCountry.text =
+            formatBoldString(manageResource.string(R.string.countries), film.country.joinToString { it.country })
         binding.tvGenres.text =
-            formatBoldString(
-                manageResource.string(R.string.genres),
-                film.genres.joinToString { it.genre })
+            formatBoldString(manageResource.string(R.string.genres), film.genres.joinToString { it.genre })
         binding.tvFilmDescription.text = film.description
-        Glide
-            .with(context)
-            .load(film.posterUrl)
-            .into(binding.imFilmPoster)
+        Glide.with(context).load(film.posterUrl).into(binding.imFilmPoster)
     }
-    private fun updateView(binding : ViewBinding){
-        addView(binding.root)
+    private fun handleError(film: FilmInfoUi, binding: PopularFilmsErrorBinding){
+        binding.tvExceptionMessage.text = film.getMessage()
+        binding.btRetry.setOnClickListener {
+
+        }
     }
 }
