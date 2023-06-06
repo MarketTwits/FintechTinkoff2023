@@ -1,4 +1,4 @@
-package com.example.fintechtinkoff2023.presentation.film
+package com.example.fintechtinkoff2023.presentation.filmInfo
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer

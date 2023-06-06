@@ -9,7 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.fintechtinkoff2023.core.sl.ProvideViewModel
 import com.example.fintechtinkoff2023.databinding.FragmentSearchBinding
 import com.example.fintechtinkoff2023.domain.model.FilmUi
-import com.example.fintechtinkoff2023.presentation.film.FilmInfoFragment
+import com.example.fintechtinkoff2023.presentation.filmInfo.FilmInfoFragment
 import com.example.fintechtinkoff2023.presentation.search.adapter.SearchFilmsAdapter
 import com.example.fintechtinkoff2023.presentation.utils.adapterListener.ItemClick
 import com.example.fintechtinkoff2023.presentation.utils.adapterListener.ItemLongClick

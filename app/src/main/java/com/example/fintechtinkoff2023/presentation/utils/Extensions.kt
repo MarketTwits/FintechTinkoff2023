@@ -7,6 +7,7 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.TextWatcher
 import android.text.style.StyleSpan
+import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
 import com.example.fintechtinkoff2023.R
 import com.example.fintechtinkoff2023.presentation.utils.text_handler.AfterTextChangedListener
@@ -46,6 +47,16 @@ fun Fragment.navigationAddFragment(
 
 
 fun Fragment.formatBoldString(title: String, text: String): SpannableString {
+    val str = SpannableString(title + text)
+    str.setSpan(
+        StyleSpan(Typeface.BOLD),
+        0,
+        title.length,
+        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+    )
+    return str
+}
+fun FrameLayout.formatBoldString(title: String, text: String): SpannableString {
     val str = SpannableString(title + text)
     str.setSpan(
         StyleSpan(Typeface.BOLD),
