@@ -8,6 +8,7 @@ import com.example.fintechtinkoff2023.core.communication.Communication
 import com.example.fintechtinkoff2023.core.wrappers.DispatchersList
 import com.example.fintechtinkoff2023.domain.FilmInteract
 import com.example.fintechtinkoff2023.domain.model.FilmUi
+import com.example.fintechtinkoff2023.presentation.filmInfo.FilmIdCommunication
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 

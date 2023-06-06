@@ -4,6 +4,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
+import com.example.fintechtinkoff2023.core.wrappers.Logger
 import com.example.fintechtinkoff2023.data.database.CacheDataSource
 import com.example.fintechtinkoff2023.data.FilmsCloudDataSource
 import com.example.fintechtinkoff2023.data.network.mapper.FilmsCloudToDomainFilmMapper
@@ -71,6 +72,7 @@ interface FilmRepository {
                 val data = cloudDataSource.fetchInfoAboutFilm(filmId)
                 NetworkResult.Success(data = filmMapper.mapFilm(data))
             } catch (e: Exception) {
+                Logger.Base().logError(message = e.message.toString())
                 NetworkResult.Error(errorTypeDomainMapper.map(e))
             }
         }

@@ -8,7 +8,7 @@ data class InfoFilmCloud(
     val completed: Boolean,
     val countries: List<Country>,
     val coverUrl: String,
-    val description: String,
+    val description: String?,
     val editorAnnotation: Any,
     val endYear: Any,
     val filmLength: Int,
@@ -20,7 +20,7 @@ data class InfoFilmCloud(
     val kinopoiskId: Int,
     val lastSync: String,
     val logoUrl: String,
-    val nameEn: Any,
+    val nameEn: String?,
     val nameOriginal: String,
     val nameRu: String?,
     val posterUrl: String,
@@ -53,9 +53,9 @@ data class InfoFilmCloud(
     override suspend fun <T> map(mapper: FilmInfo.Mapper<T>): T {
         return mapper.map(
             kinopoiskId,
-            nameRu ?: nameOriginal,
+            nameRu ?: nameEn ?: nameOriginal,
             posterUrl,
-            description,
+            description ?: "",
             countries,
             genres
         )
