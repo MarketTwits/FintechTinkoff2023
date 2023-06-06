@@ -9,7 +9,7 @@ class FilmInfoModule(private val core: Core) : Module<FilmInfoViewModel> {
     override fun viewModel() = FilmInfoViewModel(
         DispatchersList.Base(),
         FilmInfoCommunication.Base(),
-        FilmInfoIdCommunication.Base(),
+        FilmIdCommunication.Base(),
         BaseModule.Base(core).provideInteractor()
     )
 }

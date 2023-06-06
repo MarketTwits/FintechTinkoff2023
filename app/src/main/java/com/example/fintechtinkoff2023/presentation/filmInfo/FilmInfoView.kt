@@ -18,6 +18,7 @@ import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.Glide
 import com.example.fintechtinkoff2023.R
 import com.example.fintechtinkoff2023.core.sl.ProvideViewModel
+import com.example.fintechtinkoff2023.core.wrappers.Logger
 import com.example.fintechtinkoff2023.core.wrappers.ManageResource
 import com.example.fintechtinkoff2023.databinding.FilmInfoViewBinding
 import com.example.fintechtinkoff2023.databinding.PopularFilmsErrorBinding
@@ -27,7 +28,8 @@ import com.example.fintechtinkoff2023.presentation.utils.formatBoldString
 import kotlinx.coroutines.launch
 
 class FilmInfoView : FrameLayout {
-    val binding = FilmInfoViewBinding.inflate(LayoutInflater.from(context))
+    private lateinit var viewModel: FilmInfoViewModel
+
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
@@ -35,15 +37,13 @@ class FilmInfoView : FrameLayout {
         attrs,
         defStyleAttr
     )
-
     init {
         val binding = FilmInfoViewBinding.inflate(LayoutInflater.from(context))
         addView(binding.root)
     }
-
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        val viewModel : FilmInfoViewModel = (context.applicationContext as ProvideViewModel)
+        viewModel = (context.applicationContext as ProvideViewModel)
             .viewModel(
                 findViewTreeViewModelStoreOwner()!!,
                 FilmInfoViewModel::class.java
@@ -51,9 +51,9 @@ class FilmInfoView : FrameLayout {
         viewModel.observeFilm(findViewTreeLifecycleOwner()!!) {
             observerTopFilmLiveDataFlow(it)
         }
-//        viewModel.observeFilmId(findViewTreeLifecycleOwner()!!){
-//
-//        }
+        viewModel.observeFilmId(findViewTreeLifecycleOwner()!!) {
+            viewModel.loadInfoAboutFilm(it)
+        }
     }
 
     private fun observerTopFilmLiveDataFlow(filmInfo: FilmInfoUi) {
@@ -64,35 +64,49 @@ class FilmInfoView : FrameLayout {
                 addView(binding.root)
                 setUpUI(filmInfo, binding)
             }
+
             is FilmInfoUi.Progress -> {
-                val loadingBinding = PopularFilmsLoadingBinding.inflate(LayoutInflater.from(context))
+                val loadingBinding =
+                    PopularFilmsLoadingBinding.inflate(LayoutInflater.from(context))
                 addView(loadingBinding.root)
             }
+
             is FilmInfoUi.Failed -> {
                 val errorBinding = PopularFilmsErrorBinding.inflate(LayoutInflater.from(context))
+                handleError(filmInfo, errorBinding)
                 addView(errorBinding.root)
             }
-            else ->  {
+
+            else -> {
                 val errorBinding = PopularFilmsErrorBinding.inflate(LayoutInflater.from(context))
                 addView(errorBinding.root)
-                errorBinding.tvExceptionMessage.text = filmInfo.getMessage()
+                handleError(filmInfo, errorBinding)
             }
         }
     }
+
     private fun setUpUI(film: FilmInfoUi, binding: FilmInfoViewBinding) {
         val manageResource = ManageResource.Base(context)
         binding.tvFilmName.text = film.name
         binding.tvCountry.text =
-            formatBoldString(manageResource.string(R.string.countries), film.country.joinToString { it.country })
+            formatBoldString(
+                manageResource.string(R.string.countries),
+                film.country.joinToString { it.country })
         binding.tvGenres.text =
-            formatBoldString(manageResource.string(R.string.genres), film.genres.joinToString { it.genre })
+            formatBoldString(
+                manageResource.string(R.string.genres),
+                film.genres.joinToString { it.genre })
         binding.tvFilmDescription.text = film.description
         Glide.with(context).load(film.posterUrl).into(binding.imFilmPoster)
     }
-    private fun handleError(film: FilmInfoUi, binding: PopularFilmsErrorBinding){
+
+    private fun handleError(film: FilmInfoUi, binding: PopularFilmsErrorBinding) {
         binding.tvExceptionMessage.text = film.getMessage()
         binding.btRetry.setOnClickListener {
-
+            viewModel.observeFilmId(findViewTreeLifecycleOwner()!!){
+                viewModel.loadInfoAboutFilm(it)
+                Logger.Base().logError(message = film.filmId.toString())
+            }
         }
     }
 }
