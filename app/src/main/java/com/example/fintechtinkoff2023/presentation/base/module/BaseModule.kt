@@ -3,6 +3,7 @@ package com.example.fintechtinkoff2023.presentation.base.module
 import com.example.fintechtinkoff2023.core.Core
 import com.example.fintechtinkoff2023.data.database.CacheDataSource
 import com.example.fintechtinkoff2023.data.FilmsCloudDataSource
+import com.example.fintechtinkoff2023.data.mapper.FilmBaseToCacheMapper
 import com.example.fintechtinkoff2023.data.network.mapper.FilmsCloudToDomainFilmMapper
 import com.example.fintechtinkoff2023.data.network.retrofit.MakeService
 import com.example.fintechtinkoff2023.domain.FilmInteract
@@ -16,7 +17,10 @@ interface BaseModule {
     fun provideInteractor() : FilmInteract
     abstract class Abstract(private val core: Core) : BaseModule{
         override fun provideInteractor(): FilmInteract {
-                val cacheDataSource = CacheDataSource.Base(core.database().filmDao())
+                val cacheDataSource = CacheDataSource.Base(
+                    FilmBaseToCacheMapper.Base(),
+                    core.database().filmDao()
+                )
                 return FilmInteract.Base(
                     cacheDataSource,
                     FavoriteFilmsComparisonMapper.Base(),

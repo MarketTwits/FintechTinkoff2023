@@ -1,28 +1,24 @@
 package com.example.fintechtinkoff2023.data.database
 
-import androidx.lifecycle.LiveData
 import com.example.fintechtinkoff2023.data.database.db_entites.FilmCache
 import com.example.fintechtinkoff2023.data.database.room.FilmFavoritesDao
-import com.example.fintechtinkoff2023.domain.model.Film
+import com.example.fintechtinkoff2023.data.mapper.FilmBaseToCacheMapper
 import com.example.fintechtinkoff2023.domain.model.FilmBase
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.distinctUntilChanged
-import okhttp3.internal.notify
 
 interface CacheDataSource {
     suspend fun addOrRemove(film: FilmBase)
     fun getMovieById(filmId: Int): FilmCache?
     suspend fun getData(): Flow<List<FilmCache>>
-    suspend fun getDataLiveData() : LiveData<List<FilmCache>>
+    suspend fun getDataLiveData(): Flow<List<FilmCache>>
 
     class Base(
+        private val mapper: FilmBaseToCacheMapper,
         private val filmFavoritesDao: FilmFavoritesDao,
     ) : CacheDataSource {
 
         override suspend fun addOrRemove(film: FilmBase) {
-            //FIXME - add FilmBaseToCacheMapper
-            val filmCached = film.map(Film.Mapper.ToCache())
+            val filmCached = mapper.map(film)
             val existingMovie = filmFavoritesDao.getFilmById(filmCached.filmId.toString())
             if (existingMovie == null) {
                 filmFavoritesDao.insertFavoritesFilm(filmCached)
@@ -39,8 +35,8 @@ interface CacheDataSource {
             return filmFavoritesDao.getFavoritesFilmsList()
         }
 
-        override suspend fun getDataLiveData(): LiveData<List<FilmCache>> {
-            return filmFavoritesDao.getFavoritesFilmsListLiveData()
+        override suspend fun getDataLiveData(): Flow<List<FilmCache>> {
+            return filmFavoritesDao.getFavoritesFilmsList()
         }
     }
 }

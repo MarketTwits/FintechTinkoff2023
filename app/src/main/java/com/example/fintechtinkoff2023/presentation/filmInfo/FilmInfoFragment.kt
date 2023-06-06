@@ -1,4 +1,4 @@
-package com.example.fintechtinkoff2023.presentation.film
+package com.example.fintechtinkoff2023.presentation.filmInfo
 
 
 import android.os.Bundle
@@ -34,38 +34,10 @@ class FilmInfoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        loadInfoAboutFilm()
-        observerTopFilmLiveDataFlow()
-    }
-    private fun loadInfoAboutFilm(){
         val filmId = requireArguments().getInt(FILM_ITEM_ID)
-        lifecycleScope.launch {
-            viewModel.loadInfoAboutFilm(filmId = filmId)
-        }
+        viewModel.loadInfoAboutFilm(filmId = filmId)
     }
 
-    private fun observerTopFilmLiveDataFlow() {
-        lifecycleScope.launch {
-            viewModel.observe(viewLifecycleOwner) {
-                when(it){
-                    is FilmInfoUi.Base ->   setUpUI(it)
-                    is FilmInfoUi.Progress -> {}//todo
-                    is FilmInfoUi.Failed -> {Toast.makeText(requireContext(), "Failed", Toast.LENGTH_LONG).show()} //todo
-                    else -> {} //todo
-                }
-            }
-        }
-    }
-    private fun setUpUI(film : FilmInfoUi){
-        binding.tvFilmName.text = film.name
-        binding.tvCountry.text = formatBoldString( getString(R.string.countries), film.country.joinToString { it.country })
-        binding.tvGenres.text = formatBoldString( getString(R.string.genres), film.genres.joinToString { it.genre })
-        binding.tvFilmDescription.text = film.description
-        Glide
-            .with(requireContext())
-            .load(film.posterUrl)
-            .into(binding.imFilmPoster)
-    }
     companion object {
         const val FILM_ITEM_ID = "FILM_ITEM_ID"
         fun newInstanceEditItem(filmItemId: Int): FilmInfoFragment {

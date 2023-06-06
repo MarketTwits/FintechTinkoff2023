@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import com.example.fintechtinkoff2023.core.Core
 import com.example.fintechtinkoff2023.presentation.favorites.FavoriteFilmsModule
 import com.example.fintechtinkoff2023.presentation.favorites.FavoritesFilmViewModel
-import com.example.fintechtinkoff2023.presentation.film.FilmInfoModule
-import com.example.fintechtinkoff2023.presentation.film.FilmInfoViewModel
+import com.example.fintechtinkoff2023.presentation.filmInfo.FilmInfoModule
+import com.example.fintechtinkoff2023.presentation.filmInfo.FilmInfoViewModel
 import com.example.fintechtinkoff2023.presentation.popular.PopularFilmsViewModel
 import com.example.fintechtinkoff2023.presentation.popular.PopularModule
 import com.example.fintechtinkoff2023.presentation.search.SearchFilmsViewModel

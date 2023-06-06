@@ -1,4 +1,4 @@
-package com.example.fintechtinkoff2023.presentation.film
+package com.example.fintechtinkoff2023.presentation.filmInfo
 
 import com.example.fintechtinkoff2023.core.communication.Communication
 import com.example.fintechtinkoff2023.domain.model.FilmInfoUi

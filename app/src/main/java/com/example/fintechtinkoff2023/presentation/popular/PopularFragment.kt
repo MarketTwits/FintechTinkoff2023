@@ -5,19 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import com.example.fintechtinkoff2023.core.sl.ProvideViewModel
 import com.example.fintechtinkoff2023.databinding.FragmentPopularBinding
 import com.example.fintechtinkoff2023.domain.model.FilmUi
 import com.example.fintechtinkoff2023.presentation.favorites.FavoritesFragment
-import com.example.fintechtinkoff2023.presentation.film.FilmInfoFragment
+import com.example.fintechtinkoff2023.presentation.filmInfo.FilmInfoFragment
 import com.example.fintechtinkoff2023.presentation.popular.adapter.PopularFilmsAdapter
 import com.example.fintechtinkoff2023.presentation.search.SearchFragment
 import com.example.fintechtinkoff2023.presentation.utils.adapterListener.ItemClick
 import com.example.fintechtinkoff2023.presentation.utils.adapterListener.ItemLongClick
 import com.example.fintechtinkoff2023.presentation.utils.adapterListener.Retry
 import com.example.fintechtinkoff2023.presentation.utils.navigationReplaceFragment
-import kotlinx.coroutines.launch
 
 
 class PopularFragment : Fragment() {
