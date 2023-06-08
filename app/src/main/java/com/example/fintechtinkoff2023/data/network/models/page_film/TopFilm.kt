@@ -5,18 +5,18 @@ import com.example.fintechtinkoff2023.data.network.models.base_film_model.Genre
 import com.example.fintechtinkoff2023.domain.model.Film
 
 data class TopFilm(
-    val countries: List<Country>,
-    val filmId: Int,
-    val filmLength: String,
-    val genres: List<Genre>,
-    val nameEn: String,
-    val nameRu: String?,
-    val posterUrl: String,
-    val posterUrlPreview: String,
-    val rating: String,
-    val ratingChange: Any,
-    val ratingVoteCount: Int,
-    val year: String,
+    private val countries: List<Country>,
+    private val filmId: Int,
+    private val filmLength: String,
+    private val genres: List<Genre>,
+    private val nameEn: String,
+    private val nameRu: String?,
+    private val posterUrl: String,
+    private val posterUrlPreview: String,
+    private val rating: String,
+    private val ratingChange: Any,
+    private val ratingVoteCount: Int,
+    private val year: String,
 ): Film{
     override suspend fun <T> map(mapper: Film.Mapper<T>): T {
         return mapper.map(filmId, nameRu ?: nameEn, posterUrlPreview, year)

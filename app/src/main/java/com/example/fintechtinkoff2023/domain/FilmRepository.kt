@@ -4,6 +4,7 @@ import com.example.fintechtinkoff2023.data.database.CacheDataSource
 import com.example.fintechtinkoff2023.data.FilmsCloudDataSource
 import com.example.fintechtinkoff2023.data.mapper.FilmsCacheToDomainFilmMapper
 import com.example.fintechtinkoff2023.data.network.mapper.FilmsCloudToDomainFilmMapper
+import com.example.fintechtinkoff2023.domain.error.ErrorType
 import com.example.fintechtinkoff2023.domain.error.ErrorTypeDomainMapper
 import com.example.fintechtinkoff2023.domain.model.Film
 import com.example.fintechtinkoff2023.domain.model.FilmBase
@@ -19,7 +20,6 @@ interface FilmRepository {
     suspend fun fetchInfoAboutFilm(filmId: Int): NetworkResult<FilmInfoBase>
     suspend fun fetchFavoriteFilms(): Flow<List<FilmBase>>
     suspend fun addOrRemove(baseFilm: FilmBase): NetworkResult<FilmBase>
-    suspend fun fetchSearchMovieFlow(keywords: String): Flow<NetworkResult<List<FilmBase>>>
     class Base(
         private val cacheDataSource: CacheDataSource,
         private val cloudDataSource: FilmsCloudDataSource,
@@ -50,21 +50,6 @@ interface FilmRepository {
                 return NetworkResult.Error(errorTypeDomainMapper.map(e))
             }
         }
-
-        override suspend fun fetchSearchMovieFlow(keywords: String): Flow<NetworkResult<List<FilmBase>>> =
-            flow {
-                try {
-                    val data = cloudDataSource.fetchSearchMovie(keywords)
-                    if (data.isEmpty()) {
-                        emit(NetworkResult.Error.NotFound())
-                    } else {
-                        emit(NetworkResult.Success(filmCloudMapper.mapFilms(data)))
-                    }
-                } catch (e: Exception) {
-                    emit(NetworkResult.Error(errorTypeDomainMapper.map(e)))
-                }
-            }
-
         override suspend fun fetchInfoAboutFilm(filmId: Int): NetworkResult<FilmInfoBase> {
             return try {
                 val cache = cacheDataSource.getMovieInfoById(filmId)
@@ -72,7 +57,11 @@ interface FilmRepository {
                     NetworkResult.Success(data = filmCacheMapper.map(cache))
                 } else {
                     val data = cloudDataSource.fetchInfoAboutFilm(filmId)
-                    NetworkResult.Success(data = filmCloudMapper.mapFilm(data))
+                    if (data != null) {
+                        NetworkResult.Success(data = filmCloudMapper.mapFilm(data))
+                    } else {
+                        NetworkResult.Error.NotFound()
+                    }
                 }
             } catch (e: Exception) {
                 NetworkResult.Error(errorTypeDomainMapper.map(e))
