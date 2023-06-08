@@ -2,7 +2,7 @@ package com.example.fintechtinkoff2023.core
 
 import android.content.Context
 import com.example.fintechtinkoff2023.core.communication.NavigationCommunication
-import com.example.fintechtinkoff2023.core.storage.RoomStorage
+import com.example.fintechtinkoff2023.core.storage.RoomCacheDataSource
 import com.example.fintechtinkoff2023.core.storage.SharedPreferencesStorage
 import com.example.fintechtinkoff2023.core.wrappers.ManageResource
 
@@ -19,9 +19,8 @@ class Core(
     companion object {
         private const val STORAGE_NAME = "NEWS APP DATA"
     }
-
     override fun manageResource(): ManageResource = manageResource
-    override fun database(): RoomStorage = RoomStorage.AppDatabase.getInstance(context)
+    override fun database(): RoomCacheDataSource = RoomCacheDataSource.Base(context)
 }
 
 interface ProvideStorage {
@@ -31,7 +30,6 @@ interface ProvideStorage {
 interface ProvideManageResource {
     fun manageResource(): ManageResource
 }
-
-interface ProvideRoomDataBase {
-    fun database(): RoomStorage
+interface ProvideRoomDataBase{
+    fun database() : RoomCacheDataSource
 }

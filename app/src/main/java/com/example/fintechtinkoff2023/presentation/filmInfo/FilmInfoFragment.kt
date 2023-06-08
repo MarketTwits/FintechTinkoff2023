@@ -26,9 +26,9 @@ class FilmInfoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
+        binding = FragmentFilmInfoBinding.inflate(inflater, container, false)
         viewModel = (requireActivity().application as ProvideViewModel)
             .viewModel(this, FilmInfoViewModel::class.java)
-        binding = FragmentFilmInfoBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -40,7 +40,7 @@ class FilmInfoFragment : Fragment() {
     }
 
     companion object {
-        const val FILM_ITEM_ID = "FILM_ITEM_ID"
+        private const val FILM_ITEM_ID = "FILM_ITEM_ID"
         fun newInstanceEditItem(filmItemId: Int): FilmInfoFragment {
             return FilmInfoFragment().apply {
                 arguments = Bundle().apply {

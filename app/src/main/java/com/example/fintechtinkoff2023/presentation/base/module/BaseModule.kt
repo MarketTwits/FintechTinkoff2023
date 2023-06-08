@@ -14,12 +14,12 @@ import com.example.fintechtinkoff2023.domain.mapper.FavoriteFilmsComparisonMappe
 import com.example.fintechtinkoff2023.domain.mapper.FilmUiToDomainFilmMapper
 
 interface BaseModule {
-    fun provideInteractor() : FilmInteract
+     fun provideInteractor() : FilmInteract
     abstract class Abstract(private val core: Core) : BaseModule{
-        override fun provideInteractor(): FilmInteract {
+        override  fun provideInteractor(): FilmInteract {
                 val cacheDataSource = CacheDataSource.Base(
                     FilmBaseToCacheMapper.Base(),
-                    core.database().filmDao()
+                    core.database().favoritesDao()
                 )
                 return FilmInteract.Base(
                     cacheDataSource,

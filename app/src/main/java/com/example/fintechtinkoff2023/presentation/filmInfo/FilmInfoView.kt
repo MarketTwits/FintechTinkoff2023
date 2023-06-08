@@ -1,6 +1,7 @@
 package com.example.fintechtinkoff2023.presentation.filmInfo
 
 import android.content.Context
+import android.graphics.Color
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
@@ -15,6 +16,9 @@ import com.example.fintechtinkoff2023.databinding.PopularFilmsErrorBinding
 import com.example.fintechtinkoff2023.databinding.PopularFilmsLoadingBinding
 import com.example.fintechtinkoff2023.domain.model.FilmInfoUi
 import com.example.fintechtinkoff2023.presentation.utils.formatBoldString
+import com.example.fintechtinkoff2023.presentation.utils.images.InitShimmerDrawable
+import com.facebook.shimmer.Shimmer
+import com.facebook.shimmer.ShimmerDrawable
 
 class FilmInfoView : FrameLayout, HandleInfoUiState {
     private lateinit var viewModel: FilmInfoViewModel
@@ -52,7 +56,10 @@ class FilmInfoView : FrameLayout, HandleInfoUiState {
             tvCountry.text = formatBoldString(context.getString(R.string.countries), film.country.joinToString { it.country })
             tvGenres.text = formatBoldString(context.getString(R.string.genres), film.genres.joinToString { it.genre })
             tvFilmDescription.text = film.description
-            Glide.with(context).load(film.posterUrl).into(imFilmPoster)
+            Glide.with(context)
+                .load(film.posterUrl)
+                .placeholder(InitShimmerDrawable.Base(context.getColor(R.color.light_blue)).map())
+                .into(imFilmPoster)
         }
     }
 

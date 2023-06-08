@@ -6,43 +6,22 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.fintechtinkoff2023.core.communication.Communication
-import com.example.fintechtinkoff2023.core.wrappers.DispatchersList
-import com.example.fintechtinkoff2023.domain.FilmInteract
 import com.example.fintechtinkoff2023.domain.model.FilmUi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class SearchFilmsViewModel(
-    private val dispatchersList: DispatchersList,
+    private val searchFilmsLoader: SearchFilmsLoader,
     private val communication: SearchFilmCommunication,
     private val communicationString: CheckStringCommunication,
-    private val filmsInteractor: FilmInteract,
 ) : ViewModel(), Communication.Observe<List<FilmUi>> {
 
-    private fun load(keywords: String) {
-        viewModelScope.launch(dispatchersList.io()) {
-            filmsInteractor.fetchSearchFilms(keywords)
-                .collectLatest {
-                    withContext(dispatchersList.main()) {
-                        communication.map(it)
-                    }
-                }
-        }
-    }
-
-    fun listen(text: String) {
+    fun listenEditText(text: String) {
         if (text != communicationString.fetch()) {
             communicationString.map(text)
-            load(text)
+            searchFilmsLoader.load(viewModelScope, text)
         }
     }
-
     fun itemToCache(item: FilmUi) {
-        viewModelScope.launch(Dispatchers.IO) {
-            filmsInteractor.addOrRemoveFilm(item)
-        }
+        searchFilmsLoader.itemToCache(viewModelScope, item)
     }
 
     override fun observe(owner: LifecycleOwner, observer: Observer<List<FilmUi>>) {

@@ -7,10 +7,18 @@ import com.example.fintechtinkoff2023.presentation.base.module.BaseModule
 
 
 class SearchModule(private val core: Core) : Module<SearchFilmsViewModel> {
-    override fun viewModel() = SearchFilmsViewModel(
-        DispatchersList.Base(),
-        SearchFilmCommunication.Base(),
-        CheckStringCommunication.Base(),
-        BaseModule.Base(core).provideInteractor()
-    )
+    override fun viewModel(): SearchFilmsViewModel {
+        val dispatchersList = DispatchersList.Base()
+        val searchCommunication = SearchFilmCommunication.Base()
+        val checkStringCommunication = CheckStringCommunication.Base()
+        val interactor = BaseModule.Base(core).provideInteractor()
+        return SearchFilmsViewModel(
+            SearchFilmsLoader.Base(
+                dispatchersList, searchCommunication, interactor
+            ),
+            searchCommunication,
+            checkStringCommunication,
+        )
+    }
+
 }
