@@ -69,13 +69,13 @@ interface FilmInteract {
                     emit(data.data.map(FilmInfo.Mapper.ToInfoUi()))
                 }
                 is NetworkResult.Error -> emit(FilmInfoUi.Failed(errorToUi.map(data.errorType)))
-                is NetworkResult.Error.NotFound -> emit(FilmInfoUi.Failed.FilmNotFound())
+                is NetworkResult.Error.NotFound -> emit(FilmInfoUi.Failed.FilmNotFound(errorToUi.map(data.errorType)))
                 is NetworkResult.Loading -> emit(FilmInfoUi.Progress)
             }
         }
 
         override suspend fun fetchFavoriteFilms() = flow {
-            filmRepository.fetchFavoriteFilms().collect {
+            filmRepository.fetchFavoriteFilms().collect{
                 val data = it.map { it.map(Film.Mapper.ToFavoriteUi()) }
                 emit(data)
             }

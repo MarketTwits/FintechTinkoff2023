@@ -3,28 +3,38 @@ package com.example.fintechtinkoff2023.core.storage
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
+import androidx.room.Room.databaseBuilder
 import androidx.room.RoomDatabase
 import com.example.fintechtinkoff2023.data.database.db_entites.FilmCache
 import com.example.fintechtinkoff2023.data.database.room.FilmFavoritesDao
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
+@Database(entities = [FilmCache::class], version = 1, exportSchema = false)
+abstract class RoomSchema : RoomDatabase() {
+    abstract fun filmDao(): FilmFavoritesDao
+}
+interface RoomCacheDataSource : FilmsFavoriteDataSource {
 
-interface RoomStorage {
-    fun filmDao(): FilmFavoritesDao
-
-    @Database(entities = [FilmCache::class], version = 1, exportSchema = false)
-    abstract class AppDatabase : RoomDatabase(), RoomStorage {
+    abstract class Abstract(
+        private val context: Context,
+        private val dataBaseName: String,
+    ) : RoomCacheDataSource {
+        override fun favoritesDao(): FilmFavoritesDao {
+            return getInstance(context, RoomSchema::class.java, dataBaseName).filmDao()
+        }
         companion object {
-            private var db: AppDatabase? = null
-            private const val DB_NAME = "main.db"
-            private val LOCK = Any()
-
-            fun getInstance(context: Context): AppDatabase {
-                synchronized(LOCK) {
+            private var db: RoomSchema? = null
+            fun getInstance(context: Context, schema : Class<RoomSchema>, dataBaseName: String): RoomSchema {
+                synchronized(lock) {
                     db?.let { return it }
                     val instance =
-                        Room.databaseBuilder(
+                        databaseBuilder(
                             context,
-                            AppDatabase::class.java,
-                            DB_NAME
+                            schema,
+                            dataBaseName
                         )
                             .fallbackToDestructiveMigration()
                             .build()
@@ -32,7 +42,13 @@ interface RoomStorage {
                     return instance
                 }
             }
+            private val lock = Object()
         }
-        abstract override fun filmDao(): FilmFavoritesDao
     }
+
+    class Base(context: Context) : Abstract(context, "database.db")
 }
+interface FilmsFavoriteDataSource {
+    fun favoritesDao(): FilmFavoritesDao
+}
+

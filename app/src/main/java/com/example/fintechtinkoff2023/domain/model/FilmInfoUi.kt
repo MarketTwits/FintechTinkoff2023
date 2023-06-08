@@ -13,7 +13,6 @@ sealed class FilmInfoUi(
     val genres: List<Genre> = emptyList(),
     ) {
     abstract fun handle(handleUi : HandleInfoUiState)
-    open fun getMessage(): String = ""
     class Base(
         filmId: Int,
         nameRu: String,
@@ -30,10 +29,9 @@ sealed class FilmInfoUi(
         override fun handle(handleUi: HandleInfoUiState) {
             handleUi.handleError(text)
         }
-        override fun getMessage() = text
-        class FilmNotFound : FilmInfoUi() {
+        class FilmNotFound(private val text: String) : FilmInfoUi() {
             override fun handle(handleUi: HandleInfoUiState) {
-                handleUi.handleError("Not found")//todo
+                handleUi.handleError(text)
             }
         }
     }

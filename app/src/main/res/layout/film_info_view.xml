@@ -65,24 +65,29 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
             android:fontFamily="@font/roboto_bold"
             android:textColor="@color/black"
             android:textSize="25sp"
-            tools:text="Изгой-один: Звёздные войны"
             app:layout_constraintEnd_toEndOf="parent"
+
             app:layout_constraintHorizontal_bias="0.088"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imFilmPoster" />
+            app:layout_constraintTop_toBottomOf="@+id/imFilmPoster"
+            tools:text="Изгой-один: Звёздные войны" />
 
 
-        <ImageView
-            android:id="@+id/imFilmPoster"
-            android:layout_width="match_parent"
-            android:layout_height="450dp"
-            android:scaleType="centerCrop"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imFilmPoster"
+                android:layout_width="match_parent"
+                android:layout_height="450dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
