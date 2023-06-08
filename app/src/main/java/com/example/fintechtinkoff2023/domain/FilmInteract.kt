@@ -1,7 +1,6 @@
 package com.example.fintechtinkoff2023.domain
 
 import com.example.fintechtinkoff2023.data.database.CacheDataSource
-import com.example.fintechtinkoff2023.domain.error.ErrorType
 import com.example.fintechtinkoff2023.domain.mapper.ErrorTypeDomainToUiMapper
 import com.example.fintechtinkoff2023.domain.mapper.FavoriteFilmsComparisonMapper
 import com.example.fintechtinkoff2023.domain.mapper.FilmUiToDomainFilmMapper
@@ -12,10 +11,7 @@ import com.example.fintechtinkoff2023.domain.model.FilmUi
 import com.example.fintechtinkoff2023.domain.state.NetworkResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.onEach
 
 interface FilmInteract {
     suspend fun fetchTopFilms(): Flow<List<FilmUi>>
@@ -82,8 +78,7 @@ interface FilmInteract {
         }
 
         override suspend fun addOrRemoveFilm(film: FilmUi) {
-            val filmBase = filmUiToDomainMapper.map(film)
-            filmRepository.addFilmsToFavorite(filmBase)
+            filmRepository.addOrRemove(filmUiToDomainMapper.map(film))
         }
     }
 }

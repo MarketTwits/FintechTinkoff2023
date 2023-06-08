@@ -3,20 +3,17 @@ package com.example.fintechtinkoff2023.data.database.room
 import androidx.room.*
 import com.example.fintechtinkoff2023.data.database.db_entites.FilmCache
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.StateFlow
+
 
 @Dao
 interface FilmFavoritesDao {
-    @Query("SELECT * FROM favorites_films_list ORDER BY id DESC")
+    @Query("SELECT * FROM film_info_cached ORDER BY id DESC")
     fun getFavoritesFilmsList(): Flow<List<FilmCache>>
-
-    @Query("SELECT * FROM favorites_films_list WHERE filmId = :id")
-    fun getFilmById(id: String): FilmCache?
-
+    @Query("SELECT * FROM film_info_cached WHERE filmId = :id")
+    fun getFilmInfoById(id: String): FilmCache?
     @Insert
-    suspend fun insertFavoritesFilm(film: FilmCache)
-
-    @Query("DELETE FROM favorites_films_list WHERE filmId = :filmId")
-    suspend fun deleteFavoriteFilm(filmId: Int)
+    suspend fun insertFavoriteFilmInfo(film : FilmCache)
+    @Query("DELETE FROM film_info_cached WHERE filmId = :filmId")
+    suspend fun deleteFavoriteFilmInfo(filmId: Int)
 
 }

@@ -53,8 +53,6 @@ class FavoritesFragment : Fragment() {
 
     private fun setupRecyclerView() {
         binding.rvSearchFilm.adapter = adapter
-        binding.rvSearchFilm.clearAnimation()
-        binding.rvSearchFilm.itemAnimator?.changeDuration = 0
     }
 
     private fun observeViewModel() {

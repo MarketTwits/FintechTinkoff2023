@@ -4,6 +4,7 @@ import com.example.fintechtinkoff2023.core.Core
 import com.example.fintechtinkoff2023.data.database.CacheDataSource
 import com.example.fintechtinkoff2023.data.FilmsCloudDataSource
 import com.example.fintechtinkoff2023.data.mapper.FilmBaseToCacheMapper
+import com.example.fintechtinkoff2023.data.mapper.FilmsCacheToDomainFilmMapper
 import com.example.fintechtinkoff2023.data.network.mapper.FilmsCloudToDomainFilmMapper
 import com.example.fintechtinkoff2023.data.network.retrofit.MakeService
 import com.example.fintechtinkoff2023.domain.FilmInteract
@@ -32,10 +33,11 @@ interface BaseModule {
                             MakeService.Base().service()
                         ),
                         ErrorTypeDomainMapper.Base(),
-                        FilmsCloudToDomainFilmMapper.Base()
+                        FilmsCloudToDomainFilmMapper.Base(),
+                        FilmsCacheToDomainFilmMapper.Base()
                     )
                 )
         }
     }
-    class Base(private val core : Core) : Abstract(core)
+    class Base(core : Core) : Abstract(core)
 }
