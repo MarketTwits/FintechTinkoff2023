@@ -1,0 +1,37 @@
+package com.example.fintechtinkoff2023.data.fake.expected
+
+import com.example.fintechtinkoff2023.data.network.models.base_film_model.Country
+import com.example.fintechtinkoff2023.data.network.models.base_film_model.Genre
+import com.example.fintechtinkoff2023.data.network.models.item_film.FilmInfoCloud
+import com.example.fintechtinkoff2023.domain.model.FilmBase
+import com.example.fintechtinkoff2023.domain.model.FilmInfoBase
+
+interface RepositoryTestExpectedData {
+    fun fetchFilmsSuccessData(): List<FilmBase>
+    fun fetchInfoAboutFilmSuccessData(): FilmInfoBase
+    class Base : RepositoryTestExpectedData {
+        override fun fetchFilmsSuccessData(): List<FilmBase> {
+            val filmBase1 = FilmBase(
+                filmId = 1,
+                name = "Фильм1",
+                posterUrl = "https://example.com/poster1_preview.jpg",
+                year = "2021"
+            )
+            val filmBase2 = FilmBase(
+                filmId = 2,
+                name = "Фильм2",
+                posterUrl = "https://example.com/poster2_preview.jpg",
+                year = "2022"
+            )
+            return listOf(filmBase1, filmBase2)
+        }
+        override fun fetchInfoAboutFilmSuccessData(): FilmInfoBase {
+            return FilmInfoBase(
+                country = listOf(Country("Country1")),
+                filmId = 1, genres = listOf(Genre("Genre1")),
+                name = "Фильм1", posterUrl = "https://example.com/poster1.jpg",
+                description = "Film 1 description", year = "1"
+            )
+        }
+    }
+}

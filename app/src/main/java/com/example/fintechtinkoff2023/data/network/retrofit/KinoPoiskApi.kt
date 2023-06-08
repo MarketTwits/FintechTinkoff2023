@@ -1,6 +1,6 @@
 package com.example.fintechtinkoff2023.data.network.retrofit
 
-import com.example.fintechtinkoff2023.data.network.models.item_film.InfoFilmCloud
+import com.example.fintechtinkoff2023.data.network.models.item_film.InfoFilmCloudRaw
 import com.example.fintechtinkoff2023.data.network.models.page_film.TopFilmPage
 import com.example.fintechtinkoff2023.data.network.models.search_films.SearchFilmsPage
 
@@ -27,7 +27,7 @@ interface KinoPoiskApi {
     @GET("v2.2/films/{filmId}")
     suspend fun getInfoAboutFilmById(
         @Path("filmId") filmId: Int
-    ) : InfoFilmCloud
+    ) : InfoFilmCloudRaw
 
     private companion object {
         private const val QUERY_PARAM_TYPE = "type"

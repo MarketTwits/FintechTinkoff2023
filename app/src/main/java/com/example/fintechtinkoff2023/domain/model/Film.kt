@@ -2,6 +2,7 @@ package com.example.fintechtinkoff2023.domain.model
 import com.example.fintechtinkoff2023.data.database.db_entites.FilmCache
 import com.example.fintechtinkoff2023.data.network.models.base_film_model.Country
 import com.example.fintechtinkoff2023.data.network.models.base_film_model.Genre
+import com.example.fintechtinkoff2023.data.network.models.item_film.FilmInfoCloud
 
 
 interface Film {
@@ -56,7 +57,19 @@ interface FilmInfo {
             country: List<Country> = emptyList(),
             genres: List<Genre> = emptyList(),
         ): T
-
+        class ToCloud : Mapper<FilmInfoCloud>{
+            override suspend fun map(
+                filmId: Int,
+                name: String,
+                posterUrl: String,
+                description: String,
+                year: String,
+                country: List<Country>,
+                genres: List<Genre>,
+            ): FilmInfoCloud {
+                return FilmInfoCloud(filmId, name, posterUrl, description, year,genres, country)
+            }
+        }
         class ToInfoBase : Mapper<FilmInfoBase> {
             override suspend fun map(
                 filmId: Int,
