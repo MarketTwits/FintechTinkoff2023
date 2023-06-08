@@ -2,16 +2,11 @@ package com.example.fintechtinkoff2023.core.storage
 
 import android.content.Context
 import androidx.room.Database
-import androidx.room.Room
 import androidx.room.Room.databaseBuilder
 import androidx.room.RoomDatabase
 import com.example.fintechtinkoff2023.data.database.db_entites.FilmCache
 import com.example.fintechtinkoff2023.data.database.room.FilmFavoritesDao
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
+
 @Database(entities = [FilmCache::class], version = 1, exportSchema = false)
 abstract class RoomSchema : RoomDatabase() {
     abstract fun filmDao(): FilmFavoritesDao

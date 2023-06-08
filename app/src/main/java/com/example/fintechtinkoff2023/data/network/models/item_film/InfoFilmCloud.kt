@@ -56,6 +56,7 @@ data class InfoFilmCloud(
             nameRu ?: nameEn ?: nameOriginal,
             posterUrl,
             description ?: "",
+            year.toString(),
             countries,
             genres
         )
