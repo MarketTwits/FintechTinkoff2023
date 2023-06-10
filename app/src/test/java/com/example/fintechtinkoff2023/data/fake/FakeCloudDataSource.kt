@@ -1,15 +1,11 @@
 package com.example.fintechtinkoff2023.data.fake
 
 import com.example.fintechtinkoff2023.data.FilmsCloudDataSource
-import com.example.fintechtinkoff2023.data.database.CacheDataSource
-import com.example.fintechtinkoff2023.data.database.db_entites.FilmCache
 import com.example.fintechtinkoff2023.data.network.models.base_film_model.Country
 import com.example.fintechtinkoff2023.data.network.models.base_film_model.Genre
 import com.example.fintechtinkoff2023.data.network.models.item_film.FilmInfoCloud
 import com.example.fintechtinkoff2023.data.network.models.page_film.TopFilm
 import com.example.fintechtinkoff2023.data.network.models.search_films.SearchFilm
-import com.example.fintechtinkoff2023.domain.model.FilmInfoBase
-import kotlinx.coroutines.flow.Flow
 
 class FakeCloudDataSource : FilmsCloudDataSource {
     override suspend fun fetchTopMovie(): List<TopFilm> {
@@ -53,7 +49,7 @@ class FakeCloudDataSource : FilmsCloudDataSource {
             countries = listOf(Country("Country1")),
             kinopoiskId = 1, genres = listOf(Genre("Genre1")),
             name = "Фильм1", posterUrl = "https://example.com/poster1.jpg",
-            description = "Film 1 description", year = "1"
+            description = "Film 1 description", year = "2021"
         )
     }
 }
@@ -70,24 +66,3 @@ class FakeCloudDataSourceWithEmptyList : FilmsCloudDataSource {
     override suspend fun fetchInfoAboutFilm(filmId: Int): FilmInfoCloud? = null
 }
 
-class FakeCacheDataSource : CacheDataSource {
-    override suspend fun addFilm(film: FilmInfoBase) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun removeFilm(filmId: Int) {
-        TODO("Not yet implemented")
-    }
-
-    override fun getMovieInfoById(filmId: Int): FilmCache? {
-       return null
-    }
-
-    override suspend fun getData(): Flow<List<FilmCache>> {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun getDataLiveData(): Flow<List<FilmCache>> {
-        TODO("Not yet implemented")
-    }
-}
