@@ -2,7 +2,7 @@ package com.example.fintechtinkoff2023.data.network.models.item_film
 
 import com.example.fintechtinkoff2023.data.network.models.base_film_model.Country
 import com.example.fintechtinkoff2023.data.network.models.base_film_model.Genre
-import com.example.fintechtinkoff2023.domain.model.FilmInfo
+import com.example.fintechtinkoff2023.domain.models.FilmInfo
 
 data class InfoFilmCloudRaw(
     private val completed: Boolean,
@@ -70,7 +70,7 @@ data class FilmInfoCloud(
     private val year: String,
     private val genres: List<Genre>,
     private val countries: List<Country>,
-) : FilmInfo{
+) : FilmInfo {
     override suspend fun <T> map(mapper: FilmInfo.Mapper<T>): T {
         return mapper.map(
             kinopoiskId,

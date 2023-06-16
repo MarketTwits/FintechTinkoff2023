@@ -4,11 +4,11 @@ import com.example.fintechtinkoff2023.data.database.CacheDataSource
 import com.example.fintechtinkoff2023.domain.mapper.ErrorTypeDomainToUiMapper
 import com.example.fintechtinkoff2023.domain.mapper.FavoriteFilmsComparisonMapper
 import com.example.fintechtinkoff2023.domain.mapper.FilmUiToDomainFilmMapper
-import com.example.fintechtinkoff2023.domain.model.Film
-import com.example.fintechtinkoff2023.domain.model.FilmInfo
-import com.example.fintechtinkoff2023.domain.model.FilmInfoUi
-import com.example.fintechtinkoff2023.domain.model.FilmUi
+import com.example.fintechtinkoff2023.domain.models.Film
+import com.example.fintechtinkoff2023.domain.models.FilmInfo
+import com.example.fintechtinkoff2023.presentation.models.FilmUi
 import com.example.fintechtinkoff2023.domain.state.NetworkResult
+import com.example.fintechtinkoff2023.presentation.models.FilmInfoUi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.flow
@@ -36,7 +36,7 @@ interface FilmInteract {
                     }
                 }
                 is NetworkResult.Error -> emit(listOf(FilmUi.Failed(errorToUi.map(data.errorType))))
-                is NetworkResult.Error.NotFound -> emit(listOf(FilmUi.Failed.FilmNotFound()))
+                is NetworkResult.NotFound -> emit(listOf(FilmUi.Failed.FilmNotFound()))
                 is NetworkResult.Loading -> emit(listOf(FilmUi.Progress))
             }
         }
@@ -53,7 +53,7 @@ interface FilmInteract {
                         }
                 }
                 is NetworkResult.Error -> send(listOf(FilmUi.Failed(errorToUi.map(data.errorType))))
-                is NetworkResult.Error.NotFound -> send(listOf(FilmUi.Failed.FilmNotFound()))
+                is NetworkResult.NotFound -> send(listOf(FilmUi.Failed.FilmNotFound()))
                 is NetworkResult.Loading -> send(listOf(FilmUi.Progress))
             }
         }
@@ -65,7 +65,7 @@ interface FilmInteract {
                     emit(data.data.map(FilmInfo.Mapper.ToInfoUi()))
                 }
                 is NetworkResult.Error -> emit(FilmInfoUi.Failed(errorToUi.map(data.errorType)))
-                is NetworkResult.Error.NotFound -> emit(FilmInfoUi.Failed.FilmNotFound(errorToUi.map(data.errorType)))
+                is NetworkResult.NotFound -> emit(FilmInfoUi.NotFound(errorToUi.map(data.errorType)))
                 is NetworkResult.Loading -> emit(FilmInfoUi.Progress)
             }
         }

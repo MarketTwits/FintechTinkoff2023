@@ -13,9 +13,8 @@ import com.example.fintechtinkoff2023.data.network.mapper.FilmsCloudToDomainFilm
 import com.example.fintechtinkoff2023.domain.FilmRepository
 import com.example.fintechtinkoff2023.domain.error.ErrorType
 import com.example.fintechtinkoff2023.domain.error.ErrorTypeDomainMapper
-import com.example.fintechtinkoff2023.domain.model.FilmBase
+import com.example.fintechtinkoff2023.domain.models.FilmBase
 import com.example.fintechtinkoff2023.domain.state.NetworkResult
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -73,8 +72,8 @@ class RepositoryTest {
             filmCacheMapper
         )
         val result = repository.fetchTopMovie()
-        assertTrue(result is NetworkResult.Error.NotFound)
-        val notFoundResult = result as NetworkResult.Error.NotFound
+        assertTrue(result is NetworkResult.NotFound)
+        val notFoundResult = result as NetworkResult.NotFound
         assertEquals(ErrorType.NOT_FOUND, notFoundResult.errorType)
     }
 
@@ -122,8 +121,8 @@ class RepositoryTest {
             filmCacheMapper
         )
         val result = repository.fetchTopMovie()
-        assertTrue(result is NetworkResult.Error.NotFound)
-        val notFoundResult = result as NetworkResult.Error.NotFound
+        assertTrue(result is NetworkResult.NotFound)
+        val notFoundResult = result as NetworkResult.NotFound
         assertEquals(ErrorType.NOT_FOUND, notFoundResult.errorType)
     }
 
@@ -191,8 +190,8 @@ class RepositoryTest {
             filmCacheMapper
         )
         val result = repository.fetchInfoAboutFilm(4)
-        assertTrue(result is NetworkResult.Error.NotFound)
-        val notFoundResult = result as NetworkResult.Error.NotFound
+        assertTrue(result is NetworkResult.NotFound)
+        val notFoundResult = result as NetworkResult.NotFound
         assertEquals(ErrorType.NOT_FOUND, notFoundResult.errorType)
     }
 

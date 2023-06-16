@@ -1,9 +1,9 @@
 package com.example.fintechtinkoff2023.data.network.mapper
 
-import com.example.fintechtinkoff2023.domain.model.Film
-import com.example.fintechtinkoff2023.domain.model.FilmBase
-import com.example.fintechtinkoff2023.domain.model.FilmInfo
-import com.example.fintechtinkoff2023.domain.model.FilmInfoBase
+import com.example.fintechtinkoff2023.domain.models.Film
+import com.example.fintechtinkoff2023.domain.models.FilmBase
+import com.example.fintechtinkoff2023.domain.models.FilmInfo
+import com.example.fintechtinkoff2023.domain.models.FilmInfoBase
 
 interface FilmsCloudToDomainFilmMapper {
 

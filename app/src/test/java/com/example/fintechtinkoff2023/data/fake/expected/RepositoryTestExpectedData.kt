@@ -1,11 +1,9 @@
 package com.example.fintechtinkoff2023.data.fake.expected
 
-import com.example.fintechtinkoff2023.data.database.db_entites.FilmCache
 import com.example.fintechtinkoff2023.data.network.models.base_film_model.Country
 import com.example.fintechtinkoff2023.data.network.models.base_film_model.Genre
-import com.example.fintechtinkoff2023.data.network.models.item_film.FilmInfoCloud
-import com.example.fintechtinkoff2023.domain.model.FilmBase
-import com.example.fintechtinkoff2023.domain.model.FilmInfoBase
+import com.example.fintechtinkoff2023.domain.models.FilmBase
+import com.example.fintechtinkoff2023.domain.models.FilmInfoBase
 
 interface RepositoryTestExpectedData {
     fun fetchFilmsSuccessData(): List<FilmBase>

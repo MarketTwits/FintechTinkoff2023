@@ -1,6 +1,6 @@
 package com.example.fintechtinkoff2023.presentation.utils.adapterListener
 
-import com.example.fintechtinkoff2023.domain.model.FilmUi
+import com.example.fintechtinkoff2023.presentation.models.FilmUi
 
 interface ItemClick {
     fun onClick(filmUi: FilmUi)
