@@ -2,7 +2,7 @@ package com.example.fintechtinkoff2023.data.database
 import com.example.fintechtinkoff2023.data.database.db_entites.FilmCache
 import com.example.fintechtinkoff2023.data.database.room.FilmFavoritesDao
 import com.example.fintechtinkoff2023.data.mapper.FilmBaseToCacheMapper
-import com.example.fintechtinkoff2023.domain.model.FilmInfoBase
+import com.example.fintechtinkoff2023.domain.models.FilmInfoBase
 import kotlinx.coroutines.flow.Flow
 
 
@@ -11,7 +11,7 @@ interface CacheDataSource {
     suspend fun removeFilm(filmId: Int)
     fun getMovieInfoById(filmId: Int) : FilmCache?
     suspend fun getData(): Flow<List<FilmCache>>
-    suspend fun getDataLiveData(): Flow<List<FilmCache>>
+
 
     class Base(
         private val mapper: FilmBaseToCacheMapper,
@@ -32,10 +32,6 @@ interface CacheDataSource {
         override suspend fun getData(): Flow<List<FilmCache>> {
             return filmFavoritesDao.getFavoritesFilmsList()
 
-        }
-
-        override suspend fun getDataLiveData(): Flow<List<FilmCache>> {
-            return filmFavoritesDao.getFavoritesFilmsList()
         }
     }
 }

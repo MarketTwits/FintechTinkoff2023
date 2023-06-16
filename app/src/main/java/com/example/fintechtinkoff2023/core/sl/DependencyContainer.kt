@@ -2,14 +2,14 @@ package com.example.fintechtinkoff2023.core.sl
 
 import androidx.lifecycle.ViewModel
 import com.example.fintechtinkoff2023.core.Core
-import com.example.fintechtinkoff2023.presentation.favorites.FavoriteFilmsModule
-import com.example.fintechtinkoff2023.presentation.favorites.FavoritesFilmViewModel
-import com.example.fintechtinkoff2023.presentation.filmInfo.FilmInfoModule
-import com.example.fintechtinkoff2023.presentation.filmInfo.FilmInfoViewModel
-import com.example.fintechtinkoff2023.presentation.popular.PopularFilmsViewModel
-import com.example.fintechtinkoff2023.presentation.popular.PopularModule
-import com.example.fintechtinkoff2023.presentation.search.SearchFilmsViewModel
-import com.example.fintechtinkoff2023.presentation.search.SearchModule
+import com.example.fintechtinkoff2023.presentation.screens.favorites.FavoriteFilmsModule
+import com.example.fintechtinkoff2023.presentation.screens.favorites.FavoritesFilmViewModel
+import com.example.fintechtinkoff2023.presentation.screens.filmInfo.FilmInfoModule
+import com.example.fintechtinkoff2023.presentation.screens.filmInfo.FilmInfoViewModel
+import com.example.fintechtinkoff2023.presentation.screens.popular.PopularFilmsViewModel
+import com.example.fintechtinkoff2023.presentation.screens.popular.PopularModule
+import com.example.fintechtinkoff2023.presentation.screens.search.SearchFilmsViewModel
+import com.example.fintechtinkoff2023.presentation.screens.search.SearchModule
 
 interface DependencyContainer {
     fun module(className: Class<out ViewModel>): Module<out ViewModel>

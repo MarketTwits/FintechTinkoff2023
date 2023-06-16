@@ -2,7 +2,7 @@ package com.example.fintechtinkoff2023.data.network.models.page_film
 
 import com.example.fintechtinkoff2023.data.network.models.base_film_model.Country
 import com.example.fintechtinkoff2023.data.network.models.base_film_model.Genre
-import com.example.fintechtinkoff2023.domain.model.Film
+import com.example.fintechtinkoff2023.domain.models.Film
 
 data class TopFilm(
     private val countries: List<Country>,
@@ -17,7 +17,7 @@ data class TopFilm(
     private val ratingChange: Any,
     private val ratingVoteCount: Int,
     private val year: String,
-): Film{
+): Film {
     override suspend fun <T> map(mapper: Film.Mapper<T>): T {
         return mapper.map(filmId, nameRu ?: nameEn, posterUrlPreview, year)
     }

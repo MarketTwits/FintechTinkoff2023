@@ -4,7 +4,7 @@ import com.example.fintechtinkoff2023.data.network.models.item_film.FilmInfoClou
 import com.example.fintechtinkoff2023.data.network.models.page_film.TopFilm
 import com.example.fintechtinkoff2023.data.network.models.search_films.SearchFilm
 import com.example.fintechtinkoff2023.data.network.retrofit.KinoPoiskApi
-import com.example.fintechtinkoff2023.domain.model.FilmInfo
+import com.example.fintechtinkoff2023.domain.models.FilmInfo
 
 
 interface FilmsCloudDataSource {

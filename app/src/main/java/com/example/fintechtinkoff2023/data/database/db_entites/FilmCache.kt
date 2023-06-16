@@ -6,8 +6,8 @@ import androidx.room.TypeConverters
 import com.example.fintechtinkoff2023.data.database.room.RoomConverter
 import com.example.fintechtinkoff2023.data.network.models.base_film_model.Country
 import com.example.fintechtinkoff2023.data.network.models.base_film_model.Genre
-import com.example.fintechtinkoff2023.domain.model.Film
-import com.example.fintechtinkoff2023.domain.model.FilmInfo
+import com.example.fintechtinkoff2023.domain.models.Film
+import com.example.fintechtinkoff2023.domain.models.FilmInfo
 
 @Entity(tableName = "film_info_cached")
 @TypeConverters(
@@ -24,7 +24,7 @@ class FilmCache(
     val year : String = "",
     val country: List<Country> = emptyList(),
     val genres: List<Genre> = emptyList(),
-) : Film, FilmInfo{
+) : Film, FilmInfo {
     override suspend fun <T> map(mapper: FilmInfo.Mapper<T>): T =
         mapper.map(filmId, name, posterUrl, description, year, country, genres)
 

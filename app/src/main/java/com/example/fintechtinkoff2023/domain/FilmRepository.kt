@@ -4,14 +4,12 @@ import com.example.fintechtinkoff2023.data.database.CacheDataSource
 import com.example.fintechtinkoff2023.data.FilmsCloudDataSource
 import com.example.fintechtinkoff2023.data.mapper.FilmsCacheToDomainFilmMapper
 import com.example.fintechtinkoff2023.data.network.mapper.FilmsCloudToDomainFilmMapper
-import com.example.fintechtinkoff2023.domain.error.ErrorType
 import com.example.fintechtinkoff2023.domain.error.ErrorTypeDomainMapper
-import com.example.fintechtinkoff2023.domain.model.Film
-import com.example.fintechtinkoff2023.domain.model.FilmBase
-import com.example.fintechtinkoff2023.domain.model.FilmInfoBase
+import com.example.fintechtinkoff2023.domain.models.Film
+import com.example.fintechtinkoff2023.domain.models.FilmBase
+import com.example.fintechtinkoff2023.domain.models.FilmInfoBase
 import com.example.fintechtinkoff2023.domain.state.NetworkResult
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 
 interface FilmRepository {
@@ -31,7 +29,7 @@ interface FilmRepository {
             try {
                 val data = cloudDataSource.fetchTopMovie()
                 if (data.isEmpty()) {
-                    return NetworkResult.Error.NotFound()
+                    return NetworkResult.NotFound()
                 }
                 return NetworkResult.Success(filmCloudMapper.mapFilms(data))
             } catch (e: Exception) {
@@ -43,7 +41,7 @@ interface FilmRepository {
             try {
                 val data = cloudDataSource.fetchSearchMovie(keywords)
                 if (data.isEmpty()) {
-                    return NetworkResult.Error.NotFound()
+                    return NetworkResult.NotFound()
                 }
                 return NetworkResult.Success(filmCloudMapper.mapFilms(data))
             } catch (e: Exception) {
@@ -60,7 +58,7 @@ interface FilmRepository {
                     if (data != null) {
                         NetworkResult.Success(data = filmCloudMapper.mapFilm(data))
                     } else {
-                        NetworkResult.Error.NotFound()
+                        NetworkResult.NotFound()
                     }
                 }
             } catch (e: Exception) {
