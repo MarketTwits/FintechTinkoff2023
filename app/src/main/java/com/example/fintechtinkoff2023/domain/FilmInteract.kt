@@ -9,9 +9,13 @@ import com.example.fintechtinkoff2023.domain.models.FilmInfo
 import com.example.fintechtinkoff2023.presentation.models.FilmUi
 import com.example.fintechtinkoff2023.domain.state.NetworkResult
 import com.example.fintechtinkoff2023.presentation.models.FilmInfoUi
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.launch
 
 interface FilmInteract {
     suspend fun fetchTopFilms(): Flow<List<FilmUi>>
@@ -19,6 +23,7 @@ interface FilmInteract {
     suspend fun fetchInfoFilm(filmId: Int): Flow<FilmInfoUi>
     suspend fun fetchFavoriteFilms(): Flow<List<FilmUi>>
     suspend fun addOrRemoveFilm(film: FilmUi)
+    val test : MutableSharedFlow<List<FilmUi>>
 
     class Base(
         private val cacheDataSource: CacheDataSource,
@@ -27,12 +32,16 @@ interface FilmInteract {
         private val filmUiToDomainMapper: FilmUiToDomainFilmMapper,
         private val filmRepository: FilmRepository,
     ) : FilmInteract {
+
         override suspend fun fetchTopFilms() = flow {
             emit(listOf(FilmUi.Progress))
             when (val data = filmRepository.fetchTopMovie()) {
                 is NetworkResult.Success -> {
                     cacheDataSource.getData().collect {
                         emit(favoriteFilmsComparisonMapper.compare(data.data, it))
+                        CoroutineScope(Dispatchers.IO).launch{
+                            test.emit(favoriteFilmsComparisonMapper.compare(data.data, it))
+                        }
                     }
                 }
                 is NetworkResult.Error -> emit(listOf(FilmUi.Failed(errorToUi.map(data.errorType))))
@@ -80,5 +89,7 @@ interface FilmInteract {
         override suspend fun addOrRemoveFilm(film: FilmUi) {
             filmRepository.addOrRemove(filmUiToDomainMapper.map(film))
         }
+
+        override val test: MutableSharedFlow<List<FilmUi>> = MutableSharedFlow()
     }
 }
