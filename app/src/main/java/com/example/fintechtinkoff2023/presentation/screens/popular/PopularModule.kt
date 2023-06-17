@@ -12,7 +12,7 @@ class PopularModule(
         return PopularFilmsViewModel(
             DispatchersList.Base(),
             PopularFilmCommunication.Base(),
-            BaseModule.Base(core).provideInteractor()
+            core.providePeriodicInteractor()
         )
     }
 }

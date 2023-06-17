@@ -9,30 +9,39 @@ import com.example.fintechtinkoff2023.core.communication.Communication
 import com.example.fintechtinkoff2023.core.wrappers.DispatchersList
 import com.example.fintechtinkoff2023.domain.FilmInteract
 import com.example.fintechtinkoff2023.presentation.models.FilmUi
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 
 class PopularFilmsViewModel(
     private val dispatchersList: DispatchersList,
-    private val communication : PopularFilmCommunication,
+    private val communication: PopularFilmCommunication,
     private val filmsInteractor: FilmInteract,
 ) : ViewModel(), Communication.Observe<List<FilmUi>> {
 
     init {
-        fetchTopFilms()
+       // fetchTopFilms()
+        test()
     }
-
     fun fetchTopFilms() {
+            viewModelScope.launch(dispatchersList.io()) {
+                filmsInteractor.fetchTopFilms().collect {
+                    withContext(dispatchersList.main()) {
+                        communication.map(it)
+                    }
+                }
+            }
+    }
+    fun test(){
         viewModelScope.launch(dispatchersList.io()) {
-            filmsInteractor.fetchTopFilms().collect {
+            filmsInteractor.test.collect {
                 withContext(dispatchersList.main()) {
-                   communication.map(it)
+                    communication.map(it)
                 }
             }
         }
     }
-
     fun itemToCache(item: FilmUi) {
         viewModelScope.launch(dispatchersList.io()) {
             filmsInteractor.addOrRemoveFilm(item)
