@@ -17,23 +17,22 @@ import kotlinx.coroutines.launch
 
 class TopFilmsWorker(
     context: Context,
-    workerParameters: WorkerParameters) :
+    workerParameters: WorkerParameters,
+) :
     CoroutineWorker(context, workerParameters) {
     override suspend fun doWork(): Result {
-      return try {
-          val interact = (applicationContext as FintechApp).providePeriodicInteractor()
-          val scope = CoroutineScope(Dispatchers.IO)
-          scope.launch {
-              interact.fetchTopFilms().collect()
-          }
-          Logger.Base().logError(message = "WORKER WORK")
-          Result.success()
-      }catch (e : Exception){
-          Logger.Base().logError(message = "FAILED $e")
-         Result.failure()
-      }
+        return try {
+            val interact = (applicationContext as FintechApp).providePeriodicInteractor()
+            interact.updateTipFilms()
+            Logger.Base().logError(message = "update")
+            Result.success()
+        } catch (e: Exception) {
+            Logger.Base().logError(message = "failed")
+            Result.failure()
+        }
     }
 }
+
 interface ProvidePeriodicInteractor {
     fun providePeriodicInteractor(): FilmInteract
 }

@@ -15,7 +15,7 @@ interface WorkManagerWrapper {
         private val workManager = WorkManager.getInstance(context)
         override fun start() {
             val request = PeriodicWorkRequestBuilder<TopFilmsWorker>(
-                1, TimeUnit.HOURS
+                15, TimeUnit.MINUTES
             )
                 .setConstraints(
                     Constraints.Builder()
@@ -25,7 +25,7 @@ interface WorkManagerWrapper {
                 .build()
             workManager.enqueueUniquePeriodicWork(
                 WORK_NAME,
-                ExistingPeriodicWorkPolicy.UPDATE, //todo replace to KEEP
+                ExistingPeriodicWorkPolicy.KEEP,
                 request
             )
         }

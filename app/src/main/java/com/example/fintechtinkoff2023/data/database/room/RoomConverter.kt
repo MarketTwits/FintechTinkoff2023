@@ -1,6 +1,7 @@
 package com.example.fintechtinkoff2023.data.database.room
 
 import androidx.room.TypeConverter
+import com.example.fintechtinkoff2023.data.database.db_entites.FilmCache
 import com.example.fintechtinkoff2023.data.network.models.base_film_model.Country
 import com.example.fintechtinkoff2023.data.network.models.base_film_model.Genre
 import com.google.gson.Gson
@@ -34,6 +35,20 @@ interface RoomConverter {
             val gson = Gson()
             val genreListType = object : TypeToken<List<Genre>>() {}.type
             return gson.fromJson(genreListString, genreListType)
+        }
+    }
+
+    class PopularFilmConverter {
+        @TypeConverter
+        fun fromFilmCache(filmCache: FilmCache): String {
+            val gson = Gson()
+            return gson.toJson(filmCache)
+        }
+
+        @TypeConverter
+        fun toFilmCache(data: String): FilmCache {
+            val gson = Gson()
+            return gson.fromJson(data, FilmCache::class.java)
         }
     }
 }
