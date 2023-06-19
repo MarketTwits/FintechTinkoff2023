@@ -3,7 +3,6 @@ package com.example.fintechtinkoff2023.data.test
 import com.example.fintechtinkoff2023.data.FilmsCloudDataSource
 import com.example.fintechtinkoff2023.data.database.CacheDataSource
 import com.example.fintechtinkoff2023.data.fake.FakeCacheDataSource
-import com.example.fintechtinkoff2023.data.fake.FakeCacheDataSourceException
 import com.example.fintechtinkoff2023.data.fake.FakeCloudDataSource
 import com.example.fintechtinkoff2023.data.fake.FakeCloudDataSourceThrowException
 import com.example.fintechtinkoff2023.data.fake.FakeCloudDataSourceWithEmptyList
@@ -21,7 +20,7 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test;
 
 class RepositoryTest {
-    private val cacheDataSource: CacheDataSource = FakeCacheDataSource()
+    private val cacheDataSource: CacheDataSource = FakeCacheDataSource.WithData()
     private val cloudDataSource: FilmsCloudDataSource = FakeCloudDataSource()
     private val errorTypeDomainMapper: ErrorTypeDomainMapper = ErrorTypeDomainMapper.Base()
     private val filmCloudMapper: FilmsCloudToDomainFilmMapper = FilmsCloudToDomainFilmMapper.Base()
@@ -48,8 +47,9 @@ class RepositoryTest {
     @Test
     fun test_fetch_top_movie_error() = runBlocking {
         val fakeCloudDataSource = FakeCloudDataSourceThrowException()
+        val fakeCacheDataSource = FakeCacheDataSource.WithException()
         val repository = FilmRepository.Base(
-            cacheDataSource,
+            fakeCacheDataSource,
             fakeCloudDataSource,
             errorTypeDomainMapper,
             filmCloudMapper,
@@ -65,7 +65,7 @@ class RepositoryTest {
     fun test_fetch_top_movie_not_found() = runBlocking {
         val fakeCloudDataSource = FakeCloudDataSourceWithEmptyList()
         val repository = FilmRepository.Base(
-            cacheDataSource,
+            FakeCacheDataSource.WithEmptyData(),
             fakeCloudDataSource,
             errorTypeDomainMapper,
             filmCloudMapper,
@@ -120,7 +120,7 @@ class RepositoryTest {
             filmCloudMapper,
             filmCacheMapper
         )
-        val result = repository.fetchTopMovie()
+        val result = repository.fetchSearchMovie("")
         assertTrue(result is NetworkResult.NotFound)
         val notFoundResult = result as NetworkResult.NotFound
         assertEquals(ErrorType.NOT_FOUND, notFoundResult.errorType)
@@ -229,7 +229,7 @@ class RepositoryTest {
     @Test
     fun add_items_to_favorite_failure()  = runBlocking{
         val repository = FilmRepository.Base(
-            FakeCacheDataSourceException(),
+            FakeCacheDataSource.WithException(),
             cloudDataSource,
             errorTypeDomainMapper,
             filmCloudMapper,
@@ -239,6 +239,4 @@ class RepositoryTest {
         val actual = repository.addOrRemove(baseFilm)
         assertTrue(actual is NetworkResult.Error)
     }
-
-
 }
