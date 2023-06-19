@@ -18,6 +18,7 @@ interface FilmRepository {
     suspend fun fetchInfoAboutFilm(filmId: Int): NetworkResult<FilmInfoBase>
     suspend fun fetchFavoriteFilms(): Flow<List<FilmBase>>
     suspend fun addOrRemove(baseFilm: FilmBase): NetworkResult<FilmBase>
+    suspend fun updateTopMovie() : NetworkResult<List<FilmBase>>
     class Base(
         private val cacheDataSource: CacheDataSource,
         private val cloudDataSource: FilmsCloudDataSource,
@@ -27,16 +28,21 @@ interface FilmRepository {
     ) : FilmRepository {
         override suspend fun fetchTopMovie(): NetworkResult<List<FilmBase>> {
             try {
-                val data = cloudDataSource.fetchTopMovie()
-                if (data.isEmpty()) {
-                    return NetworkResult.NotFound()
+                val cache = cacheDataSource.getPopularFilms()
+                if (cache.isNotEmpty()) {
+                    return NetworkResult.Success(filmCloudMapper.mapFilms(cache))
+                } else {
+                    val network = cloudDataSource.fetchTopMovie()
+                    if (network.isEmpty()) {
+                        return NetworkResult.NotFound()
+                    }
+                    cacheDataSource.addPopularFilms(filmCloudMapper.mapFilms(network))
+                    return NetworkResult.Success(filmCloudMapper.mapFilms(network))
                 }
-                return NetworkResult.Success(filmCloudMapper.mapFilms(data))
             } catch (e: Exception) {
                 return NetworkResult.Error(errorTypeDomainMapper.map(e))
             }
         }
-
         override suspend fun fetchSearchMovie(keywords: String): NetworkResult<List<FilmBase>> {
             try {
                 val data = cloudDataSource.fetchSearchMovie(keywords)
@@ -48,6 +54,7 @@ interface FilmRepository {
                 return NetworkResult.Error(errorTypeDomainMapper.map(e))
             }
         }
+
         override suspend fun fetchInfoAboutFilm(filmId: Int): NetworkResult<FilmInfoBase> {
             return try {
                 val cache = cacheDataSource.getMovieInfoById(filmId)
@@ -67,7 +74,7 @@ interface FilmRepository {
         }
 
         override suspend fun fetchFavoriteFilms(): Flow<List<FilmBase>> {
-            return cacheDataSource.getData().map {
+            return cacheDataSource.getFavoriteFilmsInfo().map {
                 it.map {
                     it.map(Film.Mapper.ToDomain())
                 }
@@ -85,6 +92,16 @@ interface FilmRepository {
                 }
                 NetworkResult.Success(baseFilm)
             } catch (e: Exception) {
+                NetworkResult.Error(errorTypeDomainMapper.map(e))
+            }
+        }
+
+        override suspend fun updateTopMovie() : NetworkResult<List<FilmBase>> {
+            return try {
+                val network = cloudDataSource.fetchTopMovie()
+                cacheDataSource.addPopularFilms(filmCloudMapper.mapFilms(network))
+                NetworkResult.Success(filmCloudMapper.mapFilms(network))
+            }catch (e : Exception){
                 NetworkResult.Error(errorTypeDomainMapper.map(e))
             }
         }

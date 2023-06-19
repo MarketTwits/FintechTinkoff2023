@@ -21,8 +21,7 @@ class PopularFilmsViewModel(
 ) : ViewModel(), Communication.Observe<List<FilmUi>> {
 
     init {
-       // fetchTopFilms()
-        test()
+        fetchTopFilms()
     }
     fun fetchTopFilms() {
             viewModelScope.launch(dispatchersList.io()) {
@@ -33,15 +32,7 @@ class PopularFilmsViewModel(
                 }
             }
     }
-    fun test(){
-        viewModelScope.launch(dispatchersList.io()) {
-            filmsInteractor.test.collect {
-                withContext(dispatchersList.main()) {
-                    communication.map(it)
-                }
-            }
-        }
-    }
+
     fun itemToCache(item: FilmUi) {
         viewModelScope.launch(dispatchersList.io()) {
             filmsInteractor.addOrRemoveFilm(item)

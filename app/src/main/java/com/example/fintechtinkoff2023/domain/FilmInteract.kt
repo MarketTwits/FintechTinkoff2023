@@ -19,11 +19,12 @@ import kotlinx.coroutines.launch
 
 interface FilmInteract {
     suspend fun fetchTopFilms(): Flow<List<FilmUi>>
+    suspend fun updateTipFilms()
     suspend fun fetchSearchFilms(keywords: String): Flow<List<FilmUi>>
     suspend fun fetchInfoFilm(filmId: Int): Flow<FilmInfoUi>
     suspend fun fetchFavoriteFilms(): Flow<List<FilmUi>>
     suspend fun addOrRemoveFilm(film: FilmUi)
-    val test : MutableSharedFlow<List<FilmUi>>
+
 
     class Base(
         private val cacheDataSource: CacheDataSource,
@@ -37,13 +38,11 @@ interface FilmInteract {
             emit(listOf(FilmUi.Progress))
             when (val data = filmRepository.fetchTopMovie()) {
                 is NetworkResult.Success -> {
-                    cacheDataSource.getData().collect {
+                    cacheDataSource.getFavoriteFilmsInfo().collect {
                         emit(favoriteFilmsComparisonMapper.compare(data.data, it))
-                        CoroutineScope(Dispatchers.IO).launch{
-                            test.emit(favoriteFilmsComparisonMapper.compare(data.data, it))
-                        }
                     }
                 }
+
                 is NetworkResult.Error -> emit(listOf(FilmUi.Failed(errorToUi.map(data.errorType))))
                 is NetworkResult.NotFound -> emit(listOf(FilmUi.Failed.FilmNotFound()))
                 is NetworkResult.Loading -> emit(listOf(FilmUi.Progress))
@@ -54,8 +53,7 @@ interface FilmInteract {
             send(listOf(FilmUi.Progress))
             when (val data = filmRepository.fetchSearchMovie(keywords)) {
                 is NetworkResult.Success -> {
-                    cacheDataSource.getData()
-                        .collect { cachedList ->
+                    cacheDataSource.getFavoriteFilmsInfo().collect { cachedList ->
                             val compareList =
                                 favoriteFilmsComparisonMapper.compare(data.data, cachedList)
                             send(compareList)
@@ -73,6 +71,7 @@ interface FilmInteract {
                 is NetworkResult.Success -> {
                     emit(data.data.map(FilmInfo.Mapper.ToInfoUi()))
                 }
+
                 is NetworkResult.Error -> emit(FilmInfoUi.Failed(errorToUi.map(data.errorType)))
                 is NetworkResult.NotFound -> emit(FilmInfoUi.NotFound(errorToUi.map(data.errorType)))
                 is NetworkResult.Loading -> emit(FilmInfoUi.Progress)
@@ -80,7 +79,7 @@ interface FilmInteract {
         }
 
         override suspend fun fetchFavoriteFilms() = flow {
-            filmRepository.fetchFavoriteFilms().collect{
+            filmRepository.fetchFavoriteFilms().collect {
                 val data = it.map { it.map(Film.Mapper.ToFavoriteUi()) }
                 emit(data)
             }
@@ -90,6 +89,8 @@ interface FilmInteract {
             filmRepository.addOrRemove(filmUiToDomainMapper.map(film))
         }
 
-        override val test: MutableSharedFlow<List<FilmUi>> = MutableSharedFlow()
+        override suspend fun updateTipFilms() {
+            filmRepository.updateTopMovie()
+        }
     }
 }

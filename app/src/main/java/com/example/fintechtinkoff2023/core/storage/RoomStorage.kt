@@ -5,9 +5,10 @@ import androidx.room.Database
 import androidx.room.Room.databaseBuilder
 import androidx.room.RoomDatabase
 import com.example.fintechtinkoff2023.data.database.db_entites.FilmCache
+import com.example.fintechtinkoff2023.data.database.db_entites.FilmInfoCache
 import com.example.fintechtinkoff2023.data.database.room.FilmFavoritesDao
 
-@Database(entities = [FilmCache::class], version = 1, exportSchema = false)
+@Database(entities = [FilmInfoCache::class, FilmCache::class], version = 1, exportSchema = false)
 abstract class RoomSchema : RoomDatabase() {
     abstract fun filmDao(): FilmFavoritesDao
 }

@@ -1,5 +1,7 @@
 package com.example.fintechtinkoff2023.domain.models
+
 import com.example.fintechtinkoff2023.data.database.db_entites.FilmCache
+import com.example.fintechtinkoff2023.data.database.db_entites.FilmInfoCache
 import com.example.fintechtinkoff2023.data.network.models.base_film_model.Country
 import com.example.fintechtinkoff2023.data.network.models.base_film_model.Genre
 import com.example.fintechtinkoff2023.data.network.models.item_film.FilmInfoCloud
@@ -17,6 +19,20 @@ interface Film {
             posterUrl: String,
             year: String = "",
         ): T
+
+        class ToCache() : Mapper<FilmCache> {
+            override suspend fun map(
+                filmId: Int,
+                nameRu: String,
+                posterUrl: String,
+                year: String,
+            ) = FilmCache(
+                filmId = filmId,
+                nameRu = nameRu,
+                posterUrl = posterUrl,
+                year = year
+            )
+        }
 
         class ToDomain : Mapper<FilmBase> {
             override suspend fun map(
@@ -59,6 +75,7 @@ interface FilmInfo {
             country: List<Country> = emptyList(),
             genres: List<Genre> = emptyList(),
         ): T
+
         class ToCloud : Mapper<FilmInfoCloud> {
             override suspend fun map(
                 filmId: Int,
@@ -69,9 +86,10 @@ interface FilmInfo {
                 country: List<Country>,
                 genres: List<Genre>,
             ): FilmInfoCloud {
-                return FilmInfoCloud(filmId, name, posterUrl, description, year,genres, country)
+                return FilmInfoCloud(filmId, name, posterUrl, description, year, genres, country)
             }
         }
+
         class ToInfoBase : Mapper<FilmInfoBase> {
             override suspend fun map(
                 filmId: Int,
@@ -82,7 +100,7 @@ interface FilmInfo {
                 country: List<Country>,
                 genres: List<Genre>,
             ): FilmInfoBase {
-                return FilmInfoBase(filmId, name, posterUrl, description, year,country, genres)
+                return FilmInfoBase(filmId, name, posterUrl, description, year, country, genres)
             }
         }
 
@@ -100,7 +118,7 @@ interface FilmInfo {
             }
         }
 
-        class ToCache : Mapper<FilmCache> {
+        class ToCache : Mapper<FilmInfoCache> {
             override suspend fun map(
                 filmId: Int,
                 name: String,
@@ -109,8 +127,8 @@ interface FilmInfo {
                 year: String,
                 country: List<Country>,
                 genres: List<Genre>,
-            ): FilmCache {
-                return FilmCache(
+            ): FilmInfoCache {
+                return FilmInfoCache(
                     filmId = filmId,
                     name = name,
                     posterUrl = posterUrl,
@@ -134,9 +152,10 @@ data class FilmInfoBase(
     private val genres: List<Genre> = emptyList(),
 ) : FilmInfo {
     override suspend fun <T> map(mapper: FilmInfo.Mapper<T>): T {
-        return mapper.map(filmId, name, posterUrl, description, year,country, genres)
+        return mapper.map(filmId, name, posterUrl, description, year, country, genres)
     }
-    fun getId() : Int = filmId
+
+    fun getId(): Int = filmId
 }
 
 data class FilmBase(
@@ -148,5 +167,5 @@ data class FilmBase(
     override suspend fun <T> map(mapper: Film.Mapper<T>): T =
         mapper.map(filmId, name, posterUrl, year)
 
-     fun getId(): Int = filmId
+    fun getId(): Int = filmId
 }
