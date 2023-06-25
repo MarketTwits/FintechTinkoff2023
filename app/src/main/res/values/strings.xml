@@ -12,5 +12,5 @@
     <string name="generic_error">Oops, something went wrong, check your internet connection</string>
     <string name="popular">Popular</string>
     <string name="favourites">Favourites</string>
-    <string name="image_button_content_description">Search image button</string>
+    <string name="retry">Retry</string>
 </resources>
