@@ -10,4 +10,5 @@
     <string name="service_unavalible">Сервис временно не доступен, повторите попытку позже</string>
     <string name="popular">Популярные</string>
     <string name="favourites">Избранные</string>
+    <string name="retry">Повторить</string>
 </resources>

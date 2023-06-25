@@ -46,7 +46,6 @@
                     android:layout_height="27dp"
                     android:layout_gravity="end|center_vertical"
                     android:layout_margin="20dp"
-                    android:contentDescription="@string/image_button_content_description"
                     android:src="@drawable/magnificent" />
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.AppBarLayout>
