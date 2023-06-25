@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.fintechtinkoff2023.core.sl.ProvideViewModel
 import com.example.fintechtinkoff2023.databinding.FragmentPopularBinding
+import com.example.fintechtinkoff2023.databinding.PopularFilmsScreenBinding
 import com.example.fintechtinkoff2023.presentation.models.FilmUi
 import com.example.fintechtinkoff2023.presentation.screens.favorites.FavoritesFragment
 import com.example.fintechtinkoff2023.presentation.screens.filmInfo.FilmInfoFragment
@@ -21,6 +22,7 @@ import com.example.fintechtinkoff2023.presentation.utils.navigationReplaceFragme
 class PopularFragment : Fragment() {
 
     lateinit var binding: FragmentPopularBinding
+    lateinit var popularScreenBinding : PopularFilmsScreenBinding
     private lateinit var adapter: PopularFilmsAdapter
     lateinit var viewModel: PopularFilmsViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,9 +35,8 @@ class PopularFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        // Inflate the layout for this fragment
-        //viewModel = (requireActivity().application as FintechApp).popularFilmsViewModel
         binding = FragmentPopularBinding.inflate(inflater, container, false)
+        popularScreenBinding = binding.popularScreen
         return binding.root
     }
 
@@ -62,13 +63,13 @@ class PopularFragment : Fragment() {
                 }
             }
         )
-        binding.rvTopFilms.adapter = adapter
-        binding.rvTopFilms.clearAnimation()
-        binding.rvTopFilms.itemAnimator?.changeDuration = 0
+        popularScreenBinding.rvTopFilms.adapter = adapter
+        popularScreenBinding.rvTopFilms.clearAnimation()
+        popularScreenBinding.rvTopFilms.itemAnimator?.changeDuration = 0
     }
 
     private fun setupListeners() {
-        binding.imSearch.setOnClickListener {
+        popularScreenBinding.imSearch.setOnClickListener {
             navigationReplaceFragment(SearchFragment())
         }
         binding.btFavorites.setOnClickListener {

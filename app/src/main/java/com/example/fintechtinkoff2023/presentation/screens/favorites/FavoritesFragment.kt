@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import com.example.fintechtinkoff2023.core.sl.ProvideViewModel
+import com.example.fintechtinkoff2023.databinding.FavoritesFilmsScreenBinding
 import com.example.fintechtinkoff2023.databinding.FragmentFavoritesBinding
 import com.example.fintechtinkoff2023.presentation.models.FilmUi
 import com.example.fintechtinkoff2023.presentation.screens.favorites.adapter.FavoriteFilmsAdapter
@@ -20,6 +23,7 @@ import com.example.fintechtinkoff2023.presentation.utils.navigationReplaceFragme
 class FavoritesFragment : Fragment() {
     lateinit var viewModel: FavoritesFilmViewModel
     lateinit var binding: FragmentFavoritesBinding
+    lateinit var favoriteScreenBinding : FavoritesFilmsScreenBinding
     private lateinit var adapter: FavoriteFilmsAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,6 +32,7 @@ class FavoritesFragment : Fragment() {
         viewModel = (requireActivity().application as ProvideViewModel)
             .viewModel(requireActivity(), FavoritesFilmViewModel::class.java)
         binding = FragmentFavoritesBinding.inflate(inflater, container, false)
+        favoriteScreenBinding = binding.favoriteScreen
         adapter = FavoriteFilmsAdapter(
             object : ItemClick {
                 override fun onClick(filmUi: FilmUi) {
@@ -52,7 +57,7 @@ class FavoritesFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        binding.rvSearchFilm.adapter = adapter
+        favoriteScreenBinding.rvSearchFilm.adapter = adapter
     }
 
     private fun observeViewModel() {
@@ -65,7 +70,7 @@ class FavoritesFragment : Fragment() {
         binding.btPopularity.setOnClickListener {
             navigationReplaceFragment(PopularFragment(), false)
         }
-        binding.imSearch.setOnClickListener {
+        favoriteScreenBinding.imSearch.setOnClickListener {
             navigationReplaceFragment(SearchFragment(), true)
         }
     }
