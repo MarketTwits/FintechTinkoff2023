@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name" translatable="false">FintechTinkoff2023</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="check_your_connection">An error occurred while uploading data, check your network connection %s</string>
+    <string name="search">Search</string>
+    <string name="not_found">Not foud</string>
+    <string name="genres"><b>Genres: </b></string>
+    <string name="countries"><b>Countries: </b></string>
+    <string name="no_connection_message">No  connection with internt</string>
+    <string name="service_unavalible">The service is temporarily unavailable, please try again later</string>
+    <string name="generic_error">Oops, something went wrong, check your internet connection</string>
+    <string name="popular">Popular</string>
+    <string name="favourites">Favourites</string>
+    <string name="retry">Retry</string>
+</resources>

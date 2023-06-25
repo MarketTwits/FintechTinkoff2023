@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".presentation.screens.search.SearchFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSearchFilm"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="visible"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edSearchFilm"
+        tools:listitem="@layout/film_item" />
+
+    <ImageView
+        android:id="@+id/imBackArrow"
+        android:layout_width="23dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/back_arrow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edSearchFilm"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="20dp"
+        android:textColorHint="@color/grey"
+        android:theme="@style/ThemeOverlay.AppTheme.TextInputEditText.Outline"
+        app:boxBackgroundColor="@color/white"
+        app:endIconDrawable="@drawable/baseline_clear_24"
+        app:endIconMode="clear_text"
+        app:endIconTint="@color/blue"
+        app:hintEnabled="false"
+        app:layout_constraintBottom_toBottomOf="@+id/imBackArrow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imBackArrow"
+        app:layout_constraintTop_toTopOf="@+id/imBackArrow">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edSearchFilmTextField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/search"
+            android:maxLines="1"
+            android:textColor="@color/black"
+            android:textColorHint="@color/grey"
+            android:textSize="18sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

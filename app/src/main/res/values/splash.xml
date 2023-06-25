@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.FintechTinkoff2023.MySplash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_application_icon</item>
+        <item name="postSplashScreenTheme">@style/Theme.FintechTinkoff2023</item>
+    </style>
+</resources>
