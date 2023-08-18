@@ -1,28 +1,23 @@
 package com.example.fintechtinkoff2023.presentation.screens.popular.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import com.example.fintechtinkoff2023.core.view.BaseFilmsViewHolder
 import com.example.fintechtinkoff2023.databinding.FilmItemBinding
 import com.example.fintechtinkoff2023.databinding.FilmItemNotFoundBinding
 import com.example.fintechtinkoff2023.databinding.PopularFilmsErrorBinding
 import com.example.fintechtinkoff2023.databinding.PopularFilmsLoadingBinding
 import com.example.fintechtinkoff2023.presentation.models.FilmUi
 import com.example.fintechtinkoff2023.presentation.screens.base.adapter.FilmsUiItemDiffCallback
-import com.example.fintechtinkoff2023.presentation.utils.adapterListener.ItemClick
-import com.example.fintechtinkoff2023.presentation.utils.adapterListener.ItemLongClick
-import com.example.fintechtinkoff2023.presentation.utils.adapterListener.Retry
+import com.example.fintechtinkoff2023.presentation.utils.adapterListener.ItemActions
+
 
 class PopularFilmsAdapter(
-    private val retry: Retry,
-    private val onItemClicked: ItemClick,
-    private val onItemLongClicked: ItemLongClick
-) : ListAdapter<FilmUi, PopularFilmsAdapter.PopularFilmsViewHolder>(FilmsUiItemDiffCallback()) {
+    private val mutable : ItemActions.Mutable
+) : ListAdapter<FilmUi, BaseFilmsViewHolder>(FilmsUiItemDiffCallback()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PopularFilmsViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseFilmsViewHolder {
 
         val favoriteBinding =
             FilmItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -34,16 +29,16 @@ class PopularFilmsAdapter(
         = FilmItemNotFoundBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
         val viewHolder = when (viewType) {
-            0 -> PopularFilmsViewHolder.Favorite(favoriteBinding, onItemClicked, onItemLongClicked)
-            1 -> PopularFilmsViewHolder.Base(favoriteBinding, onItemClicked, onItemLongClicked)
-            2 -> PopularFilmsViewHolder.Fail(failedBinding, retry)
-            3 -> PopularFilmsViewHolder.FilmNotFound(filmNotFoundBinding)
-            else -> PopularFilmsViewHolder.Loading(loadingBinding)
+            0 -> BaseFilmsViewHolder.Favorite(favoriteBinding, mutable)
+            1 -> BaseFilmsViewHolder.Base(favoriteBinding, mutable)
+            2 -> BaseFilmsViewHolder.Fail(failedBinding, mutable)
+            3 -> BaseFilmsViewHolder.FilmNotFound(filmNotFoundBinding)
+            else -> BaseFilmsViewHolder.Loading(loadingBinding)
         }
         return viewHolder
     }
 
-    override fun onBindViewHolder(holder: PopularFilmsViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: BaseFilmsViewHolder, position: Int) {
         holder.bind(currentList[position])
     }
 
@@ -53,78 +48,5 @@ class PopularFilmsAdapter(
         is FilmUi.Failed -> 2
         is FilmUi.Failed.FilmNotFound -> 3
         is FilmUi.Progress -> 4
-    }
-
-    abstract class PopularFilmsViewHolder(view: View) :
-        RecyclerView.ViewHolder(view) {
-        open fun bind(film: FilmUi) = Unit
-
-        class Base(
-            private val binding: FilmItemBinding,
-            private val onItemClicked: ItemClick,
-            private val onItemLongClicked: ItemLongClick
-        ) : PopularFilmsViewHolder(binding.root) {
-            override fun bind(film: FilmUi) {
-                binding.root.setOnClickListener {
-                    onItemClicked.onClick(film)
-                }
-                binding.root.setOnLongClickListener {
-                    onItemLongClicked.onLongClick(film)
-                    true
-                }
-                binding.tvFilmTitle.text = film.nameRu
-                binding.tvGenreAndYearOfRelease.text = film.year
-                binding.imStar.setImageResource(film.iconResId)
-                Glide
-                    .with(binding.imFilm)
-                    .load(film.posterUrl)
-                    .into(binding.imFilm)
-            }
-        }
-
-        class Favorite(
-            private val binding: FilmItemBinding,
-            private val onItemClicked: ItemClick,
-            private val onItemLongClicked: ItemLongClick
-        ) :
-            PopularFilmsViewHolder(binding.root) {
-            override fun bind(film: FilmUi) {
-                binding.root.setOnClickListener {
-                    onItemClicked.onClick(film)
-                }
-                binding.root.setOnLongClickListener {
-                    onItemLongClicked.onLongClick(film)
-                    true
-                }
-                binding.tvFilmTitle.text = film.nameRu
-                binding.tvGenreAndYearOfRelease.text = film.year
-                binding.imStar.setImageResource(film.iconResId)
-                Glide
-                    .with(binding.imFilm)
-                    .load(film.posterUrl)
-                    .into(binding.imFilm)
-            }
-        }
-
-        class Fail(
-            private val binding: PopularFilmsErrorBinding,
-            private val retry: Retry,
-        ) : PopularFilmsViewHolder(binding.root) {
-            override fun bind(film: FilmUi) {
-                binding.tvExceptionMessage.text = film.getMessage()
-                //getString(R.string.check_your_connection, exception) //todo
-                binding.btRetry.setOnClickListener {
-                    retry.retry()
-                }
-            }
-        }
-        class FilmNotFound(
-            private val binding: FilmItemNotFoundBinding,
-        ) : PopularFilmsViewHolder(binding.root){
-        }
-
-        class Loading(
-            private val binding: PopularFilmsLoadingBinding,
-        ) : PopularFilmsViewHolder(binding.root)
     }
 }

@@ -1,51 +1,41 @@
 package com.example.fintechtinkoff2023.presentation.screens.search
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.example.fintechtinkoff2023.core.sl.ProvideViewModel
+import com.example.fintechtinkoff2023.core.view.BaseFragment
 import com.example.fintechtinkoff2023.databinding.FragmentSearchBinding
 import com.example.fintechtinkoff2023.presentation.models.FilmUi
 import com.example.fintechtinkoff2023.presentation.screens.filmInfo.FilmInfoFragment
 import com.example.fintechtinkoff2023.presentation.screens.search.adapter.SearchFilmsAdapter
-import com.example.fintechtinkoff2023.presentation.utils.adapterListener.ItemClick
-import com.example.fintechtinkoff2023.presentation.utils.adapterListener.ItemLongClick
-import com.example.fintechtinkoff2023.presentation.utils.adapterListener.Retry
+import com.example.fintechtinkoff2023.presentation.utils.adapterListener.ItemActions
 import com.example.fintechtinkoff2023.presentation.utils.afterTextChangedDelayed
 import com.example.fintechtinkoff2023.presentation.utils.navigationReplaceFragment
 import kotlinx.coroutines.launch
 
 
-class SearchFragment : Fragment() {
-    lateinit var binding: FragmentSearchBinding
-    lateinit var viewModel: SearchFilmsViewModel
+class SearchFragment : BaseFragment<SearchFilmsViewModel, FragmentSearchBinding>(
+    FragmentSearchBinding::inflate
+) {
+    override val clazz =  SearchFilmsViewModel::class.java
+
     private val adapter = SearchFilmsAdapter(
-        object : Retry {
-            override fun retry() {
-              viewModel.listenEditText(binding.edSearchFilmTextField.text.toString())
-            }
-        }, object : ItemClick {
+        object : ItemActions.Mutable{
             override fun onClick(filmUi: FilmUi) {
-                val fragment = FilmInfoFragment.newInstanceEditItem(filmItemId = filmUi.filmId)
+                val fragment = FilmInfoFragment.newInstanceEditItem(filmUi.filmId)
                 navigationReplaceFragment(fragment)
             }
-        }, object : ItemLongClick {
             override fun onLongClick(filmUi: FilmUi) {
                 viewModel.itemToCache(filmUi)
             }
+            override fun retry() {
+                viewModel.listenEditText(binding.edSearchFilmTextField.text.toString())
+            }
         }
     )
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View {
-        viewModel = (requireActivity().application as ProvideViewModel)
-            .viewModel(requireActivity(), SearchFilmsViewModel::class.java)
-        binding = FragmentSearchBinding.inflate(inflater, container, false)
-        return binding.root
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = viewModel(requireActivity(), clazz)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
