@@ -3,25 +3,21 @@ package com.example.fintechtinkoff2023.presentation.screens.search.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
+import com.example.fintechtinkoff2023.core.view.BaseFilmsViewHolder
 import com.example.fintechtinkoff2023.databinding.FilmItemBinding
 import com.example.fintechtinkoff2023.databinding.FilmItemNotFoundBinding
 import com.example.fintechtinkoff2023.databinding.PopularFilmsErrorBinding
 import com.example.fintechtinkoff2023.databinding.PopularFilmsLoadingBinding
 import com.example.fintechtinkoff2023.presentation.models.FilmUi
 import com.example.fintechtinkoff2023.presentation.screens.base.adapter.FilmsUiItemDiffCallback
-import com.example.fintechtinkoff2023.presentation.screens.popular.adapter.PopularFilmsAdapter
-import com.example.fintechtinkoff2023.presentation.utils.adapterListener.ItemClick
-import com.example.fintechtinkoff2023.presentation.utils.adapterListener.ItemLongClick
-import com.example.fintechtinkoff2023.presentation.utils.adapterListener.Retry
+import com.example.fintechtinkoff2023.presentation.utils.adapterListener.ItemActions
 
 
 class SearchFilmsAdapter(
-    private val retry: Retry,
-    private val onItemClicked: ItemClick,
-    private val onItemLongClicked: ItemLongClick,
-) : ListAdapter<FilmUi, PopularFilmsAdapter.PopularFilmsViewHolder>(FilmsUiItemDiffCallback()) {
+    private val action : ItemActions.Mutable
+) : ListAdapter<FilmUi, BaseFilmsViewHolder>(FilmsUiItemDiffCallback()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PopularFilmsAdapter.PopularFilmsViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseFilmsViewHolder {
         val favoriteBinding =
             FilmItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         val failedBinding =
@@ -32,11 +28,11 @@ class SearchFilmsAdapter(
                 = FilmItemNotFoundBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
         val viewHolder = when (viewType) {
-            0 -> PopularFilmsAdapter.PopularFilmsViewHolder.Favorite(favoriteBinding, onItemClicked, onItemLongClicked)
-            1 -> PopularFilmsAdapter.PopularFilmsViewHolder.Base(favoriteBinding, onItemClicked, onItemLongClicked)
-            2 -> PopularFilmsAdapter.PopularFilmsViewHolder.Fail(failedBinding, retry)
-            3 -> PopularFilmsAdapter.PopularFilmsViewHolder.FilmNotFound(filmNotFoundBinding)
-            else -> PopularFilmsAdapter.PopularFilmsViewHolder.Loading(loadingBinding)
+            0 -> BaseFilmsViewHolder.Favorite(favoriteBinding, action)
+            1 -> BaseFilmsViewHolder.Base(favoriteBinding, action)
+            2 -> BaseFilmsViewHolder.Fail(failedBinding, action)
+            3 -> BaseFilmsViewHolder.FilmNotFound(filmNotFoundBinding)
+            else -> BaseFilmsViewHolder.Loading(loadingBinding)
         }
         return viewHolder
     }
@@ -48,7 +44,7 @@ class SearchFilmsAdapter(
         is FilmUi.Progress -> 4
     }
 
-    override fun onBindViewHolder(holder: PopularFilmsAdapter.PopularFilmsViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: BaseFilmsViewHolder, position: Int) {
         holder.bind(currentList[position])
     }
 }

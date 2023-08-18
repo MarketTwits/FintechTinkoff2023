@@ -8,12 +8,10 @@ import com.bumptech.glide.Glide
 import com.example.fintechtinkoff2023.databinding.FilmItemBinding
 import com.example.fintechtinkoff2023.presentation.models.FilmUi
 import com.example.fintechtinkoff2023.presentation.screens.base.adapter.FilmsUiItemDiffCallback
-import com.example.fintechtinkoff2023.presentation.utils.adapterListener.ItemClick
-import com.example.fintechtinkoff2023.presentation.utils.adapterListener.ItemLongClick
+import com.example.fintechtinkoff2023.presentation.utils.adapterListener.ItemActions
 
 class FavoriteFilmsAdapter(
-    private val onItemClicked: ItemClick,
-    private val onItemLongClicked: ItemLongClick,
+    private val action : ItemActions.MutableWithoutRetry,
 ) : ListAdapter<FilmUi, FavoriteFilmsViewHolder>(FilmsUiItemDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteFilmsViewHolder {
@@ -25,10 +23,10 @@ class FavoriteFilmsAdapter(
         val binding = holder.binding
         val item = getItem(position)
         binding.root.setOnClickListener {
-            onItemClicked.onClick(getItem(position))
+            action.onClick(getItem(position))
         }
         binding.root.setOnLongClickListener {
-            onItemLongClicked.onLongClick(getItem(position))
+            action.onLongClick(getItem(position))
             true
         }
         binding.tvFilmTitle.text = item.nameRu
