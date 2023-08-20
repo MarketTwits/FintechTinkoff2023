@@ -1,20 +1,16 @@
 package com.example.fintechtinkoff2023.core
 import android.content.Context
 import com.example.fintechtinkoff2023.FintechApp
-import com.example.fintechtinkoff2023.core.communication.NavigationCommunication
 import com.example.fintechtinkoff2023.core.storage.RoomCacheDataSource
 import com.example.fintechtinkoff2023.core.storage.SharedPreferencesStorage
 import com.example.fintechtinkoff2023.core.wrappers.ManageResource
 import com.example.fintechtinkoff2023.core.wrappers.WorkManagerWrapper
 import com.example.fintechtinkoff2023.data.worker.ProvidePeriodicInteractor
-import com.example.fintechtinkoff2023.domain.FilmInteract
-import com.example.fintechtinkoff2023.presentation.screens.base.module.BaseModule
 
 
 class Core(
     private val context: Context
 ) : ProvideStorage, ProvideManageResource, ProvideRoomDataBase, ProvideWorkManagerWrapper, ProvidePeriodicInteractor {
-    private val navigation = NavigationCommunication.Base()
     private val manageResource = ManageResource.Base(context)
     private val sharedPreferencesStorage =
         SharedPreferencesStorage.Base(context.getSharedPreferences(STORAGE_NAME, Context.MODE_PRIVATE))

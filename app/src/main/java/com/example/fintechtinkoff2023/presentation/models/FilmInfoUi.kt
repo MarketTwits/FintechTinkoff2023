@@ -2,7 +2,7 @@ package com.example.fintechtinkoff2023.presentation.models
 
 import com.example.fintechtinkoff2023.data.network.models.base_film_model.Country
 import com.example.fintechtinkoff2023.data.network.models.base_film_model.Genre
-import com.example.fintechtinkoff2023.presentation.screens.filmInfo.FilmInfoScreen
+import com.example.fintechtinkoff2023.presentation.screens.filmInfo.FilmInfoUi
 import com.example.fintechtinkoff2023.presentation.screens.filmInfo.HandleInfoUiState
 
 
@@ -15,22 +15,25 @@ interface FilmInfoUi {
        private val description: String,
        private val county: List<Country>,
        private val genres: List<Genre>,
-    ) : FilmInfoUi {
+    ) : com.example.fintechtinkoff2023.presentation.models.FilmInfoUi {
         override fun handle(handleUi: HandleInfoUiState) {
-            handleUi.handleSuccess(FilmInfoScreen( nameRu, posterUrl, description, county, genres))
+            handleUi.handleSuccess(FilmInfoUi( nameRu, posterUrl, description, county, genres))
         }
     }
-    class Failed(private val text: String) : FilmInfoUi {
-        override fun handle(handleUi: HandleInfoUiState) {
-            handleUi.handleError(text)
-        }
-    }
-    class NotFound(private val text: String) : FilmInfoUi {
+    class Failed(private val text: String) :
+        com.example.fintechtinkoff2023.presentation.models.FilmInfoUi {
         override fun handle(handleUi: HandleInfoUiState) {
             handleUi.handleError(text)
         }
     }
-    object Progress : FilmInfoUi {
+    class NotFound(private val text: String) :
+        com.example.fintechtinkoff2023.presentation.models.FilmInfoUi {
+        override fun handle(handleUi: HandleInfoUiState) {
+            handleUi.handleError(text)
+        }
+    }
+    object Progress :
+        com.example.fintechtinkoff2023.presentation.models.FilmInfoUi {
         override fun handle(handleUi: HandleInfoUiState) {
             handleUi.handleLoading()
         }

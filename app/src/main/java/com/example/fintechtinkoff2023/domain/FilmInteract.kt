@@ -71,7 +71,6 @@ interface FilmInteract {
                 is NetworkResult.Success -> {
                     emit(data.data.map(FilmInfo.Mapper.ToInfoUi()))
                 }
-
                 is NetworkResult.Error -> emit(FilmInfoUi.Failed(errorToUi.map(data.errorType)))
                 is NetworkResult.NotFound -> emit(FilmInfoUi.NotFound(errorToUi.map(data.errorType)))
                 is NetworkResult.Loading -> emit(FilmInfoUi.Progress)
