@@ -54,9 +54,6 @@ class FavoritesFragment : BaseFragment<FavoritesFilmViewModel,FragmentFavoritesB
 
     private fun setUpListeners() {
         favoriteScreenBinding = binding.favoriteScreen
-        binding.btPopularity.setOnClickListener {
-            navigationReplaceFragment(PopularFragment(), false)
-        }
         favoriteScreenBinding.imSearch.setOnClickListener {
             navigationReplaceFragment(SearchFragment(), true)
         }

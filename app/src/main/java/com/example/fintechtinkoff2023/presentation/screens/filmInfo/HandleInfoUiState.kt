@@ -3,17 +3,16 @@ package com.example.fintechtinkoff2023.presentation.screens.filmInfo
 import androidx.viewbinding.ViewBinding
 import com.example.fintechtinkoff2023.data.network.models.base_film_model.Country
 import com.example.fintechtinkoff2023.data.network.models.base_film_model.Genre
-import com.example.fintechtinkoff2023.presentation.models.FilmInfoUi
 
 interface HandleInfoUiState {
     fun handleSuccess(
-        screen : FilmInfoScreen
+        screen : com.example.fintechtinkoff2023.presentation.screens.filmInfo.FilmInfoUi
     )
     fun handleError(text: String)
     fun handleLoading()
     fun changeState(binding: ViewBinding)
 }
-data class FilmInfoScreen(
+data class FilmInfoUi(
      val name: String,
      val posterUrl: String,
      val description: String,

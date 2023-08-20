@@ -5,17 +5,21 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 
 interface Communication<T : Any> {
-    interface Update<T : Any>{
-        fun map(source : T)
+    interface Update<T : Any> {
+        fun map(source: T)
     }
-    interface Observe<T : Any>{
-        fun observe(owner : LifecycleOwner, observer: Observer<T>) = Unit
+
+    interface Observe<T : Any> {
+        fun observe(owner: LifecycleOwner, observer: Observer<T>) = Unit
     }
-    interface Fetch<T : Any>{
-        fun fetch() : T?
+
+    interface Fetch<T : Any> {
+        fun fetch(): T?
     }
-    interface Mutable<T : Any> : Update<T>, Observe<T>, Fetch<T>
-    abstract class Abstract<T : Any>(private val liveData: MutableLiveData<T> = MutableLiveData()
+
+    interface Mutable<T : Any> : Update<T>, Observe< T>, Fetch< T>
+    abstract class Abstract<T : Any>(
+        private val liveData: MutableLiveData<T> = MutableLiveData()
     ) : Mutable<T> {
         override fun map(source: T) {
             liveData.value = source
@@ -23,8 +27,7 @@ interface Communication<T : Any> {
         override fun observe(owner: LifecycleOwner, observer: Observer<T>) {
             liveData.observe(owner, observer)
         }
-        override fun fetch(): T? {
-            return liveData.value
-        }
+        override fun fetch(): T? = liveData.value
+
     }
 }

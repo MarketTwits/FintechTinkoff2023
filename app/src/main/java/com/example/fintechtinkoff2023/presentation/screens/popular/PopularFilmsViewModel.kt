@@ -6,10 +6,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.fintechtinkoff2023.core.communication.Communication
+import com.example.fintechtinkoff2023.core.view.Screen
 import com.example.fintechtinkoff2023.core.wrappers.DispatchersList
 import com.example.fintechtinkoff2023.domain.FilmInteract
 import com.example.fintechtinkoff2023.presentation.models.FilmUi
-import kotlinx.coroutines.flow.collect
+import com.example.fintechtinkoff2023.presentation.screens.main.NavigationCommunication
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -23,14 +24,15 @@ class PopularFilmsViewModel(
     init {
         fetchTopFilms()
     }
+
     fun fetchTopFilms() {
-            viewModelScope.launch(dispatchersList.io()) {
-                filmsInteractor.fetchTopFilms().collect {
-                    withContext(dispatchersList.main()) {
-                        communication.map(it)
-                    }
+        viewModelScope.launch(dispatchersList.io()) {
+            filmsInteractor.fetchTopFilms().collect {
+                withContext(dispatchersList.main()) {
+                    communication.map(it)
                 }
             }
+        }
     }
 
     fun itemToCache(item: FilmUi) {
