@@ -36,14 +36,20 @@ class NavigationView @JvmOverloads constructor(
 
     override val clazz = NavigationViewModel::class.java
     private lateinit var binding: MenuLayoutBinding
+    //todo
+    private val changeStateButtons = mutableListOf<ChangeButtonState>()
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         binding = MenuLayoutBinding.inflate(LayoutInflater.from(context), this, true)
+
         viewModel.observe(findViewTreeLifecycleOwner()!!) {
             it.show(getFragmentManager(context)!!, R.id.fragmentContainerView, false)
-            binding.btPopularity.changeState(it.javaClass.simpleName)
-            binding.btFavorites.changeState(it.javaClass.simpleName)
+            //TODO fix it
+            Log.d("coreD", changeStateButtons.last().toString())
+            viewModel.changeState(it, binding.btFavorites)
+            viewModel.changeState(it, binding.btPopularity)
+
         }
         setupListeners()
     }
@@ -54,5 +60,8 @@ class NavigationView @JvmOverloads constructor(
         binding.btPopularity.setOnClickListener {
             viewModel.show(PopularScreen)
         }
+    }
+    private fun addChangeStateButton(button: ChangeButtonState) {
+        changeStateButtons.add(button)
     }
 }
