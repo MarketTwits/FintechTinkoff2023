@@ -21,4 +21,7 @@ class NavigationViewModel(
             navigation.map(screen)
         }
     }
+    fun changeState(screen: Screen, changeButtonState: ChangeButtonState){
+       changeButtonState.changeState(screen.javaClass.simpleName)
+    }
 }

@@ -57,10 +57,7 @@ class FilmInfoView : BaseCustomView<FilmInfoViewModel>,
                 context.getString(R.string.genres),
                 screen.genres.joinToString { it.genre })
             tvFilmDescription.text = screen.description
-            Glide.with(context)
-                .load(screen.posterUrl)
-                .placeholder(InitShimmerDrawable.Base(context.getColor(R.color.light_blue)).map())
-                .into(imFilmPoster)
+            Glide.with(context).load(screen.posterUrl).placeholder(InitShimmerDrawable.Base(context.getColor(R.color.light_blue)).map()).into(imFilmPoster)
         }
     }
 
@@ -69,7 +66,6 @@ class FilmInfoView : BaseCustomView<FilmInfoViewModel>,
         with(errorBinding) {
             tvExceptionMessage.text = text
             btRetry.setOnClickListener {
-                // FIXME
                 viewModel.observeFilmId(findViewTreeLifecycleOwner()!!) {
                     viewModel.loadInfoAboutFilm(it)
                 }
