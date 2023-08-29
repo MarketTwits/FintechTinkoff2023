@@ -1,4 +1,4 @@
-package com.example.fintechtinkoff2023.presentation.screens.main
+package com.example.fintechtinkoff2023.presentation.screens.navigation
 
 import com.example.fintechtinkoff2023.core.sl.Module
 

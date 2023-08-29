@@ -6,6 +6,7 @@ import android.os.Parcelable
 import android.util.AttributeSet
 import android.widget.Button
 import com.example.fintechtinkoff2023.R
+import com.example.fintechtinkoff2023.presentation.screens.navigation.VisibilityState
 
 @SuppressLint("AppCompatCustomView")
 class CustomButton @JvmOverloads constructor(

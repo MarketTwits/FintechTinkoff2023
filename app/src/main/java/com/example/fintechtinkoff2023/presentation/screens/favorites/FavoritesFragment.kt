@@ -8,7 +8,6 @@ import com.example.fintechtinkoff2023.databinding.FragmentFavoritesBinding
 import com.example.fintechtinkoff2023.presentation.models.FilmUi
 import com.example.fintechtinkoff2023.presentation.screens.favorites.adapter.FavoriteFilmsAdapter
 import com.example.fintechtinkoff2023.presentation.screens.filmInfo.FilmInfoFragment
-import com.example.fintechtinkoff2023.presentation.screens.popular.PopularFragment
 import com.example.fintechtinkoff2023.presentation.screens.search.SearchFragment
 import com.example.fintechtinkoff2023.presentation.utils.adapterListener.ItemActions
 import com.example.fintechtinkoff2023.presentation.utils.navigationReplaceFragment

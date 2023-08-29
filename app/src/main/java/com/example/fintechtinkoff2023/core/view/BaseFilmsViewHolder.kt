@@ -3,10 +3,11 @@ package com.example.fintechtinkoff2023.core.view
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.fintechtinkoff2023.databinding.FilmErrorBinding
 import com.example.fintechtinkoff2023.databinding.FilmItemBinding
 import com.example.fintechtinkoff2023.databinding.FilmItemNotFoundBinding
-import com.example.fintechtinkoff2023.databinding.PopularFilmsErrorBinding
-import com.example.fintechtinkoff2023.databinding.PopularFilmsLoadingBinding
+import com.example.fintechtinkoff2023.databinding.FilmLoadingBinding
+import com.example.fintechtinkoff2023.databinding.PopularFilmsScreenBinding
 import com.example.fintechtinkoff2023.presentation.models.FilmUi
 import com.example.fintechtinkoff2023.presentation.utils.adapterListener.ItemActions
 
@@ -59,7 +60,7 @@ abstract class BaseFilmsViewHolder(view: View) :
     }
 
     class Fail(
-        private val binding: PopularFilmsErrorBinding,
+        private val binding: FilmErrorBinding,
         private val retry: ItemActions.Mutable,
     ) : BaseFilmsViewHolder(binding.root) {
         override fun bind(film: FilmUi) {
@@ -76,6 +77,6 @@ abstract class BaseFilmsViewHolder(view: View) :
     }
 
     class Loading(
-        private val binding: PopularFilmsLoadingBinding,
+        private val binding: FilmLoadingBinding,
     ) : BaseFilmsViewHolder(binding.root)
 }

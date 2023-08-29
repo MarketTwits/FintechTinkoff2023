@@ -1,10 +1,11 @@
-package com.example.fintechtinkoff2023.presentation.screens.main
+package com.example.fintechtinkoff2023.presentation.screens.navigation
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.example.fintechtinkoff2023.core.communication.Communication
 import com.example.fintechtinkoff2023.core.view.Screen
+import com.example.fintechtinkoff2023.presentation.screens.main.ChangeButtonState
 import com.example.fintechtinkoff2023.presentation.screens.popular.PopularScreen
 
 class NavigationViewModel(

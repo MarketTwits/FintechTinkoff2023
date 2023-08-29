@@ -1,34 +1,16 @@
-package com.example.fintechtinkoff2023.presentation.screens.main
+package com.example.fintechtinkoff2023.presentation.screens.navigation
 
-import android.app.Activity
 import android.content.Context
-import android.os.Parcelable
 import android.util.AttributeSet
 import android.util.Log
-import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
-import android.widget.FrameLayout
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.getSystemService
-import androidx.core.os.bundleOf
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.findFragment
 import androidx.lifecycle.findViewTreeLifecycleOwner
-import androidx.lifecycle.findViewTreeViewModelStoreOwner
-import androidx.lifecycle.lifecycleScope
 import com.example.fintechtinkoff2023.R
 import com.example.fintechtinkoff2023.core.view.BaseCustomView
-import com.example.fintechtinkoff2023.core.view.Screen
-import com.example.fintechtinkoff2023.core.wrappers.Logger
 import com.example.fintechtinkoff2023.databinding.MenuLayoutBinding
 import com.example.fintechtinkoff2023.presentation.screens.favorites.FavoriteScreen
+import com.example.fintechtinkoff2023.presentation.screens.main.ChangeButtonState
 import com.example.fintechtinkoff2023.presentation.screens.popular.PopularScreen
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 
 class NavigationView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
@@ -36,8 +18,6 @@ class NavigationView @JvmOverloads constructor(
 
     override val clazz = NavigationViewModel::class.java
     private lateinit var binding: MenuLayoutBinding
-    //todo
-    private val changeStateButtons = mutableListOf<ChangeButtonState>()
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
@@ -46,7 +26,6 @@ class NavigationView @JvmOverloads constructor(
         viewModel.observe(findViewTreeLifecycleOwner()!!) {
             it.show(getFragmentManager(context)!!, R.id.fragmentContainerView, false)
             //TODO fix it
-            Log.d("coreD", changeStateButtons.last().toString())
             viewModel.changeState(it, binding.btFavorites)
             viewModel.changeState(it, binding.btPopularity)
 
@@ -60,8 +39,5 @@ class NavigationView @JvmOverloads constructor(
         binding.btPopularity.setOnClickListener {
             viewModel.show(PopularScreen)
         }
-    }
-    private fun addChangeStateButton(button: ChangeButtonState) {
-        changeStateButtons.add(button)
     }
 }

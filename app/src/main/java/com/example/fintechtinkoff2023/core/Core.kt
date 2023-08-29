@@ -6,14 +6,16 @@ import com.example.fintechtinkoff2023.core.storage.SharedPreferencesStorage
 import com.example.fintechtinkoff2023.core.wrappers.ManageResource
 import com.example.fintechtinkoff2023.core.wrappers.WorkManagerWrapper
 import com.example.fintechtinkoff2023.data.worker.ProvidePeriodicInteractor
+import com.example.fintechtinkoff2023.presentation.screens.filmInfo.FilmInfoCommunication
 
 
 class Core(
     private val context: Context
-) : ProvideStorage, ProvideManageResource, ProvideRoomDataBase, ProvideWorkManagerWrapper, ProvidePeriodicInteractor {
+) : ProvideStorage, ProvideManageResource, ProvideRoomDataBase, ProvideWorkManagerWrapper, ProvidePeriodicInteractor, ProvideFilmInfoCommunication {
     private val manageResource = ManageResource.Base(context)
     private val sharedPreferencesStorage =
         SharedPreferencesStorage.Base(context.getSharedPreferences(STORAGE_NAME, Context.MODE_PRIVATE))
+    private val filmInfoCommunication = FilmInfoCommunication.Base()
     override fun storage(): SharedPreferencesStorage = sharedPreferencesStorage
     override fun manageResource(): ManageResource = manageResource
     override fun database(): RoomCacheDataSource = RoomCacheDataSource.Base(context)
@@ -23,6 +25,7 @@ class Core(
     }
     override fun provideWorkManagerWrapper() = WorkManagerWrapper.Base(context)
     override fun providePeriodicInteractor() = (context as FintechApp).providePeriodicInteractor()
+    override fun filmInfoCommunication()= filmInfoCommunication
 }
 
 interface ProvideStorage {
@@ -37,4 +40,7 @@ interface ProvideRoomDataBase{
 }
 interface ProvideWorkManagerWrapper{
     fun provideWorkManagerWrapper() : WorkManagerWrapper
+}
+interface ProvideFilmInfoCommunication{
+    fun filmInfoCommunication() : FilmInfoCommunication
 }

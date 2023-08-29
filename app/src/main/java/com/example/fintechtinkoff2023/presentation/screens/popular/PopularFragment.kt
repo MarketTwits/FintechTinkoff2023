@@ -1,13 +1,11 @@
 package com.example.fintechtinkoff2023.presentation.screens.popular
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import com.example.fintechtinkoff2023.core.view.BaseFragment
 import com.example.fintechtinkoff2023.databinding.FragmentPopularBinding
 import com.example.fintechtinkoff2023.databinding.PopularFilmsScreenBinding
 import com.example.fintechtinkoff2023.presentation.models.FilmUi
-import com.example.fintechtinkoff2023.presentation.screens.favorites.FavoritesFragment
 import com.example.fintechtinkoff2023.presentation.screens.filmInfo.FilmInfoFragment
 import com.example.fintechtinkoff2023.presentation.screens.popular.adapter.PopularFilmsAdapter
 import com.example.fintechtinkoff2023.presentation.screens.search.SearchFragment
@@ -55,9 +53,6 @@ class PopularFragment : BaseFragment<PopularFilmsViewModel, FragmentPopularBindi
         popularScreenBinding.imSearch.setOnClickListener {
             navigationReplaceFragment(SearchFragment())
         }
-//        binding.btFavorites.setOnClickListener {
-//            navigationReplaceFragment(FavoritesFragment(), false)
-//        }
     }
     private fun observerTopFilmLiveDataFlow() {
         viewModel.observe(viewLifecycleOwner) {
