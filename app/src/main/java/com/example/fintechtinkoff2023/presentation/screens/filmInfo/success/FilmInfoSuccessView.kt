@@ -9,10 +9,11 @@ import com.bumptech.glide.Glide
 import com.example.fintechtinkoff2023.R
 import com.example.fintechtinkoff2023.core.view.BaseCustomView
 import com.example.fintechtinkoff2023.databinding.FilmInfoViewBinding
-import com.example.fintechtinkoff2023.presentation.screens.filmInfo.FilmInfoUi
 import com.example.fintechtinkoff2023.presentation.screens.filmInfo.HandleInfoUiState
 import com.example.fintechtinkoff2023.presentation.utils.formatBoldString
 import com.example.fintechtinkoff2023.presentation.utils.images.InitShimmerDrawable
+import com.example.fintechtinkoff2023.presentation.models.FilmInfoUi
+import com.example.fintechtinkoff2023.presentation.screens.filmInfo.FilmInfoUiScreen
 
 class FilmInfoSuccessView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
@@ -27,17 +28,16 @@ class FilmInfoSuccessView @JvmOverloads constructor(
             viewModel(findViewTreeViewModelStoreOwner()!!, FilmInfoSuccessViewModel::class.java)
 
         viewModel.observe(findViewTreeLifecycleOwner()!!){
-            if (it is com.example.fintechtinkoff2023.presentation.models.FilmInfoUi.Base){
+            if (it is FilmInfoUi.Base){
                 addView(binding.root)
                 it.handle(this)
             }else{
                 removeAllViews()
             }
         }
-
     }
 
-    override fun handleSuccess(screen: FilmInfoUi) {
+    override fun handleSuccess(screen: FilmInfoUiScreen) {
         with(binding) {
             tvFilmName.text = screen.name
             tvCountry.text = formatBoldString(

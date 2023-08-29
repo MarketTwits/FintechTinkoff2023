@@ -34,7 +34,7 @@ class FilmInfoErrorView @JvmOverloads constructor(
         with(binding) {
             tvExceptionMessage.text = text
             btRetry.setOnClickListener {
-                //todo
+                viewModel.retry()
             }
         }
     }

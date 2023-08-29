@@ -2,7 +2,7 @@ package com.example.fintechtinkoff2023.presentation.models
 
 import com.example.fintechtinkoff2023.data.network.models.base_film_model.Country
 import com.example.fintechtinkoff2023.data.network.models.base_film_model.Genre
-import com.example.fintechtinkoff2023.presentation.screens.filmInfo.FilmInfoUi
+import com.example.fintechtinkoff2023.presentation.screens.filmInfo.FilmInfoUiScreen
 import com.example.fintechtinkoff2023.presentation.screens.filmInfo.HandleInfoUiState
 
 
@@ -17,7 +17,7 @@ interface FilmInfoUi {
        private val genres: List<Genre>,
     ) : com.example.fintechtinkoff2023.presentation.models.FilmInfoUi {
         override fun handle(handleUi: HandleInfoUiState) {
-            handleUi.handleSuccess(FilmInfoUi( nameRu, posterUrl, description, county, genres))
+            handleUi.handleSuccess(FilmInfoUiScreen( nameRu, posterUrl, description, county, genres))
         }
     }
     class Failed(private val text: String) :

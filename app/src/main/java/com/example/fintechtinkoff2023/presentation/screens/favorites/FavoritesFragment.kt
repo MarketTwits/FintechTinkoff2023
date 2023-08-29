@@ -34,7 +34,7 @@ class FavoritesFragment : BaseFragment<FavoritesFilmViewModel,FragmentFavoritesB
         adapter = FavoriteFilmsAdapter(
             object : ItemActions.MutableWithoutRetry{
                 override fun onClick(filmUi: FilmUi) {
-                    val fragment = FilmInfoFragment.newInstanceEditItem(filmItemId = filmUi.filmId)
+                    val fragment = FilmInfoFragment.newInstance.newInstanceInfoFragment(filmItemId = filmUi.filmId)
                     navigationReplaceFragment(fragment)
                 }
                 override fun onLongClick(filmUi: FilmUi) {

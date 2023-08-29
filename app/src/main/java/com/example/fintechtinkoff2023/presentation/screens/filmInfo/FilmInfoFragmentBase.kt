@@ -19,19 +19,14 @@ class FilmInfoFragment : BaseFragment<FilmInfoViewModel, FragmentFilmInfoBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val filmId = requireArguments().getInt(FILM_ITEM_ID)
+        val filmId = FilmInfoNewInstance.Base().fetchFilmId(requireArguments())
         viewModel.loadInfoAboutFilm(filmId = filmId)
         viewModel.fetchFilm(filmId)
-    }
-
-    companion object {
-        private const val FILM_ITEM_ID = "FILM_ITEM_ID"
-        fun newInstanceEditItem(filmItemId: Int): FilmInfoFragment {
-            return FilmInfoFragment().apply {
-                arguments = Bundle().apply {
-                    putInt(FILM_ITEM_ID, filmItemId)
-                }
-            }
+        viewModel.observeRetry(viewLifecycleOwner){
+            viewModel.loadInfoAboutFilm(filmId)
         }
+    }
+    companion object {
+        val newInstance = FilmInfoNewInstance.Base()
     }
 }

@@ -22,7 +22,7 @@ class SearchFragment : BaseFragment<SearchFilmsViewModel, FragmentSearchBinding>
     private val adapter = SearchFilmsAdapter(
         object : ItemActions.Mutable{
             override fun onClick(filmUi: FilmUi) {
-                val fragment = FilmInfoFragment.newInstanceEditItem(filmUi.filmId)
+                val fragment = FilmInfoFragment.newInstance.newInstanceInfoFragment(filmUi.filmId)
                 navigationReplaceFragment(fragment)
             }
             override fun onLongClick(filmUi: FilmUi) {
