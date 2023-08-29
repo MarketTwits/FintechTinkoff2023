@@ -10,6 +10,7 @@ class FilmInfoModule(private val core: Core) : Module<FilmInfoViewModel> {
         DispatchersList.Base(),
         core.filmInfoCommunication(),
         FilmIdCommunication.Base(),
+        core.retryCommunication(),
         BaseModule.Base(core).provideInteractor()
     )
 }
