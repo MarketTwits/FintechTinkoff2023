@@ -1,4 +1,4 @@
-package com.example.fintechtinkoff2023.presentation.screens.main
+package com.example.fintechtinkoff2023.presentation.screens.navigation
 
 import android.os.Parcel
 import android.os.Parcelable

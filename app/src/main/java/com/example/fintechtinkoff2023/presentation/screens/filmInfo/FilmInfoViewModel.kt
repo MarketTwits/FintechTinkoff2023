@@ -18,23 +18,17 @@ class FilmInfoViewModel(
 ) : ViewModel() {
     fun loadInfoAboutFilm(filmId: Int) {
         viewModelScope.launch(dispatchersList.io()) {
-                interactor.fetchInfoFilm(filmId).collect {
-                    withContext(dispatchersList.main()) {
-                        communication.map(it)
-                    }
+            interactor.fetchInfoFilm(filmId).collect {
+                withContext(dispatchersList.main()) {
+                    communication.map(it)
                 }
+            }
         }
     }
-    fun fetchFilm(filmId: Int){
+    fun fetchFilm(filmId: Int) {
         viewModelScope.launch(dispatchersList.main()) {
             communicationId.map(filmId)
         }
     }
 
-    fun observeFilm(owner: LifecycleOwner, observer: Observer<FilmInfoUi>) {
-        communication.observe(owner, observer)
-    }
-    fun observeFilmId(owner: LifecycleOwner, observer: Observer<Int>){
-        communicationId.observe(owner, observer)
-    }
 }

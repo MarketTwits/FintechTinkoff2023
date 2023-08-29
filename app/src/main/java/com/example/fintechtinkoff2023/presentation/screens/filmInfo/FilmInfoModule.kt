@@ -8,7 +8,7 @@ import com.example.fintechtinkoff2023.presentation.screens.base.module.BaseModul
 class FilmInfoModule(private val core: Core) : Module<FilmInfoViewModel> {
     override fun viewModel() = FilmInfoViewModel(
         DispatchersList.Base(),
-        FilmInfoCommunication.Base(),
+        core.filmInfoCommunication(),
         FilmIdCommunication.Base(),
         BaseModule.Base(core).provideInteractor()
     )

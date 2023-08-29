@@ -6,11 +6,10 @@ import com.example.fintechtinkoff2023.data.network.models.base_film_model.Genre
 
 interface HandleInfoUiState {
     fun handleSuccess(
-        screen : com.example.fintechtinkoff2023.presentation.screens.filmInfo.FilmInfoUi
-    )
-    fun handleError(text: String)
-    fun handleLoading()
-    fun changeState(binding: ViewBinding)
+        screen : FilmInfoUi
+    ) = Unit
+    fun handleError(text: String) = Unit
+    fun handleLoading() = Unit
 }
 data class FilmInfoUi(
      val name: String,
