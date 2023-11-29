@@ -45,8 +45,6 @@ class NavigationView @JvmOverloads constructor(
 
         viewModel.observe(findViewTreeLifecycleOwner()!!) {
             it.show(getFragmentManager(context)!!, R.id.fragmentContainerView, false)
-            //TODO fix it
-            Log.d("coreD", changeStateButtons.last().toString())
             viewModel.changeState(it, binding.btFavorites)
             viewModel.changeState(it, binding.btPopularity)
 
